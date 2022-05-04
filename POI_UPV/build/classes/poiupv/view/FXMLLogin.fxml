@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.FXMLSignUpController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.FXMLSignUpController">
    <top>
       <HBox prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #BB86DC; -fx-opacity: ;" BorderPane.alignment="CENTER_LEFT">
          <children>
@@ -42,7 +42,7 @@
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Uni/2%20ARA/IPC/lab/p2/JavaFX11_Sigup/src/icons/accept.png" />
+                        <Image url="@../../resources/accept.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -60,7 +60,7 @@
                <graphic>
                   <ImageView fitHeight="89.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../Uni/2%20ARA/IPC/lab/p2/JavaFX11_Sigup/src/icons/cancel.png" />
+                        <Image url="@../../resources/cancel.png" />
                      </image>
                   </ImageView>
                </graphic>
