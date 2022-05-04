@@ -38,16 +38,24 @@ public class LoginController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-
-    @FXML
-    private void handleBAcceptOnAction(ActionEvent event) {
+    public void initialize(URL url, ResourceBundle rb) 
+    {
+        
+        
+        bCancel.setOnAction( (event) -> {
+            bCancel.getScene().getWindow().hide();
+        });
     }
 
     @FXML
-    private void handleBCancelOnAction(ActionEvent event) {
+    private void handleBAcceptOnAction(ActionEvent event) 
+    {
+        
     }
-    
+
+    @FXML
+    private void handleBCancelOnAction(ActionEvent event) 
+    {
+        
+    }
 }
