@@ -5,7 +5,9 @@
 package poiupv.controller;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import javafx.beans.property.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,6 +36,9 @@ public class LoginController implements Initializable {
     @FXML
     private Label lIncorrectPass;
 
+    private BooleanProperty validEmail;
+    private BooleanProperty validpass;
+            
     /**
      * Initializes the controller class.
      */
@@ -42,6 +47,24 @@ public class LoginController implements Initializable {
     {
         bCancel.setOnAction( (event) -> {
             bCancel.getScene().getWindow().hide();
+        });
+        
+        validEmail = new SimpleBooleanProperty();
+        validpass = new SimpleBooleanProperty();
+        
+        validEmail.setValue(Boolean.FALSE);
+        validpass.setValue(Boolean.FALSE);
+        
+        email.focusedProperty().addListener((observable, oldValue, newValue)->{
+            if (email.textProperty().getValue() != "") {
+                validEmail.setValue(Boolean.TRUE);
+            }
+        });
+        
+        pass.focusedProperty().addListener((observable, oldValue, newValue)->{
+            if (pass.textProperty().getValue() != "") {
+                validpass.setValue(Boolean.TRUE);
+            }
         });
     }    
 
