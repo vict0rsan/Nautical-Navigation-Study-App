@@ -187,7 +187,10 @@ public class FXMLSignUpController implements Initializable {
     {
         if(!User.checkNickName(username.textProperty().getValueSafe()))
         {
-            usernameErrorText.textProperty().setValue("error de formato incorrecto");
+            usernameErrorText.textProperty().setValue("Incorrect username. A nickname is " +
+                    "valid if it is between 6 and 15 characters long and " +
+                    "contains uppercase or lowercase letters or the " +
+                    "hyphens '-' and '_' .");
             username.requestFocus();
         }
         else if(nav.exitsNickName(username.textProperty().getValueSafe()))
