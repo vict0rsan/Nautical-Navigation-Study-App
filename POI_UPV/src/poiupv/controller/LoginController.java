@@ -75,9 +75,5 @@ public class LoginController implements Initializable {
     @FXML
     private void handleBAcceptOnAction(ActionEvent event) {
     }
-
-    @FXML
-    private void handleBCancelOnAction(ActionEvent event) {
-    }
     
 }

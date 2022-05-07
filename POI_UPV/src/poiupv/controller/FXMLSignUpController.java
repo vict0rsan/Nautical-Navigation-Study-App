@@ -277,12 +277,6 @@ public class FXMLSignUpController implements Initializable {
     }
 
     @FXML
-    private void handleBCancelOnAction(ActionEvent event) 
-    {
-        
-    }
-
-    @FXML
     private void handleSelectAvatarButton(ActionEvent event) throws IOException
     {
         
