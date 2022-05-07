@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -60,30 +61,35 @@ public class AvatarSelectorController implements Initializable {
     private void handleAvatar1(ActionEvent event) 
     {
         setAndDisplayImage("1");
+        ((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     @FXML
     private void handleAvatar2(ActionEvent event) 
     {
         setAndDisplayImage("2");
+        ((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     @FXML
     private void handleAvatar3(ActionEvent event) 
     {
         setAndDisplayImage("3");
+        ((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     @FXML
     private void handleAvatar4(ActionEvent event) 
     {
         setAndDisplayImage("4");
+        ((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     @FXML
     private void handleAvatarDefault(ActionEvent event) 
     {
         setAndDisplayImage("default");
+        ((Node) event.getSource()).getScene().getWindow().hide();
     }
     
     protected void setAndDisplayImage(String n)
@@ -91,6 +97,7 @@ public class AvatarSelectorController implements Initializable {
         String name = String.format("resources/avatars/avatar%s.png", n);
         Image myImage = new Image(name);
         avatar.setImage(myImage);
+        
     }
     
 }
