@@ -106,7 +106,7 @@
                         <Insets left="25.0" />
                      </padding>
                   </VBox>
-                  <Text fx:id="usernameErrorText" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <Text fx:id="usernameErrorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
                      <HBox.margin>
                         <Insets left="10.0" top="30.0" />
                      </HBox.margin>
