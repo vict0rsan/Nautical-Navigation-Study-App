@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -19,7 +20,8 @@ import javafx.scene.image.ImageView;
  * @author guill
  */
 public class AvatarSelectorController implements Initializable {
-
+    
+    private ImageView avatar;
     @FXML
     private Button avatar1Button;
     @FXML
@@ -47,26 +49,48 @@ public class AvatarSelectorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-
-    @FXML
-    private void handleAvatar1(ActionEvent event) {
+    }
+    
+    public void initData(ImageView avatar)
+    {
+        this.avatar = avatar;
     }
 
     @FXML
-    private void handleAvatar2(ActionEvent event) {
+    private void handleAvatar1(ActionEvent event) 
+    {
+        setAndDisplayImage("1");
     }
 
     @FXML
-    private void handleAvatar3(ActionEvent event) {
+    private void handleAvatar2(ActionEvent event) 
+    {
+        setAndDisplayImage("2");
     }
 
     @FXML
-    private void handleAvatar4(ActionEvent event) {
+    private void handleAvatar3(ActionEvent event) 
+    {
+        setAndDisplayImage("3");
     }
 
     @FXML
-    private void handleAvatarDefault(ActionEvent event) {
+    private void handleAvatar4(ActionEvent event) 
+    {
+        setAndDisplayImage("4");
+    }
+
+    @FXML
+    private void handleAvatarDefault(ActionEvent event) 
+    {
+        setAndDisplayImage("default");
+    }
+    
+    protected void setAndDisplayImage(String n)
+    {
+        String name = String.format("resources/avatars/avatar%s.png", n);
+        Image myImage = new Image(name);
+        avatar.setImage(myImage);
     }
     
 }

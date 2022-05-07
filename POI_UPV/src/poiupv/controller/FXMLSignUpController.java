@@ -5,6 +5,7 @@
  */
 package poiupv.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -14,14 +15,20 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Navegacion;
 import model.User;
 
@@ -258,7 +265,29 @@ public class FXMLSignUpController implements Initializable {
     }
 
     @FXML
-    private void handleSelectAvatarButton(ActionEvent event) {
+    private void handleSelectAvatarButton(ActionEvent event) throws IOException
+    {
+        
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/AvatarSelector.fxml"));
+
+        Pane root = (Pane) myLoader.load();
+
+            //Get the controller of the UI
+        AvatarSelectorController avatarController = myLoader.<AvatarSelectorController>getController();
+            //We pass the data to the cotroller. Passing the observableList we 
+            //give controll to the modal for deleting/adding/modify the data 
+            //we see in the listView
+
+        Scene scene = new Scene (root);
+        avatarController.initData(avatar);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Avatar Selector");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.showAndWait();
     }
 
+    
 }
