@@ -95,7 +95,12 @@ public class FXMLSignUpController implements Initializable {
         boolProp.setValue(Boolean.FALSE);
         showErrorMessage(errorLabel,textField);
         textField.requestFocus();
- 
+    }
+    
+    private void manageError(Text errorText,TextField textField, BooleanProperty boolProp ){
+        boolProp.setValue(Boolean.FALSE);
+        showErrorMessage(errorText,textField);
+        textField.requestFocus();
     }
     /**
      * Updates the boolProp to true. Changes the background 
@@ -106,8 +111,12 @@ public class FXMLSignUpController implements Initializable {
      */
     private void manageCorrect(Label errorLabel,TextField textField, BooleanProperty boolProp ){
         boolProp.setValue(Boolean.TRUE);
-        hideErrorMessage(errorLabel,textField);
-        
+        hideErrorMessage(errorLabel,textField); 
+    }
+    
+    private void manageCorrect(Text errorText,TextField textField, BooleanProperty boolProp ){
+        boolProp.setValue(Boolean.TRUE);
+        hideErrorMessage(errorText,textField);
     }
     /**
      * Changes to red the background of the edit and
@@ -118,6 +127,12 @@ public class FXMLSignUpController implements Initializable {
     private void showErrorMessage(Label errorLabel,TextField textField)
     {
         errorLabel.visibleProperty().set(true);
+        textField.styleProperty().setValue("-fx-background-color: #FCE5E0");    
+    }
+    
+    private void showErrorMessage(Text errorText,TextField textField)
+    {
+        errorText.visibleProperty().set(true);
         textField.styleProperty().setValue("-fx-background-color: #FCE5E0");    
     }
     /**
@@ -132,7 +147,11 @@ public class FXMLSignUpController implements Initializable {
         textField.styleProperty().setValue("");
     }
 
-
+    private void hideErrorMessage(Text errorText,TextField textField)
+    {
+        errorText.visibleProperty().set(false);
+        textField.styleProperty().setValue("");
+    }
     
 
     
@@ -198,17 +217,16 @@ public class FXMLSignUpController implements Initializable {
                     "valid if it is between 6 and 15 characters long and " +
                     "contains uppercase or lowercase letters or the " +
                     "hyphens '-' and '_' .");
-            username.requestFocus();
+            manageError(usernameErrorText, username, validUsername);
         }
         else if(nav.exitsNickName(username.textProperty().getValueSafe()))
         {
             usernameErrorText.textProperty().setValue("Username already exists");
-            username.requestFocus();
-        }
+            manageError(usernameErrorText, username, validUsername);        }
         else
         {
             usernameErrorText.textProperty().setValue("");
-            validUsername.setValue(Boolean.TRUE);
+            manageCorrect(usernameErrorText, username, validUsername);
         }
             
     }

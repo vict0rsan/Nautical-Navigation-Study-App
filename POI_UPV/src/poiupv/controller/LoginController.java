@@ -7,6 +7,7 @@ package poiupv.controller;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
+import javafx.beans.binding.*;
 import javafx.beans.property.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,6 +67,9 @@ public class LoginController implements Initializable {
                 validpass.setValue(Boolean.TRUE);
             }
         });
+        
+        BooleanBinding validFields = Bindings.and(validEmail, validpass);
+        bAccept.disableProperty().bind(Bindings.not(validFields));
     }    
 
     @FXML
