@@ -38,7 +38,7 @@ public class WelcomeController {
             //give controll to the modal for deleting/adding/modify the data 
             //we see in the listView
 
-       Scene scene = new Scene (root);
+        Scene scene = new Scene (root);
 
         Stage stage = new Stage();
         stage.setScene(scene);

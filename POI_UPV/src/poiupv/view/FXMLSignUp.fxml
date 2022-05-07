@@ -106,9 +106,9 @@
                         <Insets left="25.0" />
                      </padding>
                   </VBox>
-                  <Text fx:id="usernameErrorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <Text fx:id="usernameErrorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" translateY="5.0" wrappingWidth="349.048828125">
                      <HBox.margin>
-                        <Insets left="10.0" top="30.0" />
+                        <Insets left="10.0" />
                      </HBox.margin>
                   </Text>
                </children>
@@ -163,10 +163,16 @@
                         <Insets left="25.0" top="15.0" />
                      </HBox.margin>
                   </VBox>
-                  <Label fx:id="lIncorrectPass" prefHeight="55.0" prefWidth="342.0" text="Incorrect. It must be a combination of 8 to 15 numbers or letters, without blank spaces" textFill="RED" visible="false" wrapText="true">
+                  <Button fx:id="passHelp" mnemonicParsing="false" onAction="#handleBPassHelpPressed" text="?">
+                     <HBox.margin>
+                        <Insets left="20.0" top="35.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Label fx:id="lIncorrectPass" prefHeight="40.0" prefWidth="304.0" textFill="RED" wrapText="true">
                      <HBox.margin>
                         <Insets left="25.0" top="20.0" />
-                     </HBox.margin></Label>
+                     </HBox.margin>
+                  </Label>
                </children>
             </HBox>
             <HBox prefHeight="70.0" prefWidth="200.0">
@@ -212,7 +218,7 @@
                         <Insets left="25.0" top="20.0" />
                      </HBox.margin>
                   </VBox>
-                  <Label fx:id="lPassdontmatch1" prefHeight="62.0" prefWidth="342.0" text="Users must be between 12 and 100 years old" textFill="RED" visible="false" wrapText="true">
+                  <Label fx:id="lBirthdate" prefHeight="62.0" prefWidth="342.0" text="Users must be between 12 and 100 years old" textFill="RED" visible="false" wrapText="true">
                      <HBox.margin>
                         <Insets left="25.0" top="40.0" />
                      </HBox.margin>

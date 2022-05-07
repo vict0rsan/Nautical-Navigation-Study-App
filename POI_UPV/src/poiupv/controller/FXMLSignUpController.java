@@ -7,8 +7,8 @@ package poiupv.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.ResourceBundle;
+import java.time.*;
+import java.util.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -18,11 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -46,8 +43,7 @@ public class FXMLSignUpController implements Initializable {
     private BooleanProperty validEmail;
     private BooleanProperty equalPasswords;  
     private BooleanProperty validUsername;
-
-    //private BooleanBinding validFields;
+    private BooleanProperty validBirthdate;
     
     //When to strings are equal, compareTo returns zero
     private final int EQUALS = 0;  
@@ -75,11 +71,13 @@ public class FXMLSignUpController implements Initializable {
     @FXML
     private DatePicker birthdate;
     @FXML
-    private Label lPassdontmatch1;
-    @FXML
     private ImageView avatar;
     @FXML
     private Button selectAvatarButton;
+    @FXML
+    private Label lBirthdate;
+	@FXML
+	private Button passHelp;
     
    
     
@@ -118,6 +116,11 @@ public class FXMLSignUpController implements Initializable {
         boolProp.setValue(Boolean.TRUE);
         hideErrorMessage(errorText,textField);
     }
+    
+    private void manageCorrect(Label errorLabel,DatePicker datePicker, BooleanProperty boolProp ){
+        boolProp.setValue(Boolean.TRUE);
+        hideErrorMessage(errorLabel,datePicker); 
+    }
     /**
      * Changes to red the background of the edit and
      * makes the error label visible
@@ -134,6 +137,12 @@ public class FXMLSignUpController implements Initializable {
     {
         errorText.visibleProperty().set(true);
         textField.styleProperty().setValue("-fx-background-color: #FCE5E0");    
+    }
+    
+    private void showErrorMessage(Label errorLabel,DatePicker datepicker)
+    {
+        errorLabel.visibleProperty().set(true);
+        datepicker.styleProperty().setValue("-fx-background-color: #FCE5E0");    
     }
     /**
      * Changes the background of the edit to the default value
@@ -153,7 +162,11 @@ public class FXMLSignUpController implements Initializable {
         textField.styleProperty().setValue("");
     }
     
-
+    private void hideErrorMessage(Label errorLabel,DatePicker datePicker)
+    {
+        errorLabel.visibleProperty().set(false);
+        datePicker.styleProperty().setValue("");
+    }
     
     //=========================================================
     // you must initialize here all related with the object 
@@ -167,17 +180,19 @@ public class FXMLSignUpController implements Initializable {
         validPassword = new SimpleBooleanProperty();   
         equalPasswords = new SimpleBooleanProperty();
         validUsername = new SimpleBooleanProperty();
+		validBirthdate = new SimpleBooleanProperty();
         
         validPassword.setValue(Boolean.FALSE);
         validEmail.setValue(Boolean.FALSE);
         equalPasswords.setValue(Boolean.FALSE);
         validUsername.setValue(Boolean.FALSE);
+		validBirthdate.setValue(Boolean.FALSE);
         
        
         email.focusedProperty().addListener((observable, oldValue, newValue)->{
-        if(!newValue){ //focus lost.
-        checkEditEmail(); }
-        });
+	    if(!newValue){ //focus lost.
+		checkEditEmail(); }
+            });
         
         pass.focusedProperty().addListener((observable, oldValue, newValue)->{
             if(!newValue) 
@@ -197,6 +212,13 @@ public class FXMLSignUpController implements Initializable {
             if(!newValue)
             {
                 checkEqualPass();
+            }
+        });
+	
+		birthdate.focusedProperty().addListener((observable, oldValue, newValue)->{
+            if(!newValue)
+            {
+                checkBirthdate();
             }
         });
         
@@ -221,7 +243,7 @@ public class FXMLSignUpController implements Initializable {
         }
         else if(nav.exitsNickName(username.textProperty().getValueSafe()))
         {
-            usernameErrorText.textProperty().setValue("Username already exists");
+            usernameErrorText.textProperty().setValue("Username already exists.");
             manageError(usernameErrorText, username, validUsername);        }
         else
         {
@@ -241,10 +263,12 @@ public class FXMLSignUpController implements Initializable {
     
     private void checkEditPass()
     {
-        if(!User.checkPassword(pass.textProperty().getValueSafe()))
-            manageError(lIncorrectPass, pass, validPassword);
-        else
+        if(!User.checkPassword(pass.textProperty().getValueSafe())) {
+		lIncorrectPass.setText("Incorrect password.");
+		manageError(lIncorrectPass, pass, validPassword);
+	} else {
             manageCorrect(lIncorrectPass, pass, validPassword);
+	}
     }
     
     private void checkEqualPass()
@@ -258,9 +282,20 @@ public class FXMLSignUpController implements Initializable {
         }
         else manageCorrect(lPassdontmatch, rpass, equalPasswords);
     }
+    
+    private void checkBirthdate() {
+	if (Period.between(birthdate.getValue(), LocalDate.now()).getYears() < 12 || 
+	    Period.between(birthdate.getValue(), LocalDate.now()).getYears() > 100) {
+	    showErrorMessage(lBirthdate, birthdate);
+	    validBirthdate.setValue(Boolean.FALSE);
+            birthdate.setValue(null);
+            birthdate.requestFocus();
+	}
+	else manageCorrect(lBirthdate, birthdate, validBirthdate);
+    }
 
     @FXML
-    private void handleBAcceptOnAction(ActionEvent event) 
+    private void handleBAcceptOnAction(ActionEvent event) throws Exception
     {
         try{nav.registerUser(username.textProperty().getValue(), email.textProperty().getValue(), pass.textProperty().getValue(), birthdate.getValue());}
         catch(Exception e){ System.out.println(e.getMessage());}
@@ -268,12 +303,40 @@ public class FXMLSignUpController implements Initializable {
         pass.textProperty().setValue("");
         rpass.textProperty().setValue("");
         username.textProperty().setValue("");
+		birthdate.setValue(null);
         
         
         validEmail.setValue(Boolean.FALSE);
         validPassword.setValue(Boolean.FALSE);
         equalPasswords.setValue(Boolean.FALSE);
         validUsername.setValue(Boolean.FALSE);
+		
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Registration confirmed");
+		alert.setHeaderText(null);
+		alert.setContentText("You have been succesfully registered!");
+		
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.isPresent() && result.get() == ButtonType.OK) {
+			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FunctionSelector.fxml"));
+
+			Pane root = (Pane) myLoader.load();
+
+				//Get the controller of the UI
+			LoginController detailsController = myLoader.<LoginController>getController();
+				//We pass the data to the cotroller. Passing the observableList we 
+				//give controll to the modal for deleting/adding/modify the data 
+				//we see in the listView
+
+			Scene scene = new Scene (root);
+
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Function selector");
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setResizable(false);
+			stage.showAndWait();
+		}		
     }
 
     @FXML
@@ -301,5 +364,20 @@ public class FXMLSignUpController implements Initializable {
         stage.showAndWait();
     }
 
-    
+    @FXML
+    private void handleBPassHelpPressed(ActionEvent event) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Password help");
+		alert.setHeaderText("A password is correct if:");
+		alert.setContentText(
+			"- it contains between 8 and 20 characters\n" + 
+			"- contains at least one upper case letter\n" +
+			"- contains at least one lower case letter\n" + 
+			"- contains at least one digit" +
+			"- contains a special character from the set: !@#$%&*&*()-+=\n" +
+			"- does not contain any blanks"
+		);
+		alert.initModality(Modality.WINDOW_MODAL);
+		alert.showAndWait();
+	}
 }
