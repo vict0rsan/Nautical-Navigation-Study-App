@@ -320,10 +320,10 @@ public class FXMLSignUpController implements Initializable {
 		if (result.isPresent() && result.get() == ButtonType.OK) {
 			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FunctionSelector.fxml"));
 
-			Pane root = (Pane) myLoader.load();
+			SplitPane root = (SplitPane) myLoader.load();
 
 				//Get the controller of the UI
-			LoginController detailsController = myLoader.<LoginController>getController();
+			FunctionSelectorController detailsController = myLoader.<FunctionSelectorController>getController();
 				//We pass the data to the cotroller. Passing the observableList we 
 				//give controll to the modal for deleting/adding/modify the data 
 				//we see in the listView
@@ -370,12 +370,12 @@ public class FXMLSignUpController implements Initializable {
 		alert.setTitle("Password help");
 		alert.setHeaderText("A password is correct if:");
 		alert.setContentText(
-			"- it contains between 8 and 20 characters\n" + 
+			"- contains between 8 and 20 characters\n" + 
 			"- contains at least one upper case letter\n" +
 			"- contains at least one lower case letter\n" + 
 			"- contains at least one digit" +
 			"- contains a special character from the set: !@#$%&*&*()-+=\n" +
-			"- does not contain any blanks"
+			"- does not contain any blank spaces"
 		);
 		alert.initModality(Modality.WINDOW_MODAL);
 		alert.showAndWait();
