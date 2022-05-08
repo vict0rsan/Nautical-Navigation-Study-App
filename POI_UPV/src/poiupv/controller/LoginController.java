@@ -115,6 +115,7 @@ public class LoginController implements Initializable {
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FunctionSelector.fxml"));
 	SplitPane root = (SplitPane) myLoader.load();
 	FunctionSelectorController detailsController = myLoader.<FunctionSelectorController>getController();
+        detailsController.setUser(user);
         
 	Scene scene = new Scene (root);
 	Stage stage = new Stage();
