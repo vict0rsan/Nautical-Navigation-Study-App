@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -59,10 +60,6 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        bCancel.setOnAction( (event) -> {
-            bCancel.getScene().getWindow().hide();
-        });
-        
         validEmail = new SimpleBooleanProperty();
         validpass = new SimpleBooleanProperty();
         
@@ -125,7 +122,10 @@ public class LoginController implements Initializable {
 	stage.setTitle("MAIN MENU");
 	stage.initModality(Modality.APPLICATION_MODAL);
 	stage.setResizable(false);
-	stage.showAndWait();
+	stage.show();
+        Node source = (Node) event.getSource();
+        Stage oldStage = (Stage) source.getScene().getWindow();
+	oldStage.close();
     }
     
     private void clearFields(){
@@ -134,6 +134,28 @@ public class LoginController implements Initializable {
         validEmail.setValue(Boolean.FALSE);
         validpass.setValue(Boolean.FALSE);
         username.requestFocus();
+    }
+
+    @FXML
+    private void handleButtonCancelOnAction(ActionEvent event) throws IOException
+    {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/Welcome.fxml"));
+
+        Pane root = (Pane) myLoader.load();
+        
+        WelcomeController welcomeController = myLoader.<WelcomeController>getController();
+
+        Scene scene = new Scene (root);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Welcome");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.show();
+        Node source = (Node) event.getSource();
+        Stage oldStage = (Stage) source.getScene().getWindow();
+	oldStage.close();
     }
     
 }

@@ -178,13 +178,13 @@ public class FXMLSignUpController implements Initializable {
         validPassword = new SimpleBooleanProperty();   
         equalPasswords = new SimpleBooleanProperty();
         validUsername = new SimpleBooleanProperty();
-		validBirthdate = new SimpleBooleanProperty();
+	validBirthdate = new SimpleBooleanProperty();
         
         validPassword.setValue(Boolean.FALSE);
         validEmail.setValue(Boolean.FALSE);
         equalPasswords.setValue(Boolean.FALSE);
         validUsername.setValue(Boolean.FALSE);
-		validBirthdate.setValue(Boolean.FALSE);
+	validBirthdate.setValue(Boolean.FALSE);
         
        
         email.focusedProperty().addListener((observable, oldValue, newValue)->{
@@ -224,9 +224,6 @@ public class FXMLSignUpController implements Initializable {
                  .and(equalPasswords).and(validUsername);
         
         bAccept.disableProperty().bind(Bindings.not(validFields));
-        bCancel.setOnAction( (event) -> {
-            bCancel.getScene().getWindow().hide();
-        });
     } ;
     
     private void checkUsername()
@@ -333,7 +330,7 @@ public class FXMLSignUpController implements Initializable {
 			stage.setTitle("Function selector");
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setResizable(false);
-			stage.showAndWait();
+			stage.show();
 			
 			Node source = (Node) event.getSource();
 			Stage oldStage = (Stage) source.getScene().getWindow();
@@ -348,12 +345,8 @@ public class FXMLSignUpController implements Initializable {
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/AvatarSelector.fxml"));
 
         Pane root = (Pane) myLoader.load();
-
-            //Get the controller of the UI
+        
         AvatarSelectorController avatarController = myLoader.<AvatarSelectorController>getController();
-            //We pass the data to the cotroller. Passing the observableList we 
-            //give controll to the modal for deleting/adding/modify the data 
-            //we see in the listView
 
         Scene scene = new Scene (root);
         avatarController.initData(avatar);
@@ -382,4 +375,26 @@ public class FXMLSignUpController implements Initializable {
 		alert.initModality(Modality.WINDOW_MODAL);
 		alert.showAndWait();
 	}
+
+    @FXML
+    private void handleButtonCancelOnAction(ActionEvent event) throws IOException
+    {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/Welcome.fxml"));
+
+        Pane root = (Pane) myLoader.load();
+        
+        WelcomeController welcomeController = myLoader.<WelcomeController>getController();
+
+        Scene scene = new Scene (root);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Welcome");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.show();
+        Node source = (Node) event.getSource();
+        Stage oldStage = (Stage) source.getScene().getWindow();
+	oldStage.close();
+    }
 }

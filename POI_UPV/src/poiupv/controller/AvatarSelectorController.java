@@ -92,12 +92,11 @@ public class AvatarSelectorController implements Initializable {
         ((Node) event.getSource()).getScene().getWindow().hide();
     }
     
-    protected void setAndDisplayImage(String n)
+    private void setAndDisplayImage(String n)
     {
         String name = String.format("resources/avatars/avatar%s.png", n);
         Image myImage = new Image(name);
         avatar.setImage(myImage);
-        
     }
     
 }
