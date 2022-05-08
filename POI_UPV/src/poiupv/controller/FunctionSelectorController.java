@@ -6,7 +6,9 @@ package poiupv.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -14,6 +16,9 @@ import javafx.fxml.Initializable;
  * @author nash1
  */
 public class FunctionSelectorController implements Initializable {
+
+    @FXML
+    private Button logoutButton;
 
 	/**
 	 * Initializes the controller class.
