@@ -17,15 +17,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.*;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.stage.*;
 import model.Navegacion;
 import model.User;
 
@@ -278,7 +276,7 @@ public class FXMLSignUpController implements Initializable {
             showErrorMessage(lPassdontmatch, rpass);
             equalPasswords.setValue(Boolean.FALSE);
             rpass.textProperty().setValue("");
-            rpass.requestFocus();
+            pass.requestFocus();
         }
         else manageCorrect(lPassdontmatch, rpass, equalPasswords);
     }
@@ -318,12 +316,12 @@ public class FXMLSignUpController implements Initializable {
 		
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.isPresent() && result.get() == ButtonType.OK) {
-			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FunctionSelector.fxml"));
+			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLLogin.fxml"));
 
-			SplitPane root = (SplitPane) myLoader.load();
+			BorderPane root = (BorderPane) myLoader.load();
 
 				//Get the controller of the UI
-			FunctionSelectorController detailsController = myLoader.<FunctionSelectorController>getController();
+			LoginController detailsController = myLoader.<LoginController>getController();
 				//We pass the data to the cotroller. Passing the observableList we 
 				//give controll to the modal for deleting/adding/modify the data 
 				//we see in the listView
@@ -336,6 +334,10 @@ public class FXMLSignUpController implements Initializable {
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setResizable(false);
 			stage.showAndWait();
+			
+			Node source = (Node) event.getSource();
+			Stage oldStage = (Stage) source.getScene().getWindow();
+			oldStage.close();
 		}		
     }
 
