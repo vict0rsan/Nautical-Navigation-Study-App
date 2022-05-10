@@ -1,5 +1,6 @@
 package poiupv.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashSet;
@@ -29,6 +30,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Navegacion;
@@ -80,6 +82,8 @@ public class ModifyProfileController implements Initializable
     
     //When to strings are equal, compareTo returns zero
     private final int EQUALS = 0; 
+    @FXML
+    private Button selectAvatarFromDeviceButton;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -303,6 +307,28 @@ public class ModifyProfileController implements Initializable
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.showAndWait();
+    }
+
+    @FXML
+    private void handleSelectAvatarFromDeviceButton(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Buscar Imagen");
+
+        // Agregar filtros para facilitar la busqueda
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+
+        // Obtener la imagen seleccionada
+        File imgFile = fileChooser.showOpenDialog(null);
+
+        // Mostar la imagen
+        if (imgFile != null) {
+            Image image = new Image("file:" + imgFile.getAbsolutePath());
+            avatar.setImage(image);
+        }
     }
         
         

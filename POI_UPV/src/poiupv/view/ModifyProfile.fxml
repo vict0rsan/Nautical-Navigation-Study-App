@@ -83,20 +83,30 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="30.0" prefHeight="70.0" prefWidth="600.0">
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="30.0" prefHeight="70.0" prefWidth="600.0" spacing="30.0">
                <children>
-                  <VBox prefHeight="46.0" prefWidth="232.0">
+                  <VBox prefHeight="46.0" prefWidth="232.0" spacing="15.0">
                      <children>
-                        <Label text="Username:">
+                        <Label alignment="BOTTOM_LEFT" text="Username:">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="username" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="194.0">
+                        <TextField fx:id="username" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="205.0">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
                         </TextField>
+                        <VBox prefHeight="62.0" prefWidth="194.0" spacing="5.0">
+                           <children>
+                              <Label text="Birthdate:">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="birthdate" />
+                           </children>
+                        </VBox>
                      </children>
                      <HBox.margin>
                         <Insets top="10.0" />
@@ -105,11 +115,38 @@
                         <Insets left="25.0" />
                      </padding>
                   </VBox>
-                  <Text fx:id="usernameErrorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" translateY="5.0" wrappingWidth="349.048828125">
+                  <VBox prefHeight="62.0" prefWidth="90.0">
+                     <children>
+                        <Label text="Avatar:">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <ImageView fx:id="avatar" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/avatars/avatardefault.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="25.0" top="20.0" />
                      </HBox.margin>
-                  </Text>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="selectAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectAvatarButton" prefHeight="26.0" prefWidth="100.0" text="Selelect default" />
+                        <Button fx:id="selectAvatarFromDeviceButton" mnemonicParsing="false" onAction="#handleSelectAvatarFromDeviceButton" prefHeight="35.0" prefWidth="100.0" text="Upload from device" />
+                     </children>
+                     <HBox.margin>
+                        <Insets top="40.0" />
+                     </HBox.margin>
+                  </VBox>
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
@@ -200,19 +237,6 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="241.0" prefHeight="70.0" prefWidth="200.0">
                <children>
-                  <VBox prefHeight="62.0" prefWidth="194.0">
-                     <children>
-                        <Label text="Birthdate:">
-                           <font>
-                              <Font name="Arial Rounded MT Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="birthdate" />
-                     </children>
-                     <HBox.margin>
-                        <Insets left="25.0" top="20.0" />
-                     </HBox.margin>
-                  </VBox>
                   <Label fx:id="incorrectBirthday" prefHeight="62.0" prefWidth="342.0" text="Users must be between 12 and 100 years old" textFill="RED" visible="false" wrapText="true">
                      <HBox.margin>
                         <Insets left="25.0" top="40.0" />
@@ -220,38 +244,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="312.0" prefHeight="70.0" prefWidth="200.0">
-               <children>
-                  <VBox prefHeight="62.0" prefWidth="90.0">
-                     <children>
-                        <Label text="Avatar:">
-                           <font>
-                              <Font name="Arial Rounded MT Bold" size="12.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                        <ImageView fx:id="avatar" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../resources/avatars/avatardefault.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin>
-                        </ImageView>
-                     </children>
-                     <HBox.margin>
-                        <Insets left="25.0" top="20.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <Button fx:id="selectAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectAvatarButton" text="Select avatar">
-                     <HBox.margin>
-                        <Insets left="20.0" top="30.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="312.0" prefHeight="70.0" prefWidth="200.0" />
          </children>
          <padding>
             <Insets top="20.0" />
