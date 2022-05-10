@@ -15,7 +15,7 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="398.0" prefWidth="251.0" spacing="10.0">
                <children>
-                  <Text fx:id="welcomeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back manolo" textAlignment="CENTER" wrappingWidth="185.81954193115234">
+                  <Text fx:id="welcomeText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="185.81954193115234">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -25,7 +25,7 @@
                   </Text>
                   <Label alignment="CENTER" prefHeight="50.0" prefWidth="63.0" text="Not you?" />
                   <Label text="Maybe you want to" />
-                  <Button fx:id="logoutButton" mnemonicParsing="false" text="Logout" />
+                  <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleOnActionLogoutButton" text="Logout" />
                </children>
                <opaqueInsets>
                   <Insets top="20.0" />

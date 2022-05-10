@@ -75,8 +75,8 @@ public class FXMLSignUpController implements Initializable {
     private Button selectAvatarButton;
     @FXML
     private Label lBirthdate;
-	@FXML
-	private Button passHelp;
+    @FXML
+    private Button passHelp;
     @FXML
     private Button selectAvatarFromFIleButton;
     
@@ -295,13 +295,14 @@ public class FXMLSignUpController implements Initializable {
     @FXML
     private void handleBAcceptOnAction(ActionEvent event) throws Exception
     {
-        try{nav.registerUser(username.textProperty().getValue(), email.textProperty().getValue(), pass.textProperty().getValue(), birthdate.getValue());}
+        try{nav.registerUser(username.textProperty().getValue(), email.textProperty().getValue(), pass.textProperty().getValue(), avatar.getImage(), birthdate.getValue());}
         catch(Exception e){ System.out.println(e.getMessage());}
         email.textProperty().setValue("");
         pass.textProperty().setValue("");
         rpass.textProperty().setValue("");
         username.textProperty().setValue("");
-		birthdate.setValue(null);
+        avatar.setImage(new Image("resources/avatars/avatardefault.png"));
+        birthdate.setValue(null);
         
         
         validEmail.setValue(Boolean.FALSE);
@@ -309,36 +310,36 @@ public class FXMLSignUpController implements Initializable {
         equalPasswords.setValue(Boolean.FALSE);
         validUsername.setValue(Boolean.FALSE);
 		
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Registration confirmed");
-		alert.setHeaderText(null);
-		alert.setContentText("You have been succesfully registered!");
-		
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.isPresent() && result.get() == ButtonType.OK) {
-			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLLogin.fxml"));
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Registration confirmed");
+        alert.setHeaderText(null);
+        alert.setContentText("You have been succesfully registered!");
 
-			BorderPane root = (BorderPane) myLoader.load();
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLLogin.fxml"));
 
-				//Get the controller of the UI
-			LoginController detailsController = myLoader.<LoginController>getController();
-				//We pass the data to the cotroller. Passing the observableList we 
-				//give controll to the modal for deleting/adding/modify the data 
-				//we see in the listView
+            BorderPane root = (BorderPane) myLoader.load();
 
-			Scene scene = new Scene (root);
+                    //Get the controller of the UI
+            LoginController detailsController = myLoader.<LoginController>getController();
+                    //We pass the data to the cotroller. Passing the observableList we 
+                    //give controll to the modal for deleting/adding/modify the data 
+                    //we see in the listView
 
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			stage.setTitle("Function selector");
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setResizable(false);
-			stage.show();
-			
-			Node source = (Node) event.getSource();
-			Stage oldStage = (Stage) source.getScene().getWindow();
-			oldStage.close();
-		}		
+            Scene scene = new Scene (root);
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Login");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.show();
+
+            Node source = (Node) event.getSource();
+            Stage oldStage = (Stage) source.getScene().getWindow();
+            oldStage.close();
+        }		
     }
 
     @FXML
