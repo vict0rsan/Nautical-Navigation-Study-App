@@ -5,6 +5,7 @@
  */
 package poiupv.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
@@ -76,6 +77,8 @@ public class FXMLSignUpController implements Initializable {
     private Label lBirthdate;
 	@FXML
 	private Button passHelp;
+    @FXML
+    private Button selectAvatarFromFIleButton;
     
    
     
@@ -396,5 +399,28 @@ public class FXMLSignUpController implements Initializable {
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
 	oldStage.close();
+    }
+
+    @FXML
+    private void handleSelectAvatarFromFileButton(ActionEvent event) 
+    {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Buscar Imagen");
+
+        // Agregar filtros para facilitar la busqueda
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+
+        // Obtener la imagen seleccionada
+        File imgFile = fileChooser.showOpenDialog(null);
+
+        // Mostar la imagen
+        if (imgFile != null) {
+            Image image = new Image("file:" + imgFile.getAbsolutePath());
+            avatar.setImage(image);
+        }
     }
 }
