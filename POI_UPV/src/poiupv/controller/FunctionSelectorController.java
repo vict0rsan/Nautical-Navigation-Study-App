@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
 
@@ -23,27 +24,26 @@ public class FunctionSelectorController implements Initializable {
 
     @FXML
     private Button logoutButton;
-    @FXML
-    private Label welcomeMessage;
     
     private User currentUser;
+    @FXML
+    private Text welcomeText;
 
 	/**
 	 * Initializes the controller class.
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		// TODO
-                if(currentUser != null)
-                    welcomeMessage.setText("Welcome back\n" + currentUser.getNickName());
-                
+            // TODO
 	}
         
         
         
         public void setUser(User user){
-            this.currentUser = user;
-        }
+            currentUser = user;
+            if(currentUser != null)
+                welcomeText.textProperty().setValue("Welcome back\n" + currentUser.getNickName());            
+        }   
         
       
 }

@@ -7,18 +7,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.4247994652406416" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.FunctionSelectorController">
+<SplitPane dividerPositions="0.4247994652406416" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.FunctionSelectorController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="398.0" prefWidth="251.0" spacing="10.0">
                <children>
-                  <Label fx:id="welcomeMessage" prefHeight="148.0" prefWidth="218.0" textAlignment="CENTER" wrapText="true">
+                  <Text fx:id="welcomeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back manolo" textAlignment="CENTER" wrappingWidth="185.81954193115234">
                      <font>
-                        <Font size="28.0" />
+                        <Font size="25.0" />
                      </font>
-                  </Label>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Text>
                   <Label alignment="CENTER" prefHeight="50.0" prefWidth="63.0" text="Not you?" />
                   <Label text="Maybe you want to" />
                   <Button fx:id="logoutButton" mnemonicParsing="false" text="Logout" />
