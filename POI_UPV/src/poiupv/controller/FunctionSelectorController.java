@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -54,23 +55,24 @@ public class FunctionSelectorController implements Initializable {
 
     @FXML
     private void handleOnActionLogoutButton(ActionEvent event) throws IOException {
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FMXLLogin.fxml"));
-	BorderPane root = (BorderPane) myLoader.load();
-	//LoginController loginController = myLoader.<LoginController>getController();
+        this.currentUser = null;
         
-	Scene scene = new Scene (root);
-	Stage stage = new Stage();
-	stage.setScene(scene);
-	stage.setTitle("Login");
-	stage.initModality(Modality.APPLICATION_MODAL);
-	stage.setResizable(false);
-	stage.show();
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/Welcome.fxml"));
+        Pane root = (Pane) myLoader.load();
+        WelcomeController detailsController = myLoader.<WelcomeController>getController();
+        
+        Scene scene = new Scene (root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Login");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.show();
+        
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
 	oldStage.close();
     }
-        
-      
 }
 	
 
