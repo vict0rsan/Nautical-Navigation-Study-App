@@ -89,9 +89,9 @@ public class LoginController implements Initializable {
         Boolean existsNickName = database.exitsNickName(currentNickname);
         
         if(!existsNickName){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("LOGIN ERROR: ");
-            alert.setHeaderText("LOGIN FAILED BECAUSE: ");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("LOGIN ERROR");
+            alert.setHeaderText("LOGIN FAILED");
             alert.setContentText("User " + currentNickname + " does not exist");
             alert.initModality(Modality.WINDOW_MODAL);
             alert.showAndWait();
@@ -102,9 +102,9 @@ public class LoginController implements Initializable {
         User user = database.loginUser(currentNickname, password.getText());
         
         if(user == null){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("LOGIN ERROR: ");
-            alert.setHeaderText("LOGIN FAILED BECAUSE: ");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("LOGIN ERROR");
+            alert.setHeaderText("LOGIN FAILED");
             alert.setContentText("User and password do not match");
             alert.initModality(Modality.WINDOW_MODAL);
             alert.showAndWait();
