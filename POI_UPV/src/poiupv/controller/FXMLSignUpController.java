@@ -35,17 +35,6 @@ import model.User;
  */
 public class FXMLSignUpController implements Initializable {
 
-
- 
-    //properties to control valid fieds values. 
-    private BooleanProperty validPassword;
-    private BooleanProperty validEmail;
-    private BooleanProperty equalPasswords;  
-    private BooleanProperty validUsername;
-    private BooleanProperty validBirthdate;
-    
-    //When to strings are equal, compareTo returns zero
-    private final int EQUALS = 0;  
     @FXML
     private TextField email;
     @FXML
@@ -80,8 +69,15 @@ public class FXMLSignUpController implements Initializable {
     @FXML
     private Button selectAvatarFromFIleButton;
     
-   
+   //properties to control valid fieds values. 
+    private BooleanProperty validPassword;
+    private BooleanProperty validEmail;
+    private BooleanProperty equalPasswords;  
+    private BooleanProperty validUsername;
+    private BooleanProperty validBirthdate;
     
+    //When to strings are equal, compareTo returns zero
+    private final int EQUALS = 0; 
 
     /**
      * Updates the boolProp to false.Changes to red the background of the edit. 

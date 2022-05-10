@@ -73,6 +73,26 @@ public class FunctionSelectorController implements Initializable {
         Stage oldStage = (Stage) source.getScene().getWindow();
 	oldStage.close();
     }
+
+    @FXML
+    private void handleModifyProfileButton(ActionEvent event) throws IOException {
+        
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ModifyProfile.fxml"));
+	BorderPane root = (BorderPane) myLoader.load();
+	ModifyProfileController modifyProfileController = myLoader.<ModifyProfileController>getController();
+        modifyProfileController.setUser(currentUser);
+        
+	Scene scene = new Scene (root);
+	Stage stage = new Stage();
+	stage.setScene(scene);
+	stage.setTitle("MAIN MENU");
+	stage.initModality(Modality.APPLICATION_MODAL);
+	stage.setResizable(false);
+	stage.show();
+        Node source = (Node) event.getSource();
+        Stage oldStage = (Stage) source.getScene().getWindow();
+	oldStage.close();
+    }
 }
 	
 

@@ -138,7 +138,7 @@
                         <Insets left="25.0" />
                      </padding>
                   </VBox>
-                  <Label fx:id="lIncorrectEmail" text="Incorrect Email" textFill="RED" visible="false">
+                  <Label fx:id="incorrectEmail" text="Incorrect Email" textFill="RED" visible="false">
                      <HBox.margin>
                         <Insets left="20.0" top="35.0" />
                      </HBox.margin></Label>
@@ -148,12 +148,12 @@
                <children>
                   <VBox prefHeight="62.0" prefWidth="194.0">
                      <children>
-                        <Label text="New password:">
+                        <Label text="Change password:">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font>
                         </Label>
-                        <PasswordField fx:id="pass">
+                        <PasswordField fx:id="password">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
@@ -163,12 +163,12 @@
                         <Insets left="25.0" top="15.0" />
                      </HBox.margin>
                   </VBox>
-                  <Button fx:id="passHelp" mnemonicParsing="false" onAction="#handleBPassHelpPressed" text="?">
+                  <Button fx:id="passwordHelpButton" mnemonicParsing="false" onAction="#handleBPassHelpPressed" text="?">
                      <HBox.margin>
                         <Insets left="20.0" top="35.0" />
                      </HBox.margin>
                   </Button>
-                  <Label fx:id="lIncorrectPass" prefHeight="40.0" prefWidth="304.0" textFill="RED" wrapText="true">
+                  <Label fx:id="incorrectPassword" prefHeight="40.0" prefWidth="304.0" textFill="RED" wrapText="true">
                      <HBox.margin>
                         <Insets left="25.0" top="20.0" />
                      </HBox.margin>
@@ -183,7 +183,7 @@
                            <font>
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font></Label>
-                        <PasswordField fx:id="rpass">
+                        <PasswordField fx:id="passwordConfirmation">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
@@ -193,7 +193,7 @@
                         <Insets left="25.0" top="20.0" />
                      </HBox.margin>
                   </VBox>
-                  <Label fx:id="lPassdontmatch" prefHeight="62.0" prefWidth="342.0" text="Passwords don't match" textFill="RED" visible="false" wrapText="true">
+                  <Label fx:id="incorrectPasswordConfirmation" prefHeight="62.0" prefWidth="342.0" text="Passwords don't match" textFill="RED" visible="false" wrapText="true">
                      <HBox.margin>
                         <Insets left="25.0" top="40.0" />
                      </HBox.margin></Label>
@@ -218,7 +218,7 @@
                         <Insets left="25.0" top="20.0" />
                      </HBox.margin>
                   </VBox>
-                  <Label fx:id="lBirthdate" prefHeight="62.0" prefWidth="342.0" text="Users must be between 12 and 100 years old" textFill="RED" visible="false" wrapText="true">
+                  <Label fx:id="incorrectBirthday" prefHeight="62.0" prefWidth="342.0" text="Users must be between 12 and 100 years old" textFill="RED" visible="false" wrapText="true">
                      <HBox.margin>
                         <Insets left="25.0" top="40.0" />
                      </HBox.margin>

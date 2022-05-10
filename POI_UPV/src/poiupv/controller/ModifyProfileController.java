@@ -1,24 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package poiupv.controller;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Navegacion;
 import model.User;
 
@@ -26,87 +38,108 @@ import model.User;
  *
  * @author VicLo
  */
-public class ModifyProfileController 
+public class ModifyProfileController implements Initializable
 {
-    
-    private BooleanProperty validPassword;
-    private BooleanProperty validEmail;
-    private BooleanProperty equalPasswords; 
-
-    private Navegacion nav;
     @FXML
     private Button bAccept;
     @FXML
     private Button bCancel;
     @FXML
-    private TextField username;
-    @FXML
     private Text usernameErrorText;
     @FXML
     private TextField email;
     @FXML
-    private Label lIncorrectEmail;
+    private Label incorrectEmail;
     @FXML
-    private PasswordField pass;
+    private PasswordField password;
     @FXML
-    private Button passHelp;
+    private Button passwordHelpButton;
     @FXML
-    private Label lIncorrectPass;
+    private Label incorrectPassword;
     @FXML
-    private PasswordField rpass;
+    private PasswordField passwordConfirmation;
     @FXML
-    private Label lPassdontmatch;
+    private Label incorrectPasswordConfirmation;
     @FXML
     private DatePicker birthdate;
     @FXML
-    private Label lBirthdate;
+    private Label incorrectBirthday;
     @FXML
     private ImageView avatar;
     @FXML
     private Button selectAvatarButton;
-
+    @FXML
+    private TextField username;
     
-    public void initialize(URL url, ResourceBundle rb) 
-    {
-        try {nav = Navegacion.getSingletonNavegacion();} 
-        catch(Exception e){System.out.println(e.getMessage());}
-       
+    private User currentUser;
+    
+    //properties to control valid fieds values. 
+    private BooleanProperty validPassword;
+    private BooleanProperty validEmail;
+    private BooleanProperty equalPasswords;  
+    
+    //When to strings are equal, compareTo returns zero
+    private final int EQUALS = 0; 
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         validEmail = new SimpleBooleanProperty();
         validPassword = new SimpleBooleanProperty();   
         equalPasswords = new SimpleBooleanProperty();
         
+        validEmail.setValue(Boolean.TRUE);
         validPassword.setValue(Boolean.FALSE);
-        validEmail.setValue(Boolean.FALSE);
         equalPasswords.setValue(Boolean.FALSE);
-        
        
         email.focusedProperty().addListener((observable, oldValue, newValue)->{
-	    if(!newValue){ //focus lost.
-		checkEditEmail(); }
+	    if(!newValue) //focus lost.
+		checkEditEmail(); 
             });
         
-        pass.focusedProperty().addListener((observable, oldValue, newValue)->{
+        password.focusedProperty().addListener((observable, oldValue, newValue)->{
             if(!newValue) 
-            {
                 checkEditPass();
-            }
         });
-        
-        rpass.focusedProperty().addListener((observable, oldValue, newValue)->{
+      
+        passwordConfirmation.focusedProperty().addListener((observable, oldValue, newValue)->{
             if(!newValue)
-            {
                 checkEqualPass();
-            }
         });
-
-        
+ 
         BooleanBinding validFields = Bindings.and(validEmail, validPassword)
                  .and(equalPasswords);
         
         bAccept.disableProperty().bind(Bindings.not(validFields));
     }
     
-     private void manageError(Label errorLabel,TextField textField, BooleanProperty boolProp ){
+     private void checkEditEmail(){
+        if(!User.checkEmail(email.textProperty().getValueSafe())) 
+            manageError(incorrectEmail, email,validEmail );
+        else
+            manageCorrect(incorrectEmail, email,validEmail );
+    }
+    
+    private void checkEditPass(){
+        if(!User.checkPassword(password.textProperty().getValueSafe())) {
+		incorrectPassword.setText("Not a valid password");
+		manageError(incorrectPassword, password, validPassword);
+	} else {
+            manageCorrect(incorrectPassword, password, validPassword);
+	}
+    }
+    
+    private void checkEqualPass(){
+        if(password.textProperty().getValueSafe().compareTo(passwordConfirmation.textProperty().getValueSafe()) != EQUALS)
+        {
+            showErrorMessage(incorrectPasswordConfirmation, passwordConfirmation);
+            equalPasswords.setValue(Boolean.FALSE);
+            passwordConfirmation.textProperty().setValue("");
+            password.requestFocus();
+        }
+        else manageCorrect(incorrectPasswordConfirmation, passwordConfirmation, equalPasswords);
+    }
+    
+    private void manageError(Label errorLabel,TextField textField, BooleanProperty boolProp ){
         boolProp.setValue(Boolean.FALSE);
         showErrorMessage(errorLabel,textField);
         textField.requestFocus();
@@ -117,13 +150,7 @@ public class ModifyProfileController
         showErrorMessage(errorText,textField);
         textField.requestFocus();
     }
-    /**
-     * Updates the boolProp to true. Changes the background 
-     * of the edit to the default value. Makes the error label invisible. 
-     * @param errorLabel label added to alert the user
-     * @param textField edit text added to allow user to introduce the value
-     * @param boolProp property which stores if the value is correct or not
-     */
+
     private void manageCorrect(Label errorLabel,TextField textField, BooleanProperty boolProp ){
         boolProp.setValue(Boolean.TRUE);
         hideErrorMessage(errorLabel,textField); 
@@ -138,97 +165,144 @@ public class ModifyProfileController
         boolProp.setValue(Boolean.TRUE);
         hideErrorMessage(errorLabel,datePicker); 
     }
-    /**
-     * Changes to red the background of the edit and
-     * makes the error label visible
-     * @param errorLabel
-     * @param textField 
-     */
-    private void showErrorMessage(Label errorLabel,TextField textField)
-    {
+   
+    private void showErrorMessage(Label errorLabel,TextField textField){
         errorLabel.visibleProperty().set(true);
         textField.styleProperty().setValue("-fx-background-color: #FCE5E0");    
     }
     
-    private void showErrorMessage(Text errorText,TextField textField)
-    {
+    private void showErrorMessage(Text errorText,TextField textField){
         errorText.visibleProperty().set(true);
         textField.styleProperty().setValue("-fx-background-color: #FCE5E0");    
     }
     
-    private void showErrorMessage(Label errorLabel,DatePicker datepicker)
-    {
+    private void showErrorMessage(Label errorLabel,DatePicker datepicker){
         errorLabel.visibleProperty().set(true);
         datepicker.styleProperty().setValue("-fx-background-color: #FCE5E0");    
     }
-    /**
-     * Changes the background of the edit to the default value
-     * and makes the error label invisible.
-     * @param errorLabel
-     * @param textField 
-     */
-    private void hideErrorMessage(Label errorLabel,TextField textField)
-    {
+  
+    private void hideErrorMessage(Label errorLabel,TextField textField){
         errorLabel.visibleProperty().set(false);
         textField.styleProperty().setValue("");
     }
 
-    private void hideErrorMessage(Text errorText,TextField textField)
-    {
+    private void hideErrorMessage(Text errorText,TextField textField){
         errorText.visibleProperty().set(false);
         textField.styleProperty().setValue("");
     }
     
-    private void hideErrorMessage(Label errorLabel,DatePicker datePicker)
-    {
+    private void hideErrorMessage(Label errorLabel,DatePicker datePicker){
         errorLabel.visibleProperty().set(false);
         datePicker.styleProperty().setValue("");
     }
-    
-     private void checkEditEmail()
-    {
-        if(!User.checkEmail(email.textProperty().getValueSafe())) 
-            manageError(lIncorrectEmail, email,validEmail );
-        else
-            manageCorrect(lIncorrectEmail, email,validEmail );
-    }
-    
-    private void checkEditPass()
-    {
-        if(!User.checkPassword(pass.textProperty().getValueSafe())) {
-		lIncorrectPass.setText("Incorrect password.");
-		manageError(lIncorrectPass, pass, validPassword);
-	} else {
-            manageCorrect(lIncorrectPass, pass, validPassword);
-	}
-    }
-    
-    private void checkEqualPass()
-    {
-        if(pass.textProperty().getValueSafe().compareTo(rpass.textProperty().getValueSafe()) != 0)
-        {
-            showErrorMessage(lPassdontmatch, rpass);
-            equalPasswords.setValue(Boolean.FALSE);
-            rpass.textProperty().setValue("");
-            pass.requestFocus();
+
+    public void setUser(User user){
+        currentUser = user;
+        if(currentUser != null){
+            username.setDisable(true);
+            birthdate.setDisable(true);
+            
+            username.textProperty().setValue(currentUser.getNickName());
+            birthdate.setValue(currentUser.getBirthdate());
+            avatar.imageProperty().setValue(currentUser.getAvatar());
+            email.textProperty().setValue(currentUser.getEmail());
         }
-        else manageCorrect(lPassdontmatch, rpass, equalPasswords);
+    } 
+
+    @FXML
+    private void handleBAcceptOnAction(ActionEvent event) throws Exception {
+        
+        currentUser.setEmail(email.textProperty().getValue());
+        currentUser.setPassword(password.textProperty().getValue());
+        currentUser.setAvatar(avatar.getImage());
+        	
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("CHANGES DONE");
+        alert.setHeaderText(null);
+        alert.setContentText("YouR data has been succesfully updated!");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FunctionSelector.fxml"));
+
+            SplitPane root = (SplitPane) myLoader.load();
+
+                    //Get the controller of the UI
+            FunctionSelectorController functionSelector = myLoader.<FunctionSelectorController>getController();
+                    //We pass the data to the cotroller. Passing the observableList we 
+                    //give controll to the modal for deleting/adding/modify the data 
+                    //we see in the listView
+            functionSelector.setUser(currentUser);
+            Scene scene = new Scene (root);
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Function Selector");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.show();
+
+            Node source = (Node) event.getSource();
+            Stage oldStage = (Stage) source.getScene().getWindow();
+            oldStage.close();
+        }		
     }
 
     @FXML
-    private void handleBAcceptOnAction(ActionEvent event) {
-    }
+    private void handleButtonCancelOnAction(ActionEvent event) throws IOException{
+        
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FunctionSelector.fxml"));
 
-    @FXML
-    private void handleButtonCancelOnAction(ActionEvent event) {
+        SplitPane root = (SplitPane) myLoader.load();
+        
+        FunctionSelectorController functionSelector = myLoader.<FunctionSelectorController>getController();
+        functionSelector.setUser(currentUser);
+        
+
+        Scene scene = new Scene (root);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Function selector");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.show();
+        Node source = (Node) event.getSource();
+        Stage oldStage = (Stage) source.getScene().getWindow();
+	oldStage.close();
     }
 
     @FXML
     private void handleBPassHelpPressed(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Password help");
+		alert.setHeaderText("A password is correct if:");
+		alert.setContentText(
+			"- contains between 8 and 20 characters\n" + 
+			"- contains at least one upper case letter\n" +
+			"- contains at least one lower case letter\n" + 
+			"- contains at least one digit" +
+			"- contains a special character from the set: !@#$%&*&*()-+=\n" +
+			"- does not contain any blank spaces"
+		);
+		alert.initModality(Modality.WINDOW_MODAL);
+		alert.showAndWait();
     }
 
     @FXML
-    private void handleSelectAvatarButton(ActionEvent event) {
+    private void handleSelectAvatarButton(ActionEvent event) throws IOException {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/AvatarSelector.fxml"));
+        Pane root = (Pane) myLoader.load();
+        AvatarSelectorController avatarController = myLoader.<AvatarSelectorController>getController();
+
+        Scene scene = new Scene (root);
+        avatarController.initData(avatar);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Avatar Selector");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.showAndWait();
     }
         
         
