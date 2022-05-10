@@ -61,7 +61,7 @@ public class ModifyProfileController implements Initializable
     @FXML
     private Label incorrectPasswordConfirmation;
     @FXML
-    private DatePicker birthdate;
+    private TextField birthdate;
     @FXML
     private Label incorrectBirthday;
     @FXML
@@ -203,7 +203,7 @@ public class ModifyProfileController implements Initializable
             birthdate.setDisable(true);
             
             username.textProperty().setValue(currentUser.getNickName());
-            birthdate.setValue(currentUser.getBirthdate());
+            birthdate.textProperty().setValue(currentUser.getBirthdate().toString());
             avatar.imageProperty().setValue(currentUser.getAvatar());
             email.textProperty().setValue(currentUser.getEmail());
         }
