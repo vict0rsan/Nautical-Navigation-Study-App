@@ -223,7 +223,7 @@ public class ModifyProfileController implements Initializable
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("CHANGES DONE");
         alert.setHeaderText(null);
-        alert.setContentText("Your data has been succesfully updated!");
+        alert.setContentText("YouR data has been succesfully updated!");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -316,7 +316,10 @@ public class ModifyProfileController implements Initializable
 
         // Agregar filtros para facilitar la busqueda
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Images", "*.png", "*.jpg", "*.gif"));
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
 
         // Obtener la imagen seleccionada
         File imgFile = fileChooser.showOpenDialog(null);

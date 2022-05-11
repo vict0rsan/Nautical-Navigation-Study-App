@@ -406,7 +406,10 @@ public class FXMLSignUpController implements Initializable {
 
         // Agregar filtros para facilitar la busqueda
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Images", "*.png", "*.jpg", "*.gif"));
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
 
         // Obtener la imagen seleccionada
         File imgFile = fileChooser.showOpenDialog(null);
