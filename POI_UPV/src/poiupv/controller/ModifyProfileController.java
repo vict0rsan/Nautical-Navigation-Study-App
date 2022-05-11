@@ -223,7 +223,7 @@ public class ModifyProfileController implements Initializable
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("CHANGES DONE");
         alert.setHeaderText(null);
-        alert.setContentText("Your data has been succesfully updated!");
+        alert.setContentText("YouR data has been succesfully updated!");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
