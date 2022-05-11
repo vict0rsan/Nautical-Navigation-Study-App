@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <SplitPane dividerPositions="0.4247994652406416" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.FunctionSelectorController">
   <items>
@@ -15,17 +14,14 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="398.0" prefWidth="251.0" spacing="10.0">
                <children>
-                  <Text fx:id="welcomeText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="185.81954193115234">
+                  <Label prefHeight="148.0" prefWidth="218.0" text="Welcome back USERNAME" textAlignment="CENTER" wrapText="true">
                      <font>
-                        <Font size="25.0" />
+                        <Font size="28.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </Text>
+                  </Label>
                   <Label alignment="CENTER" prefHeight="50.0" prefWidth="63.0" text="Not you?" />
                   <Label text="Maybe you want to" />
-                  <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleOnActionLogoutButton" text="Logout" />
+                  <Button fx:id="logoutButton" mnemonicParsing="false" text="Logout" />
                </children>
                <opaqueInsets>
                   <Insets top="20.0" />
@@ -59,7 +55,7 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#handleModifyProfileButton" text="ACCOUNT SETTINGS">
+                  <Button mnemonicParsing="false" text="ACCOUNT SETTINGS">
                      <font>
                         <Font size="20.0" />
                      </font>
