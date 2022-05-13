@@ -153,17 +153,6 @@ public class FXMLDocumentController implements Initializable {
         contentGroup.getChildren().add(zoomGroup);
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
-
-		/*
-		AnchorPane.setTopAnchor(map_scrollpane, 0.0);
-		AnchorPane.setLeftAnchor(map_scrollpane, 0.0);
-		AnchorPane.setRightAnchor(map_scrollpane, 0.0);
-		AnchorPane.setBottomAnchor(map_scrollpane, 0.0);
-		
-		AnchorPane.setLeftAnchor(buttonPane, 0.0);
-		AnchorPane.setTopAnchor(buttonPane, 0.0);
-		AnchorPane.setBottomAnchor(buttonPane, 0.0);
-		*/
     }
 
 	public void setUser (User user) {

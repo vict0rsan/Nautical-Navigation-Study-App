@@ -13,56 +13,45 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefWidth="700.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.FXMLDocumentController">
    <children>
-      <HBox spacing="200.0" VBox.vgrow="NEVER">
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="Account">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleOnActionLoginButton" text="Login" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOnActionSignUpButton" text="Sign up" />
+                  <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#handleOnActionLogoutButton" text="Logout" visible="false" />
+                  <MenuItem fx:id="modifyButton" mnemonicParsing="false" onAction="#handleOnActionModifyButton" text="Modify profile" visible="false" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Tools">
+            <items>
+                  <RadioMenuItem mnemonicParsing="false" onAction="#pointMenuPressed" text="Mark a point" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#colourMenuPressed" text="Select colour" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Problems">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#randomProblemPressed" text="Random problem" />
+                  <MenuItem mnemonicParsing="false" onAction="#selectProblemPressed" text="Select a problem" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="640.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
          <children>
-            <MenuBar>
-              <menus>
-                <Menu mnemonicParsing="false" text="Account">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#handleOnActionLoginButton" text="Login" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleOnActionSignUpButton" text="Sign up" />
-                        <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#handleOnActionLogoutButton" text="Logout" visible="false" />
-                        <MenuItem fx:id="modifyButton" mnemonicParsing="false" onAction="#handleOnActionModifyButton" text="Modify profile" visible="false" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Tools">
-                  <items>
-                        <RadioMenuItem mnemonicParsing="false" onAction="#pointMenuPressed" text="Mark a point" />
-                        <RadioMenuItem mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" />
-                        <RadioMenuItem mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" />
-                        <RadioMenuItem mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" />
-                        <RadioMenuItem mnemonicParsing="false" onAction="#colourMenuPressed" text="Select colour" />
-                        <RadioMenuItem mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" />
-                        <RadioMenuItem mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear" />
-                  </items>
-                </Menu>
-                  <Menu mnemonicParsing="false" text="Problems">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#randomProblemPressed" text="Random problem" />
-                        <MenuItem mnemonicParsing="false" onAction="#selectProblemPressed" text="Select a problem" />
-                     </items>
-                  </Menu>
-              </menus>
-            </MenuBar>
-            <Label fx:id="welcomeLabel" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="302.0" visible="false">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin></Label>
-         </children>
-      </HBox>
-      <StackPane prefHeight="640.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
-         <children>
-               <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" onMouseMoved="#muestraPosicion" pannable="true" vbarPolicy="ALWAYS">
+               <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" onMouseMoved="#muestraPosicion" pannable="true" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
                      <Pane>
                         <children>
@@ -75,7 +64,7 @@
                      </Pane>
                   </content>
                </ScrollPane>
-            <Pane fx:id="buttonPane">
+            <Pane fx:id="buttonPane" prefHeight="626.0" prefWidth="116.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Slider fx:id="zoom_slider" layoutX="20.0" layoutY="46.0" min="10.0" orientation="VERTICAL" />
                   <Button layoutX="12.0" layoutY="195.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="30.0" prefWidth="30.0" text="-" />
@@ -144,9 +133,14 @@
                </children>
             </Pane>
          </children>
-      </StackPane>
-      <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="700.0">
+      </AnchorPane>
+      <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="700.0" spacing="150.0">
          <children>
+            <Label fx:id="welcomeLabel" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="302.0" visible="false">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
             <Label fx:id="posicion" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="221.0" text="SceneX:     SceneY:     " wrapText="true" HBox.hgrow="ALWAYS" />
          </children>
          <VBox.margin>

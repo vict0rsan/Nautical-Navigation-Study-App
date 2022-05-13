@@ -115,7 +115,7 @@ public class LoginController implements Initializable {
             return;
         }
         
-		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLDocumentController.fxml"));
+		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLDocument.fxml"));
 		myLoader.load();
         FXMLDocumentController controller = myLoader.<FXMLDocumentController>getController();
 		
