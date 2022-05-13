@@ -37,7 +37,7 @@ public class FXMLDocumentController implements Initializable {
 
     //=======================================
     // hashmap para guardar los puntos de interes POI
-    private final HashMap<String, Poi> hm = new HashMap<>();
+    //private final HashMap<String, Poi> hm = new HashMap<>();
     // ======================================
     // la variable zoomGroup se utiliza para dar soporte al zoom
     // el escalado se realiza sobre este nodo, al escalar el Group no mueve sus nodos
@@ -112,17 +112,17 @@ public class FXMLDocumentController implements Initializable {
         map_pin.setVisible(true);
     }
 
-    private void initData() {
+    /*private void initData() {
         hm.put("2F", new Poi("2F", "Edificion del DSIC", 325, 225));
         hm.put("Agora", new Poi("Agora", "Agora", 600, 360));
         map_listview.getItems().add(hm.get("2F"));
         map_listview.getItems().add(hm.get("Agora"));
-    }
+    }*/
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        initData();
+        //initData();
         //==========================================================
         // inicializamos el slider y enlazamos con el zoom
         zoom_slider.setMin(0.5);

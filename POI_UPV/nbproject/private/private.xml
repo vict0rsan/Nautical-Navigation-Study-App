@@ -4,10 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="IPC"/>
         <group>
-            <file>file:/D:/Documents/GitHub/IPC_ENTREGABLE/POI_UPV/src/poiupv/controller/FXMLSignUpController.java</file>
-            <file>file:/D:/Documents/GitHub/IPC_ENTREGABLE/POI_UPV/src/poiupv/controller/FXMLDocumentController.java</file>
-            <file>file:/D:/Documents/GitHub/IPC_ENTREGABLE/POI_UPV/src/poiupv/controller/Poi.java</file>
-            <file>file:/D:/Documents/GitHub/IPC_ENTREGABLE/POI_UPV/src/poiupv/PoiUPVApp.java</file>
+            <file>file:/C:/Users/guill/Documents/GitHub/IPC_ENTREGABLE/POI_UPV/src/poiupv/controller/AvatarSelectorController.java</file>
+            <file>file:/C:/Users/guill/Documents/GitHub/IPC_ENTREGABLE/POI_UPV/src/poiupv/controller/LoginController.java</file>
+            <file>file:/C:/Users/guill/Documents/GitHub/IPC_ENTREGABLE/POI_UPV/src/poiupv/controller/FXMLSignUpController.java</file>
+            <file>file:/C:/Users/guill/Documents/GitHub/IPC_ENTREGABLE/POI_UPV/src/poiupv/controller/ModifyProfileController.java</file>
+            <file>file:/C:/Users/guill/Documents/GitHub/IPC_ENTREGABLE/POI_UPV/src/poiupv/controller/WelcomeController.java</file>
+            <file>file:/C:/Users/guill/Documents/GitHub/IPC_ENTREGABLE/POI_UPV/src/poiupv/view/ModifyProfile.fxml</file>
         </group>
     </open-files>
 </project-private>
