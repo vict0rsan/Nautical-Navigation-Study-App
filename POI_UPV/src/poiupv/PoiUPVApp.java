@@ -26,6 +26,8 @@ public class PoiUPVApp extends Application {
         Scene scene = new Scene(root);
         stage.setTitle("Points of interest UPV");
         stage.setScene(scene);
+		stage.setMinHeight(750);
+		stage.setMinWidth(900);
         stage.show();
     }
 
