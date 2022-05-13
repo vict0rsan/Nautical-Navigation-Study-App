@@ -54,6 +54,8 @@ public class LoginController implements Initializable {
     
     private BooleanProperty validEmail;
     private BooleanProperty validpass;
+	
+	private User currentUser;
         
     /**
      * Initializes the controller class.
@@ -115,11 +117,7 @@ public class LoginController implements Initializable {
             return;
         }
         
-		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLDocument.fxml"));
-		myLoader.load();
-        FXMLDocumentController controller = myLoader.<FXMLDocumentController>getController();
-		
-		controller.setUser(user);
+		currentUser = user;
 		
 		Node source = (Node) event.getSource();
 		Stage oldStage = (Stage) source.getScene().getWindow();
@@ -133,6 +131,10 @@ public class LoginController implements Initializable {
         validpass.setValue(Boolean.FALSE);
         username.requestFocus();
     }
+	
+	public User getUser () {
+		return currentUser;
+	}
 
     @FXML
     private void handleButtonCancelOnAction(ActionEvent event) throws IOException

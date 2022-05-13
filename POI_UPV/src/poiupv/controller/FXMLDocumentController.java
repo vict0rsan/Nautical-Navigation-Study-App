@@ -197,9 +197,11 @@ public class FXMLDocumentController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Login");
-            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
-            stage.show();
+            stage.showAndWait();
+			
+			setUser(detailsController.getUser());
 	}
 
 	@FXML
@@ -230,6 +232,13 @@ public class FXMLDocumentController implements Initializable {
 		modifyButton.setVisible(false);
 		welcomeLabel.textProperty().setValue(null);
 		welcomeLabel.setVisible(false);
+		
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Logout");
+		alert.setHeaderText(null);
+		alert.setContentText("You have succesfully logged out.");
+		alert.initModality(Modality.WINDOW_MODAL);
+		alert.showAndWait();
 	}
 
 	@FXML
