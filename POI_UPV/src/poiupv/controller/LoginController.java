@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -65,6 +66,8 @@ public class LoginController implements Initializable {
         
         validEmail.setValue(Boolean.FALSE);
         validpass.setValue(Boolean.FALSE);
+		
+		username.requestFocus();
         
         username.focusedProperty().addListener((observable, oldValue, newValue)->{
             if (username.textProperty().getValue().isBlank()) {
@@ -112,22 +115,15 @@ public class LoginController implements Initializable {
             return;
         }
         
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FunctionSelector.fxml"));
-	SplitPane root = (SplitPane) myLoader.load();
-	FunctionSelectorController detailsController = myLoader.<FunctionSelectorController>getController();
-        detailsController.setUser(user);
-        
-	Scene scene = new Scene (root);
-	Stage stage = new Stage();
-	stage.setScene(scene);
-	stage.setTitle("MAIN MENU");
-	stage.initModality(Modality.APPLICATION_MODAL);
-	stage.setResizable(false);
-	stage.show();
-        clearFields();
-        Node source = (Node) event.getSource();
-        Stage oldStage = (Stage) source.getScene().getWindow();
-	oldStage.close();
+		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLDocumentController.fxml"));
+		myLoader.load();
+        FXMLDocumentController controller = myLoader.<FXMLDocumentController>getController();
+		
+		controller.setUser(user);
+		
+		Node source = (Node) event.getSource();
+		Stage oldStage = (Stage) source.getScene().getWindow();
+		oldStage.close();
     }
     
     private void clearFields(){
@@ -141,23 +137,30 @@ public class LoginController implements Initializable {
     @FXML
     private void handleButtonCancelOnAction(ActionEvent event) throws IOException
     {
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/Welcome.fxml"));
+        Node source = (Node) event.getSource();
+        Stage oldStage = (Stage) source.getScene().getWindow();
+		oldStage.close();
+    }
 
-        Pane root = (Pane) myLoader.load();
-        
-        WelcomeController welcomeController = myLoader.<WelcomeController>getController();
+	@FXML
+	private void handleOnActionSignUpLink(ActionEvent event) throws IOException {
+		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLSignUp.fxml"));
+
+        Pane root = myLoader.load();
+
+        FXMLSignUpController detailsController = myLoader.<FXMLSignUpController>getController();
 
         Scene scene = new Scene (root);
 
         Stage stage = new Stage();
         stage.setScene(scene);
-        stage.setTitle("Welcome");
+        stage.setTitle("Sign Up");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.show();
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
-	oldStage.close();
-    }
+		oldStage.close();
+	}
     
 }

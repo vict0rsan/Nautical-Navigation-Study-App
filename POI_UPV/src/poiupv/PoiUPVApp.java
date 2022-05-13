@@ -24,7 +24,7 @@ public class PoiUPVApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/poiupv/view/FXMLDocument.fxml"));
         
         Scene scene = new Scene(root);
-        stage.setTitle("Puntos de interes UPV");
+        stage.setTitle("Points of interest UPV");
         stage.setScene(scene);
         stage.show();
     }

@@ -379,23 +379,9 @@ public class FXMLSignUpController implements Initializable {
     @FXML
     private void handleButtonCancelOnAction(ActionEvent event) throws IOException
     {
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/Welcome.fxml"));
-
-        Pane root = (Pane) myLoader.load();
-        
-        WelcomeController welcomeController = myLoader.<WelcomeController>getController();
-
-        Scene scene = new Scene (root);
-
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setTitle("Welcome");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setResizable(false);
-        stage.show();
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
-	oldStage.close();
+		oldStage.close();
     }
 
     @FXML

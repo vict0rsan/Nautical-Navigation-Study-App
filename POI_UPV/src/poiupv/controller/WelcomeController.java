@@ -72,7 +72,7 @@ public class WelcomeController {
         stage.show();
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
-	oldStage.close();
+		oldStage.close();
     }
     
 }
