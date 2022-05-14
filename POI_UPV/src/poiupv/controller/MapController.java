@@ -22,17 +22,21 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -46,6 +50,8 @@ public class MapController implements Initializable {
     
     public static User currentUser;
     private Group zoomGroup;
+    private Line linePainting;
+    private Color currentColor = Color.BLACK;
 
     private ListView<Poi> map_listview;
     @FXML
@@ -64,6 +70,10 @@ public class MapController implements Initializable {
     private MenuItem modifyButton;
     @FXML
     private Label welcomeLabel;
+    @FXML
+    private ToggleButton drawLine;
+    @FXML
+    private ColorPicker colorPicker;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -139,6 +149,13 @@ public class MapController implements Initializable {
         contentGroup.getChildren().add(zoomGroup);
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
+        
+        map_scrollpane.setOnDragDetected(event -> {
+            System.out.println("Dragging");
+            linePainting.setEndX(event.getX());
+            linePainting.setEndY(event.getY());
+            event.consume();
+        });
     }
 
     
@@ -276,6 +293,30 @@ public class MapController implements Initializable {
 	@FXML
 	private void selectProblemPressed(ActionEvent event) {
 	}
+
+   
+    @FXML
+    private void moveOrDrawPressed(MouseEvent event) {
+        System.out.println("Hi mr. pressed!");
+            linePainting = new Line(event.getX(), event.getY(), event.getX(), event.getY());
+            linePainting.setStroke(currentColor);
+            zoomGroup.getChildren().add(linePainting);
+            System.out.println(linePainting);
+    }
+    
+    @FXML
+    private void changeColor(ActionEvent event) {
+        currentColor = colorPicker.getValue();
+    }
+
+    @FXML
+    private void moveOrDrawReleased(MouseEvent event) {
+         System.out.println("Hi mr. released!");
+            linePainting.setEndX(event.getX());
+            linePainting.setEndY(event.getY());
+            event.consume();
+            System.out.println(linePainting);
+    }
 
 
 }

@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
@@ -53,7 +54,7 @@
       </MenuBar>
       <AnchorPane prefHeight="640.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
          <children>
-               <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" onMouseMoved="#muestraPosicion" pannable="true" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed" onMouseReleased="#moveOrDrawReleased" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
                      <Pane>
                         <children>
@@ -80,7 +81,7 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton layoutX="12.0" layoutY="290.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                  <ToggleButton fx:id="drawLine" layoutX="12.0" layoutY="290.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -107,12 +108,6 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ColorPicker editable="true" layoutX="12.0" layoutY="412.0" prefHeight="30.0" prefWidth="30.0" style="-fx-opacity: 0;" />
-                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="12.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resources/colorPicker.png" />
-                     </image>
-                  </ImageView>
                   <ToggleButton layoutX="12.0" layoutY="448.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="22.0" layoutX="1.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true">
@@ -132,6 +127,11 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <ColorPicker fx:id="colorPicker" layoutX="9.0" layoutY="410.0" onAction="#changeColor" prefHeight="30.0" prefWidth="41.0" promptText="Color">
+                     <value>
+                        <Color />
+                     </value>
+                  </ColorPicker>
                </children>
             </Pane>
          </children>
