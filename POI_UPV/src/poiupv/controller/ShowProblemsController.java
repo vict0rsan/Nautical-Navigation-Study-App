@@ -73,8 +73,6 @@ public class ShowProblemsController implements Initializable {
                         problemDescription.setText(selectedProblem.getText());
                     }
                 });
-        
-        
     }
 
     @FXML
@@ -113,7 +111,7 @@ public class ShowProblemsController implements Initializable {
             Scene scene = new Scene (root);
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle("Problem nº " + shownProblems.getSelectionModel().getSelectedIndex());
+            stage.setTitle("Random problem");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setResizable(false);
             stage.show();

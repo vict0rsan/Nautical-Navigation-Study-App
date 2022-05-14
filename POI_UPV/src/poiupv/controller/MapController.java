@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -22,6 +23,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
@@ -46,6 +48,8 @@ import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Navegacion;
+import model.Problem;
 import model.Session;
 import model.User;
 
@@ -327,7 +331,7 @@ public class MapController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Login required");
                 alert.setHeaderText("LOG IN TO PERFORM THIS OPERATION");
-                alert.setContentText("You must be logged in to make problems");
+                alert.setContentText("You must be logged in to check your statistics");
                 alert.initModality(Modality.APPLICATION_MODAL);
                 alert.showAndWait();
             }
@@ -335,7 +339,34 @@ public class MapController implements Initializable {
         }
 
 	@FXML
-	private void randomProblemPressed(ActionEvent event) {
+	private void randomProblemPressed(ActionEvent event) throws Exception {
+            
+            if(currentUser != null){
+                Random random = new Random();
+                List<Problem> problems = Navegacion.getSingletonNavegacion().getProblems();
+                int randomIndexProblem = random.nextInt(problems.size());
+                Problem randomProblem = problems.get(randomIndexProblem);
+        
+                FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/Problem.fxml"));
+                Parent root = (Parent) myLoader.load();
+                ProblemController problemController = myLoader.<ProblemController>getController();
+                problemController.setProblem(randomProblem);
+
+                Scene scene = new Scene (root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setTitle("Random problem");
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.setResizable(false);
+                stage.show();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Login required");
+                alert.setHeaderText("LOG IN TO PERFORM THIS OPERATION");
+                alert.setContentText("You must be logged in to make problems");
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.showAndWait();
+            }
 	}
 
 	@FXML
@@ -344,7 +375,7 @@ public class MapController implements Initializable {
             if(currentUser != null){
                 FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ShowProblems.fxml"));
                 BorderPane root = (BorderPane) myLoader.load();
-                ShowProblemsController modifyProfileController = myLoader.<ShowProblemsController>getController();
+                ShowProblemsController showProblemsController = myLoader.<ShowProblemsController>getController();
 
                 Scene scene = new Scene (root);
                 Stage stage = new Stage();
