@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="Account">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleOnActionLoginButton" text="Login" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOnActionSignUpButton" text="Sign up" />
+                  <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#handleOnActionLogoutButton" text="Logout" visible="false" />
+                  <MenuItem fx:id="modifyButton" mnemonicParsing="false" onAction="#handleOnActionModifyButton" text="Modify profile" visible="false" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Tools">
+            <items>
+                  <RadioMenuItem mnemonicParsing="false" onAction="#pointMenuPressed" text="Mark a point" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#colourMenuPressed" text="Select colour" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Problems">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#randomProblemPressed" text="Random problem" />
+                  <MenuItem mnemonicParsing="false" onAction="#selectProblemPressed" text="Select a problem" />
+                  <MenuItem mnemonicParsing="false" text="Check statistics" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="640.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
+         <children>
+               <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" onMouseMoved="#muestraPosicion" pannable="true" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <content>
+                     <Pane>
+                        <children>
+                           <ImageView pickOnBounds="true">
+                              <image>
+                                 <Image url="@../../resources/upv.jpg" />
+                              </image>
+                           </ImageView>
+                        </children>
+                     </Pane>
+                  </content>
+               </ScrollPane>
+            <Pane fx:id="buttonPane" prefHeight="626.0" prefWidth="116.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Slider fx:id="zoom_slider" layoutX="20.0" layoutY="46.0" min="10.0" orientation="VERTICAL" />
+                  <Button layoutX="12.0" layoutY="195.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="30.0" prefWidth="30.0" text="-" />
+                  <Button layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#zoomIn" prefHeight="30.0" prefWidth="30.0" text="+" />
+                  <ToggleButton layoutX="12.0" layoutY="254.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/positionMarker.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton layoutX="12.0" layoutY="290.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/drawALine.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton layoutX="12.0" layoutY="330.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/drawAnArc.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton layoutX="12.0" layoutY="371.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/addText.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <ColorPicker editable="true" layoutX="12.0" layoutY="412.0" prefHeight="30.0" prefWidth="30.0" style="-fx-opacity: 0;" />
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="12.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/colorPicker.png" />
+                     </image>
+                  </ImageView>
+                  <ToggleButton layoutX="12.0" layoutY="448.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="22.0" layoutX="1.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/delete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <Label layoutX="48.0" layoutY="587.0" text="Clear" />
+                  <Button layoutX="12.0" layoutY="580.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/erase.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="700.0" spacing="150.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="1233.0">
+               <children>
+                  <Label fx:id="welcomeLabel" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="387.0" visible="false">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label fx:id="posicion" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="221.0" text="SceneX:     SceneY:     " wrapText="true" HBox.hgrow="ALWAYS" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

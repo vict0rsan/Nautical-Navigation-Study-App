@@ -17,8 +17,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.FXMLDocumentController">
+<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
    <children>
       <MenuBar>
         <menus>
@@ -45,6 +46,7 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#randomProblemPressed" text="Random problem" />
                   <MenuItem mnemonicParsing="false" onAction="#selectProblemPressed" text="Select a problem" />
+                  <MenuItem mnemonicParsing="false" text="Check statistics" />
                </items>
             </Menu>
         </menus>
@@ -136,11 +138,18 @@
       </AnchorPane>
       <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="700.0" spacing="150.0">
          <children>
-            <Label fx:id="welcomeLabel" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="302.0" visible="false">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="1233.0">
+               <children>
+                  <Label fx:id="welcomeLabel" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="387.0" visible="false">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <Label fx:id="posicion" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="221.0" text="SceneX:     SceneY:     " wrapText="true" HBox.hgrow="ALWAYS" />
          </children>
          <VBox.margin>

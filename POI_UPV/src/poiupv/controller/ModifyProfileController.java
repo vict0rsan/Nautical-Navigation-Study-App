@@ -47,8 +47,6 @@ public class ModifyProfileController implements Initializable
     @FXML
     private Button bCancel;
     @FXML
-    private Text usernameErrorText;
-    @FXML
     private TextField email;
     @FXML
     private Label incorrectEmail;
@@ -63,7 +61,7 @@ public class ModifyProfileController implements Initializable
     @FXML
     private Label incorrectPasswordConfirmation;
     @FXML
-    private TextField birthdate;
+    private DatePicker birthdate;
     @FXML
     private Label incorrectBirthday;
     @FXML
@@ -72,8 +70,6 @@ public class ModifyProfileController implements Initializable
     private Button selectAvatarButton;
     @FXML
     private TextField username;
-    
-    private User currentUser;
     
     //properties to control valid fieds values. 
     private BooleanProperty validPassword;
@@ -114,6 +110,13 @@ public class ModifyProfileController implements Initializable
                  .and(equalPasswords);
         
         bAccept.disableProperty().bind(Bindings.not(validFields));
+        
+        username.setDisable(true);
+        birthdate.setDisable(true);
+        username.textProperty().setValue(MapController.currentUser.getNickName());
+        birthdate.setValue(MapController.currentUser.getBirthdate());
+        avatar.imageProperty().setValue(MapController.currentUser.getAvatar());
+        email.textProperty().setValue(MapController.currentUser.getEmail());
     }
     
      private void checkEditEmail(){
@@ -200,25 +203,12 @@ public class ModifyProfileController implements Initializable
         datePicker.styleProperty().setValue("");
     }
 
-    public void setUser(User user){
-        currentUser = user;
-        if(currentUser != null){
-            username.setDisable(true);
-            birthdate.setDisable(true);
-            
-            username.textProperty().setValue(currentUser.getNickName());
-            birthdate.textProperty().setValue(currentUser.getBirthdate().toString());
-            avatar.imageProperty().setValue(currentUser.getAvatar());
-            email.textProperty().setValue(currentUser.getEmail());
-        }
-    } 
-
     @FXML
     private void handleBAcceptOnAction(ActionEvent event) throws Exception {
         
-        currentUser.setEmail(email.textProperty().getValue());
-        currentUser.setPassword(password.textProperty().getValue());
-        currentUser.setAvatar(avatar.getImage());
+        MapController.currentUser.setEmail(email.textProperty().getValue());
+        MapController.currentUser.setPassword(password.textProperty().getValue());
+        MapController.currentUser.setAvatar(avatar.getImage());
         	
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("CHANGES DONE");
@@ -227,25 +217,6 @@ public class ModifyProfileController implements Initializable
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FunctionSelector.fxml"));
-
-            SplitPane root = (SplitPane) myLoader.load();
-
-                    //Get the controller of the UI
-            FunctionSelectorController functionSelector = myLoader.<FunctionSelectorController>getController();
-                    //We pass the data to the cotroller. Passing the observableList we 
-                    //give controll to the modal for deleting/adding/modify the data 
-                    //we see in the listView
-            functionSelector.setUser(currentUser);
-            Scene scene = new Scene (root);
-
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Function Selector");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            stage.show();
-
             Node source = (Node) event.getSource();
             Stage oldStage = (Stage) source.getScene().getWindow();
             oldStage.close();
@@ -254,23 +225,6 @@ public class ModifyProfileController implements Initializable
 
     @FXML
     private void handleButtonCancelOnAction(ActionEvent event) throws IOException{
-        
-        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FunctionSelector.fxml"));
-
-        SplitPane root = (SplitPane) myLoader.load();
-        
-        FunctionSelectorController functionSelector = myLoader.<FunctionSelectorController>getController();
-        functionSelector.setUser(currentUser);
-        
-
-        Scene scene = new Scene (root);
-
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setTitle("Function selector");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setResizable(false);
-        stage.show();
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
 	oldStage.close();
@@ -330,7 +284,4 @@ public class ModifyProfileController implements Initializable
             avatar.setImage(image);
         }
     }
-        
-        
-        
 }

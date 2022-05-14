@@ -54,12 +54,7 @@ public class LoginController implements Initializable {
     
     private BooleanProperty validEmail;
     private BooleanProperty validpass;
-	
-	private User currentUser;
-        
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
@@ -69,7 +64,7 @@ public class LoginController implements Initializable {
         validEmail.setValue(Boolean.FALSE);
         validpass.setValue(Boolean.FALSE);
 		
-		username.requestFocus();
+	username.requestFocus();
         
         username.focusedProperty().addListener((observable, oldValue, newValue)->{
             if (username.textProperty().getValue().isBlank()) {
@@ -117,11 +112,10 @@ public class LoginController implements Initializable {
             return;
         }
         
-		currentUser = user;
-		
-		Node source = (Node) event.getSource();
-		Stage oldStage = (Stage) source.getScene().getWindow();
-		oldStage.close();
+	MapController.currentUser = user;
+	Node source = (Node) event.getSource();
+	Stage oldStage = (Stage) source.getScene().getWindow();
+	oldStage.close();
     }
     
     private void clearFields(){
@@ -132,21 +126,18 @@ public class LoginController implements Initializable {
         username.requestFocus();
     }
 	
-	public User getUser () {
-		return currentUser;
-	}
 
     @FXML
     private void handleButtonCancelOnAction(ActionEvent event) throws IOException
     {
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
-		oldStage.close();
+	oldStage.close();
     }
 
-	@FXML
-	private void handleOnActionSignUpLink(ActionEvent event) throws IOException {
-		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLSignUp.fxml"));
+    @FXML
+    private void handleOnActionSignUpLink(ActionEvent event) throws IOException {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLSignUp.fxml"));
 
         Pane root = myLoader.load();
 
@@ -163,6 +154,6 @@ public class LoginController implements Initializable {
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
 		oldStage.close();
-	}
+    }
     
 }

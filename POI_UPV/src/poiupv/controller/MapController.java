@@ -42,14 +42,9 @@ import model.User;
  *
  * @author jsoler
  */
-public class FXMLDocumentController implements Initializable {
-
-    //=======================================
-    // hashmap para guardar los puntos de interes POI
-    // private final HashMap<String, Poi> hm = new HashMap<>();
-    // ======================================
-    // la variable zoomGroup se utiliza para dar soporte al zoom
-    // el escalado se realiza sobre este nodo, al escalar el Group no mueve sus nodos
+public class MapController implements Initializable {
+    
+    public static User currentUser;
     private Group zoomGroup;
 
     private ListView<Poi> map_listview;
@@ -61,16 +56,14 @@ public class FXMLDocumentController implements Initializable {
     private MenuItem pin_info;
     @FXML
     private Label posicion;
-	@FXML
-	private Pane buttonPane;
-	
-	private User currentUser;
-	@FXML
-	private MenuItem logoutButton;
-	@FXML
-	private MenuItem modifyButton;
-	@FXML
-	private Label welcomeLabel;
+    @FXML
+    private Pane buttonPane;
+    @FXML
+    private MenuItem logoutButton;
+    @FXML
+    private MenuItem modifyButton;
+    @FXML
+    private Label welcomeLabel;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -127,13 +120,6 @@ public class FXMLDocumentController implements Initializable {
         map_pin.setVisible(true);
     }
 
-    /*private void initData() {
-        hm.put("2F", new Poi("2F", "Edificion del DSIC", 325, 225));
-        hm.put("Agora", new Poi("Agora", "Agora", 600, 360));
-        map_listview.getItems().add(hm.get("2F"));
-        map_listview.getItems().add(hm.get("Agora"));
-    }*/
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -155,13 +141,7 @@ public class FXMLDocumentController implements Initializable {
         map_scrollpane.setContent(contentGroup);
     }
 
-	public void setUser (User user) {
-		currentUser = user;
-		logoutButton.setVisible(true);
-		modifyButton.setVisible(true);
-		welcomeLabel.textProperty().setValue("Welcome back, " + user.getNickName());
-		welcomeLabel.setVisible(true);
-	}
+    
 	
     @FXML
     private void muestraPosicion(MouseEvent event) {
@@ -179,80 +159,87 @@ public class FXMLDocumentController implements Initializable {
         mensaje.setHeaderText("IPC - 2022");
         mensaje.showAndWait();
     }
+    
+    
+    private void loginSetup () {
+        logoutButton.setVisible(true);
+        modifyButton.setVisible(true);
+        welcomeLabel.textProperty().setValue("You are logged as: " + currentUser.getNickName());
+        welcomeLabel.setVisible(true);
+    }
+    
+    private void logoutSetup(){
+        logoutButton.setVisible(false);
+	modifyButton.setVisible(false);
+	welcomeLabel.textProperty().setValue(null);
+	welcomeLabel.setVisible(false);
+    }
 
-	@FXML
-	private void handleOnActionLoginButton(ActionEvent event) throws IOException {
-		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLLogin.fxml"));
+    @FXML
+    private void handleOnActionLoginButton(ActionEvent event) throws IOException {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLLogin.fxml"));
+        BorderPane root = (BorderPane) myLoader.load();
+        LoginController detailsController = myLoader.<LoginController>getController();
+        Scene scene = new Scene (root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Login");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.showAndWait();
+        
+        if(currentUser != null){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successfully logged in!");
+            alert.setHeaderText(null);
+            alert.setContentText(" Welcome back " + MapController.currentUser.getNickName() + "!");
+            alert.showAndWait();
+            loginSetup();
+        }
+    }
 
-            BorderPane root = (BorderPane) myLoader.load();
-
-                    //Get the controller of the UI
-            LoginController detailsController = myLoader.<LoginController>getController();
-                    //We pass the data to the cotroller. Passing the observableList we 
-                    //give controll to the modal for deleting/adding/modify the data 
-                    //we see in the listView
-
-            Scene scene = new Scene (root);
-
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Login");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            stage.showAndWait();
-			
-			setUser(detailsController.getUser());
-	}
-
-	@FXML
-	private void handleOnActionSignUpButton(ActionEvent event) throws IOException {
-		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLSignUp.fxml"));
-
+    @FXML
+    private void handleOnActionSignUpButton(ActionEvent event) throws IOException {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLSignUp.fxml"));
         Pane root = myLoader.load();
-
         FXMLSignUpController detailsController = myLoader.<FXMLSignUpController>getController();
 
         Scene scene = new Scene (root);
-
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Sign Up");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.show();
-	}
+    }
 
-	@FXML
-	private void handleOnActionLogoutButton(ActionEvent event) {
-		currentUser = null;
-		logoutButton.setVisible(false);
-		modifyButton.setVisible(false);
-		welcomeLabel.textProperty().setValue(null);
-		welcomeLabel.setVisible(false);
-		
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Logout");
-		alert.setHeaderText(null);
-		alert.setContentText("You have succesfully logged out.");
-		alert.initModality(Modality.WINDOW_MODAL);
-		alert.showAndWait();
-	}
+    @FXML
+    private void handleOnActionLogoutButton(ActionEvent event) {
+        currentUser = null;
+        logoutSetup();
+	
+	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	alert.setTitle("Logout");
+	alert.setHeaderText(null);
+	alert.setContentText("You have succesfully logged out.");
+	alert.initModality(Modality.WINDOW_MODAL);
+	alert.showAndWait();
+    }
 
-	@FXML
-	private void handleOnActionModifyButton(ActionEvent event) throws IOException {
-		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ModifyProfile.fxml"));
-		BorderPane root = (BorderPane) myLoader.load();
-		ModifyProfileController modifyProfileController = myLoader.<ModifyProfileController>getController();
-        modifyProfileController.setUser(currentUser);
+    @FXML
+    private void handleOnActionModifyButton(ActionEvent event) throws IOException {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ModifyProfile.fxml"));
+	BorderPane root = (BorderPane) myLoader.load();
+	ModifyProfileController modifyProfileController = myLoader.<ModifyProfileController>getController();
         
-		Scene scene = new Scene (root);
-		Stage stage = new Stage();
-		stage.setScene(scene);
-		stage.setTitle("Modify profile");
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.setResizable(false);
-		stage.show();
-	}
+	Scene scene = new Scene (root);
+	Stage stage = new Stage();
+	stage.setScene(scene);
+	stage.setTitle("Modify profile");
+	stage.initModality(Modality.WINDOW_MODAL);
+	stage.setResizable(false);
+	stage.show();
+    }
 
 	@FXML
 	private void pointMenuPressed(ActionEvent event) {

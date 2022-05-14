@@ -21,13 +21,13 @@ public class PoiUPVApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/poiupv/view/FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/poiupv/view/Map.fxml"));
         
         Scene scene = new Scene(root);
         stage.setTitle("Points of interest UPV");
         stage.setScene(scene);
-		stage.setMinHeight(750);
-		stage.setMinWidth(900);
+	stage.setMinHeight(750);
+	stage.setMinWidth(900);
         stage.show();
     }
 

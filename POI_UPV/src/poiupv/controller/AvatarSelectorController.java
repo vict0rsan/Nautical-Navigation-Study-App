@@ -15,14 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-/**
- * FXML Controller class
- *
- * @author guill
- */
 public class AvatarSelectorController implements Initializable {
-    
     private ImageView avatar;
+    
     @FXML
     private Button avatar1Button;
     @FXML
