@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
@@ -30,6 +31,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -74,6 +78,8 @@ public class MapController implements Initializable {
     private ToggleButton drawLine;
     @FXML
     private ColorPicker colorPicker;
+    @FXML
+    private ToggleGroup drawingTools;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -150,12 +156,12 @@ public class MapController implements Initializable {
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
         
-        map_scrollpane.setOnDragDetected(event -> {
-            System.out.println("Dragging");
-            linePainting.setEndX(event.getX());
-            linePainting.setEndY(event.getY());
-            event.consume();
-        });
+//        map_scrollpane.setOnDragDetected(event -> {
+//            System.out.println("Dragging");
+//            linePainting.setEndX(event.getX());
+//            linePainting.setEndY(event.getY());
+//            event.consume();
+//        });
     }
 
     
@@ -298,10 +304,27 @@ public class MapController implements Initializable {
     @FXML
     private void moveOrDrawPressed(MouseEvent event) {
         System.out.println("Hi mr. pressed!");
+        if(drawLine.isSelected())
+        {
             linePainting = new Line(event.getX(), event.getY(), event.getX(), event.getY());
+            linePainting.setOnContextMenuRequested(eventContext -> 
+            {
+                ContextMenu menuContext = new ContextMenu();
+                MenuItem deleteItem = new MenuItem("Delete");
+                menuContext.getItems().add(deleteItem);
+                //If the user selects the option, we delete the line
+                deleteItem.setOnAction( eventMenu ->
+                {
+                    zoomGroup.getChildren().remove((Node)eventContext.getSource());
+                    eventMenu.consume();
+                });
+                menuContext.show(linePainting, event.getSceneX(), event.getSceneY());
+                eventContext.consume();
+            });
             linePainting.setStroke(currentColor);
             zoomGroup.getChildren().add(linePainting);
             System.out.println(linePainting);
+        }
     }
     
     @FXML
@@ -310,13 +333,31 @@ public class MapController implements Initializable {
     }
 
     @FXML
-    private void moveOrDrawReleased(MouseEvent event) {
-         System.out.println("Hi mr. released!");
+    private void moveOrDrawReleased(MouseEvent event) 
+    {
+        System.out.println("Hi mr. released!");
+        if(drawLine.isSelected())
+        {
             linePainting.setEndX(event.getX());
             linePainting.setEndY(event.getY());
             event.consume();
             System.out.println(linePainting);
+        }
+         
     }
 
+    @FXML
+    private void handleDragOnMap(MouseEvent event) 
+    {
+        System.out.println("Dragging"); 
+        if(drawLine.isSelected())
+        {
+            linePainting.setEndX(event.getX());
+            linePainting.setEndY(event.getY());
+            event.consume();
+        }
+    }
+
+   
 
 }
