@@ -312,14 +312,14 @@ public class MapController implements Initializable {
         private void checkStatisticsPressed(ActionEvent event) throws Exception {
             
              if(currentUser != null){
-                FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ShowProblems.fxml"));
+                FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/CheckStatistics.fxml"));
                 BorderPane root = (BorderPane) myLoader.load();
-                ShowProblemsController modifyProfileController = myLoader.<ShowProblemsController>getController();
+                CheckStatisticsController statisticsController = myLoader.<CheckStatisticsController>getController();
 
                 Scene scene = new Scene (root);
                 Stage stage = new Stage();
                 stage.setScene(scene);
-                stage.setTitle("Problems");
+                stage.setTitle("Statistics");
                 stage.initModality(Modality.WINDOW_MODAL);
                 stage.setResizable(false);
                 stage.show();
