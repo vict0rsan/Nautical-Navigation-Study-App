@@ -5,8 +5,10 @@
  */
 package poiupv.controller;
 
+import DBAccess.NavegacionDAOException;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +46,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Session;
 import model.User;
 
 /**
@@ -53,9 +56,14 @@ import model.User;
 public class MapController implements Initializable {
     
     public static User currentUser;
+    public static int currentSessionHints;
+    public static int currentSessionFaults;
+    
     private Group zoomGroup;
     private Line linePainting;
     private Color currentColor = Color.BLACK;
+    
+    private LocalDateTime sessionInitialized;
 
     private ListView<Poi> map_listview;
     @FXML
@@ -192,6 +200,10 @@ public class MapController implements Initializable {
     }
     
     private void logoutSetup(){
+        currentSessionHints = 0;
+        currentSessionFaults = 0;
+        currentUser = null;
+        sessionInitialized = null;
         logoutButton.setVisible(false);
 	modifyButton.setVisible(false);
 	welcomeLabel.textProperty().setValue(null);
@@ -212,6 +224,7 @@ public class MapController implements Initializable {
         stage.showAndWait();
         
         if(currentUser != null){
+            sessionInitialized = LocalDateTime.now();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Successfully logged in!");
             alert.setHeaderText(null);
@@ -237,8 +250,11 @@ public class MapController implements Initializable {
     }
 
     @FXML
-    private void handleOnActionLogoutButton(ActionEvent event) {
-        currentUser = null;
+    private void handleOnActionLogoutButton(ActionEvent event) throws NavegacionDAOException {
+        
+        Session currrentSession = new Session(sessionInitialized, currentSessionHints ,currentSessionFaults);
+        currentUser.addSession(currrentSession);
+        
         logoutSetup();
 	
 	Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -298,17 +314,27 @@ public class MapController implements Initializable {
 
 	@FXML
 	private void selectProblemPressed(ActionEvent event) throws Exception {
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ShowProblems.fxml"));
-            BorderPane root = (BorderPane) myLoader.load();
-            ShowProblemsController modifyProfileController = myLoader.<ShowProblemsController>getController();
-        
-            Scene scene = new Scene (root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Problems");
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.setResizable(false);
-            stage.show();
+            
+            if(currentUser != null){
+                FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ShowProblems.fxml"));
+                BorderPane root = (BorderPane) myLoader.load();
+                ShowProblemsController modifyProfileController = myLoader.<ShowProblemsController>getController();
+
+                Scene scene = new Scene (root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setTitle("Problems");
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.setResizable(false);
+                stage.show();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Login required");
+                alert.setHeaderText("LOG IN TO PERFORM THIS OPERATION");
+                alert.setContentText("You must be logged in to make problems");
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.showAndWait();
+            }
 	}
 
    

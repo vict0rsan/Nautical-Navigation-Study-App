@@ -80,10 +80,12 @@ public class ProblemController implements Initializable{
     }
     
     private void markAsCorrect(RadioButton answer){
+        MapController.currentSessionHints += 1;
         answer.setTextFill(Color.GREEN);
     }
     
     private void markAsIncorrectAndFindCorrect(){
+        MapController.currentSessionFaults += 1;
         RadioButton selectedButton = (RadioButton) answer.getSelectedToggle();
         selectedButton.setTextFill(Color.RED);
         
