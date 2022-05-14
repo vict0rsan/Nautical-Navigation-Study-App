@@ -297,13 +297,25 @@ public class MapController implements Initializable {
 	}
 
 	@FXML
-	private void selectProblemPressed(ActionEvent event) {
+	private void selectProblemPressed(ActionEvent event) throws Exception {
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ShowProblems.fxml"));
+            BorderPane root = (BorderPane) myLoader.load();
+            ShowProblemsController modifyProfileController = myLoader.<ShowProblemsController>getController();
+        
+            Scene scene = new Scene (root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Problems");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setResizable(false);
+            stage.show();
 	}
 
    
     @FXML
     private void moveOrDrawPressed(MouseEvent event) {
         System.out.println("Hi mr. pressed!");
+        System.out.println("Is draw line pressed? " + drawLine.isSelected());
         if(drawLine.isSelected())
         {
             linePainting = new Line(event.getX(), event.getY(), event.getX(), event.getY());
