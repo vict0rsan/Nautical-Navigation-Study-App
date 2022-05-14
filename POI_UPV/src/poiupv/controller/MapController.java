@@ -34,6 +34,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.DragEvent;
@@ -44,7 +45,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -65,6 +68,8 @@ public class MapController implements Initializable {
     
     private Group zoomGroup;
     private Line linePainting;
+    private Circle circlePainting;
+    private double coordinateXCircle;
     private Color currentColor = Color.BLACK;
     
     private LocalDateTime sessionInitialized;
@@ -92,6 +97,10 @@ public class MapController implements Initializable {
     private ColorPicker colorPicker;
     @FXML
     private ToggleGroup drawingTools;
+    @FXML
+    private ToggleButton drawCircle;
+    @FXML
+    private ToggleButton putText;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -167,13 +176,6 @@ public class MapController implements Initializable {
         contentGroup.getChildren().add(zoomGroup);
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
-        
-//        map_scrollpane.setOnDragDetected(event -> {
-//            System.out.println("Dragging");
-//            linePainting.setEndX(event.getX());
-//            linePainting.setEndY(event.getY());
-//            event.consume();
-//        });
     }
 
     
@@ -397,15 +399,15 @@ public class MapController implements Initializable {
    
     @FXML
     private void moveOrDrawPressed(MouseEvent event) {
-        System.out.println("Hi mr. pressed!");
-        System.out.println("Is draw line pressed? " + drawLine.isSelected());
-        if(drawLine.isSelected())
-        {
+        System.out.println("Pressing...");
+        System.out.println("Is drawLine pressed? " + drawLine.isSelected());
+        System.out.println("Is drawCricle pressed? " + drawCircle.isSelected());
+        System.out.println("Is putText pressed? " + putText.isSelected());
+        if(drawLine.isSelected()){
             linePainting = new Line(event.getX(), event.getY(), event.getX(), event.getY());
-            zoomGroup.getChildren().add(linePainting);
             linePainting.setStroke(currentColor);
-            linePainting.setOnContextMenuRequested(eventContext -> 
-            {
+            zoomGroup.getChildren().add(linePainting);
+            linePainting.setOnContextMenuRequested(eventContext -> {
                 ContextMenu menuContext = new ContextMenu();
                 MenuItem deleteItem = new MenuItem("Delete");
                 menuContext.getItems().add(deleteItem);
@@ -418,7 +420,62 @@ public class MapController implements Initializable {
                 menuContext.show(linePainting, event.getSceneX(), event.getSceneY());
                 eventContext.consume();
             });
-            System.out.println(linePainting);
+        }else if(drawCircle.isSelected()){
+            circlePainting = new Circle(1);
+            circlePainting.setStroke(currentColor);
+            circlePainting.setFill(Color.TRANSPARENT);
+            
+            zoomGroup.getChildren().add(circlePainting);
+            circlePainting.setCenterX(event.getX());
+            circlePainting.setCenterY(event.getY());
+            coordinateXCircle = event.getX();
+        }else if(putText.isSelected()){
+            TextField text = new TextField();
+            zoomGroup.getChildren().add(text);
+            text.setLayoutX(event.getX());
+            text.setLayoutY(event.getY());
+            text.requestFocus();
+            System.out.println("Puting text?");
+            text.setOnAction(e -> {
+                Text test = new Text(text.getText());
+                test.setX(text.getLayoutX());
+                test.setY(text.getLayoutY());
+                test.setStyle("-fx-font-family: Gafata; -fx-font-size: 40;");
+                zoomGroup.getChildren().add(test);
+                zoomGroup.getChildren().remove(text);
+                e.consume();
+            });
+            
+        }
+    }
+    
+    
+
+    @FXML
+    private void moveOrDrawReleased(MouseEvent event){
+        System.out.println("Releasing...");
+        if(drawLine.isSelected()){
+            linePainting.setEndX(event.getX());
+            linePainting.setEndY(event.getY());
+            event.consume();
+        }else if(drawCircle.isSelected()){
+            double radius = Math.abs(event.getX() - coordinateXCircle);
+            circlePainting.setRadius(radius);
+            event.consume();
+        }
+    }
+
+    @FXML
+    private void handleDragOnMap(MouseEvent event){
+        System.out.println("Dragging..."); 
+        if(drawLine.isSelected()){
+            linePainting.setEndX(event.getX());
+            linePainting.setEndY(event.getY());
+            event.consume();
+        }else if(drawCircle.isSelected()){
+            double radius = Math.abs(event.getX() - coordinateXCircle);
+            circlePainting.setRadius(radius);
+            event.consume();
         }
     }
     
@@ -426,35 +483,5 @@ public class MapController implements Initializable {
     private void changeColor(ActionEvent event) {
         currentColor = colorPicker.getValue();
     }
-
-    @FXML
-    private void moveOrDrawReleased(MouseEvent event) 
-    {
-        System.out.println("Hi mr. released!");
-        if(drawLine.isSelected())
-        {
-            linePainting.setEndX(event.getX());
-            linePainting.setEndY(event.getY());
-            event.consume();
-            System.out.println(linePainting);
-        }
-         
-    }
-
-    @FXML
-    private void handleDragOnMap(MouseEvent event) 
-    {
-        System.out.println("Dragging"); 
-        if(drawLine.isSelected())
-        {
-            linePainting.setEndX(event.getX());
-            linePainting.setEndY(event.getY());
-            event.consume();
-        }
-    }
-
-   
-
-   
 
 }
