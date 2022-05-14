@@ -307,6 +307,8 @@ public class MapController implements Initializable {
         if(drawLine.isSelected())
         {
             linePainting = new Line(event.getX(), event.getY(), event.getX(), event.getY());
+            zoomGroup.getChildren().add(linePainting);
+            linePainting.setStroke(currentColor);
             linePainting.setOnContextMenuRequested(eventContext -> 
             {
                 ContextMenu menuContext = new ContextMenu();
@@ -321,8 +323,6 @@ public class MapController implements Initializable {
                 menuContext.show(linePainting, event.getSceneX(), event.getSceneY());
                 eventContext.consume();
             });
-            linePainting.setStroke(currentColor);
-            zoomGroup.getChildren().add(linePainting);
             System.out.println(linePainting);
         }
     }
