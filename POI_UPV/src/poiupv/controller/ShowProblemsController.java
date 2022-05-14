@@ -20,7 +20,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Navegacion;
@@ -41,6 +43,10 @@ public class ShowProblemsController implements Initializable {
     
     @FXML
     private Label problemDescription;
+    @FXML
+    private ImageView avatar;
+    @FXML
+    private Text user;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -53,6 +59,9 @@ public class ShowProblemsController implements Initializable {
             shownProblems.setCellFactory(c -> new ProblemListCell());
         } catch (NavegacionDAOException ex) {
         }
+        
+        avatar.setImage(MapController.currentUser.getAvatar());
+        user.setText(MapController.currentUser.getNickName());
         
         
         shownProblems.getSelectionModel().selectedIndexProperty().

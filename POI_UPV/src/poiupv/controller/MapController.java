@@ -307,6 +307,32 @@ public class MapController implements Initializable {
 	@FXML
 	private void clearMenuPressed(ActionEvent event) {
 	}
+        
+         @FXML
+        private void checkStatisticsPressed(ActionEvent event) throws Exception {
+            
+             if(currentUser != null){
+                FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ShowProblems.fxml"));
+                BorderPane root = (BorderPane) myLoader.load();
+                ShowProblemsController modifyProfileController = myLoader.<ShowProblemsController>getController();
+
+                Scene scene = new Scene (root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setTitle("Problems");
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.setResizable(false);
+                stage.show();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Login required");
+                alert.setHeaderText("LOG IN TO PERFORM THIS OPERATION");
+                alert.setContentText("You must be logged in to make problems");
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.showAndWait();
+            }
+            
+        }
 
 	@FXML
 	private void randomProblemPressed(ActionEvent event) {
@@ -395,6 +421,8 @@ public class MapController implements Initializable {
             event.consume();
         }
     }
+
+   
 
    
 

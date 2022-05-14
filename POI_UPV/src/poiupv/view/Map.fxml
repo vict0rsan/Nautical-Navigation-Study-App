@@ -21,7 +21,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
+<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
    <children>
       <MenuBar>
         <menus>
@@ -48,7 +48,7 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#randomProblemPressed" text="Random problem" />
                   <MenuItem mnemonicParsing="false" onAction="#selectProblemPressed" text="Select a problem" />
-                  <MenuItem mnemonicParsing="false" text="Check statistics" />
+                  <MenuItem mnemonicParsing="false" onAction="#checkStatisticsPressed" text="Check statistics" />
                </items>
             </Menu>
         </menus>
