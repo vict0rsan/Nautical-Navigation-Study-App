@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -27,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -37,6 +39,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
@@ -69,8 +72,10 @@ public class MapController implements Initializable {
     private Group zoomGroup;
     private Line linePainting;
     private Circle circlePainting;
+    private Circle pointSelected;
     private double coordinateXCircle;
     private Color currentColor = Color.BLACK;
+    private double currentThickness = 5;
     
     private LocalDateTime sessionInitialized;
 
@@ -101,6 +106,10 @@ public class MapController implements Initializable {
     private ToggleButton drawCircle;
     @FXML
     private ToggleButton putText;
+    @FXML
+    private Slider thicknessSlider;
+    @FXML
+    private ToggleButton selectPoint;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -163,11 +172,21 @@ public class MapController implements Initializable {
         //initData();
         //==========================================================
         // inicializamos el slider y enlazamos con el zoom
+        map_scrollpane.setHvalue(0.315);
+        map_scrollpane.setVvalue(0.1);
+        
+        
         zoom_slider.setMin(0.5);
         zoom_slider.setMax(1.5);
         zoom_slider.setValue(1.0);
         zoom_slider.valueProperty().addListener((o, oldVal, newVal) -> zoom((Double) newVal));
         
+        thicknessSlider.setMin(1);
+        thicknessSlider.setMax(10);
+        thicknessSlider.setValue(5);
+        thicknessSlider.valueProperty().addListener(l -> {
+            currentThickness = thicknessSlider.getValue();
+        });
         //=========================================================================
         //Envuelva el contenido de scrollpane en un grupo para que 
         //ScrollPane vuelva a calcular las barras de desplazamiento tras el escalado
@@ -406,6 +425,7 @@ public class MapController implements Initializable {
         if(drawLine.isSelected()){
             linePainting = new Line(event.getX(), event.getY(), event.getX(), event.getY());
             linePainting.setStroke(currentColor);
+            linePainting.setStrokeWidth(currentThickness);
             zoomGroup.getChildren().add(linePainting);
             linePainting.setOnContextMenuRequested(eventContext -> {
                 ContextMenu menuContext = new ContextMenu();
@@ -424,7 +444,7 @@ public class MapController implements Initializable {
             circlePainting = new Circle(1);
             circlePainting.setStroke(currentColor);
             circlePainting.setFill(Color.TRANSPARENT);
-            
+            circlePainting.setStrokeWidth(currentThickness);
             zoomGroup.getChildren().add(circlePainting);
             circlePainting.setCenterX(event.getX());
             circlePainting.setCenterY(event.getY());
@@ -446,6 +466,13 @@ public class MapController implements Initializable {
                 e.consume();
             });
             
+        }else if(selectPoint.isSelected()){
+            pointSelected = new Circle(5);
+            pointSelected.setStroke(currentColor);
+            pointSelected.setStrokeWidth(currentThickness);
+            zoomGroup.getChildren().add(pointSelected);
+            pointSelected.setCenterX(event.getX());
+            pointSelected.setCenterY(event.getY());
         }
     }
     

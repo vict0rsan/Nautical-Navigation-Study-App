@@ -96,7 +96,7 @@
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="504.0" prefWidth="150.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="avatar" fitHeight="108.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/avatars/avatardefault.png" />
                </image>

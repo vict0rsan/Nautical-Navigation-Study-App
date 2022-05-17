@@ -10,10 +10,13 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.Answer;
 import model.Problem;
 
@@ -36,6 +39,10 @@ public class ProblemController implements Initializable{
     private RadioButton answer3;
     @FXML
     private RadioButton answer4;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private Button submitButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -54,18 +61,23 @@ public class ProblemController implements Initializable{
         }else if(answer4.isSelected() && answers.get(3).getValidity()){
             markAsCorrect( answer4);
         }else{
-            markAsIncorrectAndFindCorrect();
+            markAsIncorrectAndFindCorrect(answers);
         }
         
         answer1.setDisable(true);
         answer2.setDisable(true);
         answer3.setDisable(true);
         answer4.setDisable(true);
+        submitButton.setDisable(true);
+        cancelButton.requestFocus();
         
     }
 
     @FXML
     private void onActionCancelButton(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage oldStage = (Stage) source.getScene().getWindow();
+        oldStage.close();
     }
     
     public void setProblem(Problem problem){
@@ -84,12 +96,20 @@ public class ProblemController implements Initializable{
         answer.setTextFill(Color.GREEN);
     }
     
-    private void markAsIncorrectAndFindCorrect(){
+    private void markAsIncorrectAndFindCorrect(List<Answer> answers){
         MapController.currentSessionFaults += 1;
         RadioButton selectedButton = (RadioButton) answer.getSelectedToggle();
         selectedButton.setTextFill(Color.RED);
         
-        
+         if(answers.get(0).getValidity()){
+            answer1.setTextFill(Color.GREEN);
+        }else if(answers.get(1).getValidity()){
+            answer2.setTextFill(Color.GREEN);
+        }else if(answers.get(2).getValidity()){
+            answer3.setTextFill(Color.GREEN);
+        }else if(answers.get(3).getValidity()){
+            answer4.setTextFill(Color.GREEN);
+        }
     }
     
 }
