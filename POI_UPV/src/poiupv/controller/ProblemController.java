@@ -5,6 +5,8 @@
 package poiupv.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -85,10 +87,13 @@ public class ProblemController implements Initializable{
         problemText.setText(problem.getText());
         
         List<Answer> answers = problem.getAnswers();
-        answer1.setText(answers.get(0).getText());
-        answer2.setText(answers.get(1).getText());
-        answer3.setText(answers.get(2).getText());
-        answer4.setText(answers.get(3).getText());
+        List<Answer> mixedAnswers = new ArrayList(answers);
+        Collections.shuffle(mixedAnswers);
+
+        answer1.setText(mixedAnswers.get(0).getText());
+        answer2.setText(mixedAnswers.get(1).getText());
+        answer3.setText(mixedAnswers.get(2).getText());
+        answer4.setText(mixedAnswers.get(3).getText());
     }
     
     private void markAsCorrect(RadioButton answer){
