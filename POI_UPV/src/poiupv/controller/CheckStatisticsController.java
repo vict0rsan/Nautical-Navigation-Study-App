@@ -20,14 +20,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Problem;
 import model.Session;
 
@@ -93,8 +100,23 @@ public class CheckStatisticsController implements Initializable {
     }    
 
     @FXML
-    private void handleGeneralStatisticsOnAction(ActionEvent event) {
-        
+    private void handleGeneralStatisticsOnAction(ActionEvent event) throws Exception {
+        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/GeneralStatistics.fxml"));
+
+        Pane root = (Pane) myLoader.load();
+
+        Scene scene = new Scene (root);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("General Statistics");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setResizable(false);
+        stage.show();
+
+        Node source = (Node) event.getSource();
+        Stage oldStage = (Stage) source.getScene().getWindow();
+        oldStage.close();
     }
 
     @FXML
