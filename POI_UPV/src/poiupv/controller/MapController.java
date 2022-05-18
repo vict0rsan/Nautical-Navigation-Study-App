@@ -333,7 +333,7 @@ public class MapController implements Initializable {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent())
         {
-            if(currentUser.checkPassword(result.get()))
+            if(currentUser.getPassword().equals(result.get()))
             {
                 Scene scene = new Scene (root);
                 Stage stage = new Stage();
@@ -353,7 +353,6 @@ public class MapController implements Initializable {
                 alert.showAndWait();
             }
         }
-	
     }
 
 	@FXML

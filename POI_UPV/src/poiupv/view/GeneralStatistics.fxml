@@ -8,29 +8,25 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.GeneralStatisticsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.GeneralStatisticsController">
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <VBox alignment="BOTTOM_CENTER" prefHeight="61.0" prefWidth="276.0">
          <children>
-            <VBox alignment="BOTTOM_CENTER">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="General statistics.">
-                     <font>
-                        <Font size="32.0" />
-                     </font>
-                  </Text>
-                  <Label fx:id="user" text="User">
-                     <font>
-                        <Font size="32.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="General statistics">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Text>
+            <Label fx:id="user" text="User">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
          </children>
-      </HBox>
-      <HBox>
+      </VBox>
+      <HBox prefHeight="286.0" prefWidth="550.0">
          <VBox.margin>
-            <Insets left="30.0" right="20.0" top="20.0" />
+            <Insets bottom="40.0" left="30.0" right="20.0" top="20.0" />
          </VBox.margin>
          <children>
             <VBox alignment="CENTER" prefHeight="143.0" prefWidth="208.0">
@@ -84,6 +80,9 @@
                      </VBox.margin>
                   </HBox>
                </children>
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
             </VBox>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="72.0">
                <children>
@@ -120,8 +119,11 @@
                      </VBox.margin>
                   </Label>
                </children>
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
             </VBox>
-            <PieChart fx:id="pieChart" prefHeight="200.0" prefWidth="239.0" />
+            <PieChart fx:id="pieChart" prefHeight="282.0" prefWidth="335.0" />
          </children>
       </HBox>
    </children>

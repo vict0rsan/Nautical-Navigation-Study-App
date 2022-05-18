@@ -11,8 +11,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -84,6 +86,7 @@ public class CheckStatisticsController implements Initializable {
                         problemCount.setText("-");
                         correctAnswers.setText("-");
                         incorrectAnswers.setText("-");
+                        pieChart.setData(null);
                     }else{
                         Session selectedSession = shownSessions.getSelectionModel().getSelectedItem();
                         int hits = selectedSession.getHits();
@@ -95,6 +98,19 @@ public class CheckStatisticsController implements Initializable {
                         data.add(new PieChart.Data("Hits", hits));
                         data.add(new PieChart.Data("Faults", faults));
                         pieChart.setData(data);
+                        
+                        int i = 0;
+                        for (PieChart.Data pieSlice : data) {
+                            if(i == 0)
+                                pieSlice.getNode().setStyle("-fx-pie-color: green;");
+                            else
+                                pieSlice.getNode().setStyle("-fx-pie-color: red;");
+                          i++;
+                        }
+                        
+                        pieChart.legendVisibleProperty().setValue(Boolean.TRUE);
+                        
+                       
                     }
                 });
     }    
@@ -123,9 +139,12 @@ public class CheckStatisticsController implements Initializable {
     private void handleFilterSessionsOnAction(ActionEvent event) {
         List<Session> sessions = MapController.currentUser.getSessions();
         LocalDate dateFrom = dateFilter.getValue();
-        sessions = sessions.stream().filter(s -> s.getLocalDate().compareTo(dateFrom) >= 0).collect(Collectors.toList());
-        sessionsToShow = FXCollections.observableArrayList(sessions);
-        shownSessions.setItems(sessionsToShow);
+        if(dateFrom != null){
+            sessions = sessions.stream().filter(s -> s.getLocalDate().compareTo(dateFrom) >= 0).collect(Collectors.toList());
+            sessionsToShow = FXCollections.observableArrayList(sessions);
+            shownSessions.setItems(sessionsToShow);
+            pieChart.setData(null);
+        }
     }
     
     

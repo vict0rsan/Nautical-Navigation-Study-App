@@ -8,6 +8,8 @@ package poiupv.controller;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
@@ -52,5 +54,11 @@ public class GeneralStatisticsController implements Initializable {
         problemLabel.setText("" + problems);
         correctLabel.setText("" + hits);
         incorrectLabel.setText("" + misses);
+        user.setText("- " + MapController.currentUser.getNickName() + " -");
+        
+        ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
+        data.add(new PieChart.Data("Hits", hits));
+        data.add(new PieChart.Data("Faults", misses));
+        pieChart.setData(data);
     }    
 }
