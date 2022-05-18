@@ -22,7 +22,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
+<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
    <children>
       <MenuBar>
         <menus>
@@ -58,7 +58,7 @@
          <children>
                <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" pannable="true" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
-                     <Pane onMouseDragged="#handleDragOnMap" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed" onMouseReleased="#moveOrDrawReleased">
+                     <Pane onMouseClicked="#clickTest" onMouseDragged="#handleDragOnMap" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed" onMouseReleased="#moveOrDrawReleased">
                         <children>
                            <ImageView pickOnBounds="true">
                               <image>
@@ -69,7 +69,7 @@
                      </Pane>
                   </content>
                </ScrollPane>
-            <Pane fx:id="buttonPane" prefHeight="626.0" prefWidth="116.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane prefHeight="626.0" prefWidth="116.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Slider fx:id="zoom_slider" layoutX="20.0" layoutY="46.0" min="10.0" orientation="VERTICAL" />
                   <Button layoutX="12.0" layoutY="195.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="30.0" prefWidth="30.0" text="-" />
@@ -113,27 +113,28 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton layoutX="12.0" layoutY="484.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools" />
-                  <Label layoutX="48.0" layoutY="587.0" text="Clear" />
-                  <Button layoutX="12.0" layoutY="580.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                  <ToggleButton fx:id="removeButton" layoutX="12.0" layoutY="484.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#removePressed" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../resources/erase.png" />
                            </image>
                         </ImageView>
-                     </graphic>
-                  </Button>
+                     </graphic></ToggleButton>
+                  <Label layoutX="48.0" layoutY="587.0" text="Clear" />
+                  <Button layoutX="12.0" layoutY="580.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/delete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                   <ColorPicker fx:id="colorPicker" layoutX="9.0" layoutY="410.0" onAction="#changeColor" prefHeight="30.0" prefWidth="41.0" promptText="Color">
                      <value>
                         <Color />
                      </value>
                   </ColorPicker>
-                  <ImageView fitHeight="150.0" fitWidth="22.0" layoutX="16.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resources/delete.png" />
-                     </image>
-                  </ImageView>
                   <MenuButton layoutX="9.0" layoutY="452.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Thickness">
                     <items>
                       <MenuItem mnemonicParsing="false">

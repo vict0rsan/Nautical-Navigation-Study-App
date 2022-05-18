@@ -53,8 +53,6 @@ public class ModifyProfileController implements Initializable
     @FXML
     private PasswordField password;
     @FXML
-    private Button passwordHelpButton;
-    @FXML
     private Label incorrectPassword;
     @FXML
     private PasswordField passwordConfirmation;
@@ -63,11 +61,7 @@ public class ModifyProfileController implements Initializable
     @FXML
     private DatePicker birthdate;
     @FXML
-    private Label incorrectBirthday;
-    @FXML
     private ImageView avatar;
-    @FXML
-    private Button selectAvatarButton;
     @FXML
     private TextField username;
     
@@ -78,8 +72,6 @@ public class ModifyProfileController implements Initializable
     
     //When to strings are equal, compareTo returns zero
     private final int EQUALS = 0; 
-    @FXML
-    private Button selectAvatarFromDeviceButton;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -213,7 +205,7 @@ public class ModifyProfileController implements Initializable
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("CHANGES DONE");
         alert.setHeaderText(null);
-        alert.setContentText("YouR data has been succesfully updated!");
+        alert.setContentText("Your data has been succesfully updated!");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {

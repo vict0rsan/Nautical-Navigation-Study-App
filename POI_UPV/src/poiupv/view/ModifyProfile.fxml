@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.ModifyProfileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.ModifyProfileController">
    <top>
       <HBox prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #BB86DC; -fx-opacity: ;" BorderPane.alignment="CENTER_LEFT">
          <children>
@@ -60,7 +60,7 @@
                   <Insets left="350.0" top="40.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="bCancel" minWidth="80.0" mnemonicParsing="false" onAction="#handleButtonCancelOnAction" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #E75F5F;" text="Cancel">
+            <Button minWidth="80.0" mnemonicParsing="false" onAction="#handleButtonCancelOnAction" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #E75F5F;" text="Cancel">
                <graphic>
                   <ImageView fitHeight="89.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -139,10 +139,10 @@
                         <Insets left="25.0" top="20.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                  <VBox prefHeight="100.0" prefWidth="100.0" spacing="10.0">
                      <children>
-                        <Button fx:id="selectAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectAvatarButton" prefHeight="26.0" prefWidth="100.0" text="Selelect default" />
-                        <Button fx:id="selectAvatarFromDeviceButton" mnemonicParsing="false" onAction="#handleSelectAvatarFromDeviceButton" prefHeight="35.0" prefWidth="100.0" text="Upload from device" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectAvatarButton" prefHeight="26.0" prefWidth="100.0" text="Selelect default" />
+                        <Button mnemonicParsing="false" onAction="#handleSelectAvatarFromDeviceButton" prefHeight="44.0" prefWidth="100.0" text="Upload from device" textAlignment="CENTER" wrapText="true" />
                      </children>
                      <HBox.margin>
                         <Insets top="40.0" />
@@ -178,7 +178,8 @@
                   <Label fx:id="incorrectEmail" text="Incorrect Email" textFill="RED" visible="false">
                      <HBox.margin>
                         <Insets left="20.0" top="35.0" />
-                     </HBox.margin></Label>
+                     </HBox.margin>
+                  </Label>
                </children>
             </HBox>
             <HBox prefHeight="70.0" prefWidth="600.0">
@@ -200,7 +201,7 @@
                         <Insets left="25.0" top="15.0" />
                      </HBox.margin>
                   </VBox>
-                  <Button fx:id="passwordHelpButton" mnemonicParsing="false" onAction="#handleBPassHelpPressed" text="?">
+                  <Button mnemonicParsing="false" onAction="#handleBPassHelpPressed" text="?">
                      <HBox.margin>
                         <Insets left="20.0" top="35.0" />
                      </HBox.margin>
@@ -238,7 +239,7 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="241.0" prefHeight="70.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="incorrectBirthday" prefHeight="62.0" prefWidth="342.0" text="Users must be between 12 and 100 years old" textFill="RED" visible="false" wrapText="true">
+                  <Label prefHeight="62.0" prefWidth="342.0" text="Users must be between 12 and 100 years old" textFill="RED" visible="false" wrapText="true">
                      <HBox.margin>
                         <Insets left="25.0" top="40.0" />
                      </HBox.margin>

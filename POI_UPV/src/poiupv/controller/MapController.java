@@ -89,8 +89,6 @@ public class MapController implements Initializable {
     @FXML
     private Label posicion;
     @FXML
-    private Pane buttonPane;
-    @FXML
     private MenuItem logoutButton;
     @FXML
     private MenuItem modifyButton;
@@ -110,6 +108,8 @@ public class MapController implements Initializable {
     private Slider thicknessSlider;
     @FXML
     private ToggleButton selectPoint;
+    @FXML
+    private ToggleButton removeButton;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -238,8 +238,7 @@ public class MapController implements Initializable {
     @FXML
     private void handleOnActionLoginButton(ActionEvent event) throws IOException {
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLLogin.fxml"));
-        BorderPane root = (BorderPane) myLoader.load();
-        LoginController detailsController = myLoader.<LoginController>getController();
+        Pane root = (Pane) myLoader.load();
         Scene scene = new Scene (root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -427,19 +426,7 @@ public class MapController implements Initializable {
             linePainting.setStroke(currentColor);
             linePainting.setStrokeWidth(currentThickness);
             zoomGroup.getChildren().add(linePainting);
-            linePainting.setOnContextMenuRequested(eventContext -> {
-                ContextMenu menuContext = new ContextMenu();
-                MenuItem deleteItem = new MenuItem("Delete");
-                menuContext.getItems().add(deleteItem);
-                //If the user selects the option, we delete the line
-                deleteItem.setOnAction( eventMenu ->
-                {
-                    zoomGroup.getChildren().remove((Node)eventContext.getSource());
-                    eventMenu.consume();
-                });
-                menuContext.show(linePainting, event.getSceneX(), event.getSceneY());
-                eventContext.consume();
-            });
+            
         }else if(drawCircle.isSelected()){
             circlePainting = new Circle(1);
             circlePainting.setStroke(currentColor);
@@ -473,7 +460,7 @@ public class MapController implements Initializable {
             zoomGroup.getChildren().add(pointSelected);
             pointSelected.setCenterX(event.getX());
             pointSelected.setCenterY(event.getY());
-        }
+        } 
     }
     
     
@@ -509,6 +496,18 @@ public class MapController implements Initializable {
     @FXML
     private void changeColor(ActionEvent event) {
         currentColor = colorPicker.getValue();
+    }
+
+    @FXML
+    private void removePressed(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void clickTest(MouseEvent event) {
+        if (removeButton.isSelected()) {
+            zoomGroup.getChildren().remove(event.getSource());
+        }
     }
 
 }

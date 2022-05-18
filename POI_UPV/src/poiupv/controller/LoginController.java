@@ -26,6 +26,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -153,7 +155,44 @@ public class LoginController implements Initializable {
         stage.show();
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
-		oldStage.close();
+        oldStage.close();
     }
-    
+
+    @FXML
+    private void passEnter(KeyEvent event) throws NavegacionDAOException, IOException {
+        if (event.getCode() == KeyCode.ENTER) {
+            Navegacion database = Navegacion.getSingletonNavegacion();
+            String currentNickname = username.getText();
+            Boolean existsNickName = database.exitsNickName(currentNickname);
+        
+            if(!existsNickName){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("LOGIN ERROR");
+                alert.setHeaderText("LOGIN FAILED");
+                alert.setContentText("User " + currentNickname + " does not exist");
+                alert.initModality(Modality.WINDOW_MODAL);
+                alert.showAndWait();
+                clearFields();
+                return;
+            }
+
+            User user = database.loginUser(currentNickname, password.getText());
+
+            if(user == null){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("LOGIN ERROR");
+                alert.setHeaderText("LOGIN FAILED");
+                alert.setContentText("User and password do not match");
+                alert.initModality(Modality.WINDOW_MODAL);
+                alert.showAndWait();
+                clearFields();
+                return;
+            }
+
+            MapController.currentUser = user;
+            Node source = (Node) event.getSource();
+            Stage oldStage = (Stage) source.getScene().getWindow();
+            oldStage.close();
+        }
+    } 
 }
