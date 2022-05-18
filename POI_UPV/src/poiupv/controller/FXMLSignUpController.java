@@ -22,6 +22,8 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
 import javafx.scene.image.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.*;
@@ -50,8 +52,6 @@ public class FXMLSignUpController implements Initializable {
     @FXML
     private Button bAccept;
     @FXML
-    private Button bCancel;
-    @FXML
     private TextField username;
     @FXML
     private Text usernameErrorText;
@@ -61,13 +61,7 @@ public class FXMLSignUpController implements Initializable {
     @FXML
     private ImageView avatar;
     @FXML
-    private Button selectAvatarButton;
-    @FXML
     private Label lBirthdate;
-    @FXML
-    private Button passHelp;
-    @FXML
-    private Button selectAvatarFromFIleButton;
     
    //properties to control valid fieds values. 
     private BooleanProperty validPassword;
@@ -212,7 +206,7 @@ public class FXMLSignUpController implements Initializable {
             }
         });
 	
-		birthdate.focusedProperty().addListener((observable, oldValue, newValue)->{
+	birthdate.focusedProperty().addListener((observable, oldValue, newValue)->{
             if(!newValue)
             {
                 checkBirthdate();
@@ -405,5 +399,66 @@ public class FXMLSignUpController implements Initializable {
             Image image = new Image("file:" + imgFile.getAbsolutePath());
             avatar.setImage(image);
         }
+    }
+
+    @FXML
+    private void dateEnterPressed(KeyEvent event) throws Exception {
+        if (event.getCode() == KeyCode.ENTER) {
+            try{nav.registerUser(username.textProperty().getValue(), email.textProperty().getValue(), pass.textProperty().getValue(), avatar.getImage(), birthdate.getValue());}
+            catch(Exception e){ System.out.println(e.getMessage());}
+            email.textProperty().setValue("");
+            pass.textProperty().setValue("");
+            rpass.textProperty().setValue("");
+            username.textProperty().setValue("");
+            avatar.setImage(new Image("resources/avatars/avatardefault.png"));
+            birthdate.setValue(null);
+
+
+            validEmail.setValue(Boolean.FALSE);
+            validPassword.setValue(Boolean.FALSE);
+            equalPasswords.setValue(Boolean.FALSE);
+            validUsername.setValue(Boolean.FALSE);
+
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Registration confirmed");
+            alert.setHeaderText(null);
+            alert.setContentText("You have been succesfully registered!");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLLogin.fxml"));
+
+                BorderPane root = (BorderPane) myLoader.load();
+
+                        //Get the controller of the UI
+                LoginController detailsController = myLoader.<LoginController>getController();
+                        //We pass the data to the cotroller. Passing the observableList we 
+                        //give controll to the modal for deleting/adding/modify the data 
+                        //we see in the listView
+
+                Scene scene = new Scene (root);
+
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setTitle("Login");
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setResizable(false);
+                stage.show();
+
+                Node source = (Node) event.getSource();
+                Stage oldStage = (Stage) source.getScene().getWindow();
+                oldStage.close();
+            }
+        }
+    }
+
+    @FXML
+    private void avatarEnterPressed(KeyEvent event) throws Exception {
+        dateEnterPressed(event);
+    }
+
+    @FXML
+    private void fileEnterPressed(KeyEvent event) throws Exception {
+        dateEnterPressed(event);
     }
 }

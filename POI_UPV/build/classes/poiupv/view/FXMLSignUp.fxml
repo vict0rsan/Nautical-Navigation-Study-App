@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.FXMLSignUpController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.FXMLSignUpController">
    <top>
       <HBox prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #BB86DC; -fx-opacity: ;" BorderPane.alignment="CENTER_LEFT">
          <children>
@@ -60,7 +60,7 @@
                   <Insets left="350.0" top="40.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="bCancel" minWidth="80.0" mnemonicParsing="false" onAction="#handleButtonCancelOnAction" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #E75F5F;" text="Cancel">
+            <Button minWidth="80.0" mnemonicParsing="false" onAction="#handleButtonCancelOnAction" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #E75F5F;" text="Cancel">
                <graphic>
                   <ImageView fitHeight="89.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -163,7 +163,7 @@
                         <Insets left="25.0" top="15.0" />
                      </HBox.margin>
                   </VBox>
-                  <Button fx:id="passHelp" mnemonicParsing="false" onAction="#handleBPassHelpPressed" text="?">
+                  <Button mnemonicParsing="false" onAction="#handleBPassHelpPressed" text="?">
                      <HBox.margin>
                         <Insets left="20.0" top="35.0" />
                      </HBox.margin>
@@ -208,7 +208,7 @@
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="birthdate" prefHeight="26.0" prefWidth="194.0">
+                        <DatePicker fx:id="birthdate" onKeyPressed="#dateEnterPressed" prefHeight="26.0" prefWidth="194.0">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
@@ -225,7 +225,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="312.0" prefHeight="70.0" prefWidth="200.0">
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="312.0" prefHeight="70.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <VBox prefHeight="62.0" prefWidth="90.0">
                      <children>
@@ -250,9 +250,14 @@
                         <Insets left="25.0" top="20.0" />
                      </HBox.margin>
                   </VBox>
-                  <Button fx:id="selectAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectAvatarButton" text="Select avatar">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectAvatarButton" onKeyPressed="#avatarEnterPressed" text="Select avatar">
                      <HBox.margin>
-                        <Insets left="20.0" top="30.0" />
+                        <Insets top="30.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" layoutX="145.0" layoutY="83.0" mnemonicParsing="false" onAction="#handleSelectAvatarFromFileButton" onKeyPressed="#fileEnterPressed" text="Select from file">
+                     <HBox.margin>
+                        <Insets top="30.0" />
                      </HBox.margin>
                   </Button>
                </children>
