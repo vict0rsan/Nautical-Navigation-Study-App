@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -22,21 +23,26 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
@@ -45,6 +51,7 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -110,6 +117,12 @@ public class MapController implements Initializable {
     private ToggleButton selectPoint;
     @FXML
     private ToggleButton removeButton;
+    @FXML
+    private MenuItem loginButton;
+    @FXML
+    private MenuItem signUpButton;
+    @FXML
+    private ToggleGroup drawingToolsMenu;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -218,6 +231,8 @@ public class MapController implements Initializable {
     
     
     private void loginSetup () {
+        loginButton.setVisible(false);
+        signUpButton.setVisible(false);
         logoutButton.setVisible(true);
         modifyButton.setVisible(true);
         welcomeLabel.textProperty().setValue("You are logged as: " + currentUser.getNickName());
@@ -225,6 +240,8 @@ public class MapController implements Initializable {
     }
     
     private void logoutSetup(){
+        loginButton.setVisible(true);
+        signUpButton.setVisible(true);
         currentSessionHints = 0;
         currentSessionFaults = 0;
         currentUser = null;
@@ -295,13 +312,48 @@ public class MapController implements Initializable {
 	BorderPane root = (BorderPane) myLoader.load();
 	ModifyProfileController modifyProfileController = myLoader.<ModifyProfileController>getController();
         
-	Scene scene = new Scene (root);
-	Stage stage = new Stage();
-	stage.setScene(scene);
-	stage.setTitle("Modify profile");
-	stage.initModality(Modality.WINDOW_MODAL);
-	stage.setResizable(false);
-	stage.show();
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Security check");
+        dialog.setHeaderText("For security reasons, confirm your actual password");
+        //dialog.setGraphic(new Circle(15, Color.RED)); 
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        PasswordField pwd = new PasswordField();
+        HBox content = new HBox();
+        content.setAlignment(Pos.CENTER_LEFT);
+        content.setSpacing(10);
+        content.getChildren().addAll(new Label("Enter your actual password:"), pwd);
+        dialog.getDialogPane().setContent(content);
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                return pwd.getText();
+            }
+            return null;
+        });
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent())
+        {
+            if(currentUser.checkPassword(result.get()))
+            {
+                Scene scene = new Scene (root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setTitle("Modify profile");
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.setResizable(false);
+                stage.show();
+            }
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Security error");
+                alert.setHeaderText("Password is not correct");
+                alert.setContentText("Enter your actual password in order to modify your profile!");
+                alert.initModality(Modality.WINDOW_MODAL);
+                alert.showAndWait();
+            }
+        }
+	
     }
 
 	@FXML

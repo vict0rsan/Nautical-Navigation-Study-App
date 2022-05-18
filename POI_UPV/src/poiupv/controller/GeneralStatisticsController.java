@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import model.Session;
 
@@ -30,6 +31,10 @@ public class GeneralStatisticsController implements Initializable {
     private Label incorrectLabel;
     
     private int problems = 0, hits = 0, misses = 0;
+    @FXML
+    private Label user;
+    @FXML
+    private PieChart pieChart;
 
     /**
      * Initializes the controller class.

@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
@@ -196,23 +197,48 @@ public class ModifyProfileController implements Initializable
     }
 
     @FXML
-    private void handleBAcceptOnAction(ActionEvent event) throws Exception {
-        
-        MapController.currentUser.setEmail(email.textProperty().getValue());
-        MapController.currentUser.setPassword(password.textProperty().getValue());
-        MapController.currentUser.setAvatar(avatar.getImage());
-        	
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("CHANGES DONE");
-        alert.setHeaderText(null);
-        alert.setContentText("Your data has been succesfully updated!");
-
+    private void handleBAcceptOnAction(ActionEvent event) throws Exception 
+    {
+        Alert alert;
+        alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Modify confirmation");
+        alert.setHeaderText("Are you sure you want to modify this settings?");
+        alert.setContentText("If you press OK, your profile will be modified");
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            Node source = (Node) event.getSource();
-            Stage oldStage = (Stage) source.getScene().getWindow();
-            oldStage.close();
-        }		
+        if (result.isPresent() && result.get() == ButtonType.OK)
+        {
+            MapController.currentUser.setEmail(email.textProperty().getValue());
+            MapController.currentUser.setPassword(password.textProperty().getValue());
+            MapController.currentUser.setAvatar(avatar.getImage());
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setTitle("CHANGES DONE");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Your data has been succesfully updated!");
+            result = alert2.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) 
+            {
+                Node source = (Node) event.getSource();
+                Stage oldStage = (Stage) source.getScene().getWindow();
+                oldStage.close();
+            }	
+            
+        } 
+        else 
+        {
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setTitle("Changes not done");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Your data has not been updated!");
+            result = alert2.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) 
+            {
+                Node source = (Node) event.getSource();
+                Stage oldStage = (Stage) source.getScene().getWindow();
+                oldStage.close();
+            }	
+        }
+
+        	
     }
 
     @FXML
