@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,8 @@ import java.util.Set;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,6 +62,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -141,6 +145,11 @@ public class MapController implements Initializable {
     private RadioMenuItem lineMenu;
     @FXML
     private Button clearButton;
+    @FXML
+    private Pane drawingPane;
+    
+    private List<Shape> list;
+    private ObservableList<Shape> observableList; 
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -206,6 +215,8 @@ public class MapController implements Initializable {
         map_scrollpane.setHvalue(0.315);
         map_scrollpane.setVvalue(0.1);
         
+        list = new ArrayList();
+        observableList = FXCollections.observableArrayList(list);
         
         zoom_slider.setMin(0.5);
         zoom_slider.setMax(1.5);
@@ -508,6 +519,7 @@ public class MapController implements Initializable {
             linePainting.setStroke(currentColor);
             linePainting.setStrokeWidth(currentThickness);
             zoomGroup.getChildren().add(linePainting);
+            observableList.add(linePainting);
             
         }else if(drawCircle.isSelected()){
             circlePainting = new Circle(1);
@@ -518,6 +530,7 @@ public class MapController implements Initializable {
             circlePainting.setCenterX(event.getX());
             circlePainting.setCenterY(event.getY());
             coordinateXCircle = event.getX();
+            observableList.add(circlePainting);
         }else if(putText.isSelected()){
             TextField text = new TextField();
             zoomGroup.getChildren().add(text);
@@ -532,6 +545,7 @@ public class MapController implements Initializable {
                 test.setStyle("-fx-font-family: Gafata; -fx-font-size: 40;");
                 zoomGroup.getChildren().add(test);
                 zoomGroup.getChildren().remove(text);
+                observableList.add(test);
                 e.consume();
             });
             
@@ -543,6 +557,7 @@ public class MapController implements Initializable {
             zoomGroup.getChildren().add(pointSelected);
             pointSelected.setCenterX(event.getX());
             pointSelected.setCenterY(event.getY());
+            observableList.add(pointSelected);
         } 
     }
     
@@ -584,11 +599,13 @@ public class MapController implements Initializable {
     @FXML
     private void removePressed(ActionEvent event) {
         zoomGroup.getChildren().remove(event.getSource());
+        observableList.remove(event.getSource());
     }
 
     @FXML
     private void clearButtonPressed(ActionEvent event) {
-        zoomGroup.getChildren().removeAll();
+        zoomGroup.getChildren().removeAll(observableList);
+        observableList.clear();
     }
 
     @FXML
