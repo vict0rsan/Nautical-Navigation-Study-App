@@ -22,7 +22,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
+<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
    <children>
       <MenuBar>
         <menus>
@@ -36,16 +36,16 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Tools">
             <items>
-                  <RadioMenuItem mnemonicParsing="false" onAction="#pointMenuPressed" text="Mark a point">
+                  <RadioMenuItem fx:id="pointMenu" mnemonicParsing="false" onAction="#pointMenuPressed" text="Mark a point">
                      <toggleGroup>
                         <ToggleGroup fx:id="drawingToolsMenu" />
                      </toggleGroup></RadioMenuItem>
-                  <RadioMenuItem mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" toggleGroup="$drawingToolsMenu" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" toggleGroup="$drawingToolsMenu" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" toggleGroup="$drawingToolsMenu" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#colourMenuPressed" text="Select colour" toggleGroup="$drawingToolsMenu" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" toggleGroup="$drawingToolsMenu" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear" toggleGroup="$drawingToolsMenu" />
+                  <RadioMenuItem fx:id="lineMenu" mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" toggleGroup="$drawingToolsMenu" />
+                  <RadioMenuItem fx:id="arcMenu" mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" toggleGroup="$drawingToolsMenu" />
+                  <RadioMenuItem fx:id="textMenu" mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" toggleGroup="$drawingToolsMenu" />
+                  <MenuItem fx:id="colourMenu" mnemonicParsing="false" onAction="#colourMenuPressed" text="Select colour" />
+                  <RadioMenuItem fx:id="deleteMenu" mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" toggleGroup="$drawingToolsMenu" />
+                  <MenuItem fx:id="clearMenu" mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Problems">

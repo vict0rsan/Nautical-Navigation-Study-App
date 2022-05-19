@@ -39,6 +39,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -123,6 +124,20 @@ public class MapController implements Initializable {
     private MenuItem signUpButton;
     @FXML
     private ToggleGroup drawingToolsMenu;
+    @FXML
+    private RadioMenuItem pointMenu;
+    @FXML
+    private RadioMenuItem arcMenu;
+    @FXML
+    private RadioMenuItem textMenu;
+    @FXML
+    private MenuItem colourMenu;
+    @FXML
+    private RadioMenuItem deleteMenu;
+    @FXML
+    private MenuItem clearMenu;
+    @FXML
+    private RadioMenuItem lineMenu;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -208,6 +223,12 @@ public class MapController implements Initializable {
         contentGroup.getChildren().add(zoomGroup);
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
+        
+        pointMenu.selectedProperty().bindBidirectional(selectPoint.selectedProperty());
+        lineMenu.selectedProperty().bindBidirectional(drawLine.selectedProperty());
+        arcMenu.selectedProperty().bindBidirectional(drawCircle.selectedProperty());
+        textMenu.selectedProperty().bindBidirectional(putText.selectedProperty());
+        // FALTAN LOS DE DELETE Y CLEAR, LOS PONE NACHO CUANDO ESTEN IMPLEMENTADOS
     }
 
     
@@ -357,6 +378,7 @@ public class MapController implements Initializable {
 
 	@FXML
 	private void pointMenuPressed(ActionEvent event) {
+            selectPoint.selectedProperty().setValue(Boolean.TRUE);
 	}
 
 	@FXML
@@ -373,6 +395,8 @@ public class MapController implements Initializable {
 
 	@FXML
 	private void colourMenuPressed(ActionEvent event) {
+            colorPicker.show();
+            changeColor(event);
 	}
 
 	@FXML
