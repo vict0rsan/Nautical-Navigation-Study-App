@@ -29,6 +29,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
@@ -138,6 +139,8 @@ public class MapController implements Initializable {
     private MenuItem clearMenu;
     @FXML
     private RadioMenuItem lineMenu;
+    @FXML
+    private Button clearButton;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -223,6 +226,10 @@ public class MapController implements Initializable {
         contentGroup.getChildren().add(zoomGroup);
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
+        
+        zoomGroup.setOnMousePressed(this:: moveOrDrawPressed);
+        zoomGroup.setOnMouseDragged(this:: handleDragOnMap);
+        zoomGroup.setOnMouseReleased(this:: moveOrDrawReleased);
         
         pointMenu.selectedProperty().bindBidirectional(selectPoint.selectedProperty());
         lineMenu.selectedProperty().bindBidirectional(drawLine.selectedProperty());
@@ -532,6 +539,7 @@ public class MapController implements Initializable {
             pointSelected = new Circle(5);
             pointSelected.setStroke(currentColor);
             pointSelected.setStrokeWidth(currentThickness);
+            pointSelected.setFill(currentColor);
             zoomGroup.getChildren().add(pointSelected);
             pointSelected.setCenterX(event.getX());
             pointSelected.setCenterY(event.getY());
@@ -575,14 +583,16 @@ public class MapController implements Initializable {
 
     @FXML
     private void removePressed(ActionEvent event) {
-        
+        zoomGroup.getChildren().remove(event.getSource());
+    }
+
+    @FXML
+    private void clearButtonPressed(ActionEvent event) {
+        zoomGroup.getChildren().removeAll();
     }
 
     @FXML
     private void clickTest(MouseEvent event) {
-        if (removeButton.isSelected()) {
-            zoomGroup.getChildren().remove(event.getSource());
-        }
     }
 
 }
