@@ -70,37 +70,69 @@ public class ModifyProfileController implements Initializable
     private BooleanProperty validPassword;
     private BooleanProperty validEmail;
     private BooleanProperty equalPasswords;  
+    private BooleanProperty changes;
     
     //When to strings are equal, compareTo returns zero
     private final int EQUALS = 0; 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        username.setDisable(true);
+        birthdate.setDisable(true);
+        username.textProperty().setValue(MapController.currentUser.getNickName());
+        birthdate.setValue(MapController.currentUser.getBirthdate());
+        avatar.imageProperty().setValue(MapController.currentUser.getAvatar());
+        email.textProperty().setValue(MapController.currentUser.getEmail());
         validEmail = new SimpleBooleanProperty();
         validPassword = new SimpleBooleanProperty();   
         equalPasswords = new SimpleBooleanProperty();
+        changes = new SimpleBooleanProperty();
         
         validEmail.setValue(Boolean.TRUE);
-        validPassword.setValue(Boolean.FALSE);
-        equalPasswords.setValue(Boolean.FALSE);
+        validPassword.setValue(Boolean.TRUE);
+        equalPasswords.setValue(Boolean.TRUE);
+        changes.setValue(Boolean.FALSE);
        
         email.focusedProperty().addListener((observable, oldValue, newValue)->{
 	    if(!newValue) //focus lost.
 		checkEditEmail(); 
             });
         
+        email.textProperty().addListener( (o, oldVal, newVal) ->{
+            if(!(newVal.equals(oldVal)))
+            {
+                changes.setValue(Boolean.TRUE);
+                validEmail.setValue(Boolean.FALSE);
+            }
+        });
+        
+        password.textProperty().addListener( (o, oldVal, newVal) ->{
+            if(!(newVal.equals(oldVal)))
+            {
+                changes.setValue(Boolean.TRUE);
+                equalPasswords.setValue(Boolean.FALSE);
+            }
+        });
+        
         password.focusedProperty().addListener((observable, oldValue, newValue)->{
             if(!newValue) 
                 checkEditPass();
+                
         });
       
         passwordConfirmation.focusedProperty().addListener((observable, oldValue, newValue)->{
             if(!newValue)
                 checkEqualPass();
         });
+        
+        avatar.imageProperty().addListener( (o, oldVal, newVal) -> {
+            System.out.println("Image property listener entering" + changes.getValue());
+            if(!(newVal.equals(oldVal))) changes.setValue(Boolean.TRUE);
+            System.out.println("Image property listener entering" + changes.getValue());
+        });
  
         BooleanBinding validFields = Bindings.and(validEmail, validPassword)
-                 .and(equalPasswords);
+                 .and(equalPasswords).and(changes);
         
         bAccept.disableProperty().bind(Bindings.not(validFields));
         
@@ -207,9 +239,19 @@ public class ModifyProfileController implements Initializable
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK)
         {
-            MapController.currentUser.setEmail(email.textProperty().getValue());
-            MapController.currentUser.setPassword(password.textProperty().getValue());
-            MapController.currentUser.setAvatar(avatar.getImage());
+            if(!email.getText().equals(""))
+            {
+                MapController.currentUser.setEmail(email.textProperty().getValue());
+            }
+            if(!password.getText().equals(""))
+            {
+                MapController.currentUser.setPassword(password.textProperty().getValue());
+            }
+            if(!MapController.currentUser.getAvatar().equals(avatar.getImage()))
+            {
+                MapController.currentUser.setAvatar(avatar.getImage());
+            }
+            
             Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
             alert2.setTitle("CHANGES DONE");
             alert2.setHeaderText(null);
