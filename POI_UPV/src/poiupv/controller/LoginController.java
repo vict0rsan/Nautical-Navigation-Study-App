@@ -26,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -96,6 +97,7 @@ public class LoginController implements Initializable {
             alert.setHeaderText("LOGIN FAILED");
             alert.setContentText("User " + currentNickname + " does not exist");
             alert.initModality(Modality.WINDOW_MODAL);
+            alert.initOwner(bAccept.getScene().getWindow());
             alert.showAndWait();
             clearFields();
             return;
@@ -109,6 +111,7 @@ public class LoginController implements Initializable {
             alert.setHeaderText("LOGIN FAILED");
             alert.setContentText("User and password do not match");
             alert.initModality(Modality.WINDOW_MODAL);
+            alert.initOwner(bAccept.getScene().getWindow());
             alert.showAndWait();
             clearFields();
             return;
@@ -152,6 +155,7 @@ public class LoginController implements Initializable {
         stage.setTitle("Sign Up");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
+        stage.getIcons().add(new Image("resources/helm.png"));
         stage.show();
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
@@ -171,6 +175,7 @@ public class LoginController implements Initializable {
                 alert.setHeaderText("LOGIN FAILED");
                 alert.setContentText("User " + currentNickname + " does not exist");
                 alert.initModality(Modality.WINDOW_MODAL);
+                alert.initOwner(bAccept.getScene().getWindow());
                 alert.showAndWait();
                 clearFields();
                 return;
@@ -184,6 +189,7 @@ public class LoginController implements Initializable {
                 alert.setHeaderText("LOGIN FAILED");
                 alert.setContentText("User and password do not match");
                 alert.initModality(Modality.WINDOW_MODAL);
+                alert.initOwner(bAccept.getScene().getWindow());
                 alert.showAndWait();
                 clearFields();
                 return;

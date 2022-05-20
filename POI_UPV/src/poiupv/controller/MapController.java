@@ -20,12 +20,14 @@ import java.util.Set;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -51,6 +53,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseDragEvent;
@@ -61,6 +64,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.robot.Robot;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
@@ -84,7 +88,7 @@ public class MapController implements Initializable {
     public static int currentSessionFaults;
     
     private Group zoomGroup;
-    private Line linePainting;
+    private Line linePainting = new Line();
     private Circle circlePainting;
     private Circle pointSelected;
     private double coordinateXCircle;
@@ -122,7 +126,6 @@ public class MapController implements Initializable {
     private Slider thicknessSlider;
     @FXML
     private ToggleButton selectPoint;
-    @FXML
     private ToggleButton removeButton;
     @FXML
     private MenuItem loginButton;
@@ -155,6 +158,12 @@ public class MapController implements Initializable {
     private Menu problemsButton;
     @FXML
     private ToggleButton pannableButton;
+    @FXML
+    private ImageView rule;
+    @FXML
+    private ToggleButton ruleButton;
+    @FXML
+    private ToggleButton eraseButton;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -215,7 +224,7 @@ public class MapController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //initData();
-        
+        rule.setVisible(false);
         problemsButton.setDisable(true);
         problemsButton.setText("Problems (login to access)");
         //==========================================================
@@ -246,6 +255,10 @@ public class MapController implements Initializable {
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
         
+        
+        //zoomGroup.getChildren().forEach(this::makeDraggable);
+        makeDraggable(rule);
+        
         pannableButton.focusedProperty().addListener(e -> {
             if(pannableButton.isSelected())
                 map_scrollpane.setPannable(true);
@@ -257,6 +270,7 @@ public class MapController implements Initializable {
         zoomGroup.setOnMousePressed(this:: moveOrDrawPressed);
         zoomGroup.setOnMouseDragged(this:: handleDragOnMap);
         zoomGroup.setOnMouseReleased(this:: moveOrDrawReleased);
+        
         
         pointMenu.selectedProperty().bindBidirectional(selectPoint.selectedProperty());
         lineMenu.selectedProperty().bindBidirectional(drawLine.selectedProperty());
@@ -319,6 +333,7 @@ public class MapController implements Initializable {
         stage.setTitle("Login");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
+        stage.getIcons().add(new Image("resources/helm.png"));
         stage.showAndWait();
         
         if(currentUser != null){
@@ -327,6 +342,7 @@ public class MapController implements Initializable {
             alert.setTitle("Successfully logged in!");
             alert.setHeaderText(null);
             alert.setContentText(" Welcome back " + MapController.currentUser.getNickName() + "!");
+            alert.initOwner(stage.getScene().getWindow());
             alert.showAndWait();
             loginSetup();
         }
@@ -344,6 +360,7 @@ public class MapController implements Initializable {
         stage.setTitle("Sign Up");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
+        stage.getIcons().add(new Image("resources/helm.png"));
         stage.show();
     }
 
@@ -360,6 +377,7 @@ public class MapController implements Initializable {
 	alert.setHeaderText(null);
 	alert.setContentText("You have succesfully logged out.");
 	alert.initModality(Modality.WINDOW_MODAL);
+        alert.initOwner(map_scrollpane.getScene().getWindow());
 	alert.showAndWait();
     }
 
@@ -376,6 +394,7 @@ public class MapController implements Initializable {
         stage.setTitle("Modify profile");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
+        stage.getIcons().add(new Image("resources/helm.png"));
         stage.show();
             
            
@@ -452,6 +471,7 @@ public class MapController implements Initializable {
             stage.setTitle("Random problem");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setResizable(false);
+            stage.getIcons().add(new Image("resources/helm.png"));
             stage.show();
            
 	}
@@ -470,6 +490,7 @@ public class MapController implements Initializable {
             stage.setTitle("Problems");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setResizable(false);
+            stage.getIcons().add(new Image("resources/helm.png"));
             stage.show();
            
 	}
@@ -477,14 +498,23 @@ public class MapController implements Initializable {
    
     @FXML
     private void moveOrDrawPressed(MouseEvent event) {
-        System.out.println("Pressing...");
-        System.out.println("Is drawLine pressed? " + drawLine.isSelected());
-        System.out.println("Is drawCricle pressed? " + drawCircle.isSelected());
-        System.out.println("Is putText pressed? " + putText.isSelected());
+        
         if(drawLine.isSelected()){
             linePainting = new Line(event.getX(), event.getY(), event.getX(), event.getY());
             linePainting.setStroke(currentColor);
             linePainting.setStrokeWidth(currentThickness);
+            
+            linePainting.setOnMouseClicked(e -> {
+                System.out.println(e);
+                System.out.println("Erase button is pressed:" + eraseButton.isSelected());
+            if(eraseButton.isSelected()){
+                Node src = (Node) e.getSource();
+                System.out.println(e);
+                if(src != null)
+                    src.setVisible(false);
+            }
+        });
+            
             zoomGroup.getChildren().add(linePainting);
             observableList.add(linePainting);
             
@@ -493,6 +523,18 @@ public class MapController implements Initializable {
             circlePainting.setStroke(currentColor);
             circlePainting.setFill(Color.TRANSPARENT);
             circlePainting.setStrokeWidth(currentThickness);
+            
+            circlePainting.setOnMouseClicked(e -> {
+                System.out.println(e);
+                System.out.println("Erase button is pressed:" + eraseButton.isSelected());
+            if(eraseButton.isSelected()){
+                Node src = (Node) e.getSource();
+                System.out.println(e);
+                if(src != null)
+                    src.setVisible(false);
+            }
+        });
+            
             zoomGroup.getChildren().add(circlePainting);
             circlePainting.setCenterX(event.getX());
             circlePainting.setCenterY(event.getY());
@@ -504,7 +546,6 @@ public class MapController implements Initializable {
             text.setLayoutX(event.getX());
             text.setLayoutY(event.getY());
             text.requestFocus();
-            System.out.println("Puting text?");
             text.setOnAction(e -> {
                 Text test = new Text(text.getText());
                 test.setX(text.getLayoutX());
@@ -526,13 +567,13 @@ public class MapController implements Initializable {
             pointSelected.setCenterY(event.getY());
             observableList.add(pointSelected);
         } 
+        
     }
     
     
 
     @FXML
     private void moveOrDrawReleased(MouseEvent event){
-        System.out.println("Releasing...");
         if(drawLine.isSelected()){
             linePainting.setEndX(event.getX());
             linePainting.setEndY(event.getY());
@@ -546,7 +587,6 @@ public class MapController implements Initializable {
 
     @FXML
     private void handleDragOnMap(MouseEvent event){
-        System.out.println("Dragging..."); 
         if(drawLine.isSelected()){
             linePainting.setEndX(event.getX());
             linePainting.setEndY(event.getY());
@@ -565,8 +605,10 @@ public class MapController implements Initializable {
 
     @FXML
     private void removePressed(ActionEvent event) {
-        zoomGroup.getChildren().remove(event.getSource());
-        observableList.remove(event.getSource());
+        /*if(eraseButton.isPressed()){
+            zoomGroup.getChildren().remove(event.getSource());
+            observableList.remove(event.getSource());
+        }*/
     }
 
     @FXML
@@ -581,5 +623,37 @@ public class MapController implements Initializable {
 
     @FXML
     private void pannableButtonPressed(ActionEvent event) {
+    }
+
+    @FXML
+    private void ruleButtonPressed(ActionEvent event) {
+        if(ruleButton.isSelected()){
+            rule.setVisible(true);
+            Robot robot = new Robot();
+            Point2D point = robot.getMousePosition();
+            
+
+        double x = point.getX();
+        double y = point.getX();
+        rule.setX(map_scrollpane.getScene().getWindow().getWidth());
+        rule.setY(map_scrollpane.getScene().getWindow().getHeight());
+
+        }else
+            rule.setVisible(false);
+    }
+    
+    private double startX;
+    private double startY;
+    
+    private void makeDraggable(ImageView node){
+        node.setOnMousePressed(e ->{
+            startX = e.getSceneX() - node.getTranslateX();
+            startY = e.getSceneY() - node.getTranslateY();
+        });
+        
+        node.setOnMouseDragged(e -> {
+            node.setTranslateX(e.getSceneX() - startX);
+            node.setTranslateY(e.getSceneY() - startY);
+        });
     }
 }

@@ -63,11 +63,16 @@
                   <content>
                      <Pane fx:id="drawingPane" onMouseClicked="#clickTest" onMouseDragged="#handleDragOnMap" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed" onMouseReleased="#moveOrDrawReleased">
                         <children>
-                           <ImageView pickOnBounds="true">
+                           <ImageView layoutX="42.0" pickOnBounds="true">
                               <image>
                                  <Image url="@../../resources/carta_nautica.jpg" />
                               </image>
                            </ImageView>
+                        <ImageView fx:id="rule" fitHeight="546.0" fitWidth="689.0" layoutX="375.0" layoutY="447.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/transportador.png" />
+                           </image>
+                        </ImageView>
                         </children>
                      </Pane>
                   </content>
@@ -108,7 +113,7 @@
                   </ToggleButton>
                   <ToggleButton fx:id="selectPoint" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
                      <graphic>
-                        <ImageView fitHeight="29.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="23.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../resources/positionMarker.png" />
                            </image>
@@ -117,7 +122,7 @@
                   </ToggleButton>
                   <ToggleButton fx:id="drawLine" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../resources/drawALine.png" />
                            </image>
@@ -133,7 +138,7 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="33.0">
+                  <ToggleButton fx:id="ruleButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="36.0" prefWidth="33.0">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -144,7 +149,7 @@
                   </ToggleButton>
                   <ToggleButton fx:id="putText" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../resources/addText.png" />
                            </image>
@@ -172,9 +177,9 @@
                         </ImageView>
                      </graphic>
                   </MenuButton>
-                  <ToggleButton fx:id="removeButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#removePressed" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
+                  <ToggleButton fx:id="eraseButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#removePressed" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../resources/erase.png" />
                            </image>
@@ -183,7 +188,7 @@
                   </ToggleButton>
                   <Button fx:id="clearButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#clearButtonPressed" prefHeight="30.0" prefWidth="30.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../resources/delete.png" />
                            </image>

@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Session;
@@ -40,6 +41,7 @@ public class PoiUPVApp extends Application {
         stage.setScene(scene);
 	stage.setMinHeight(750);
 	stage.setMinWidth(900);
+        stage.getIcons().add(new Image("resources/helm.png"));
         stage.setOnCloseRequest(e -> {
             
             if(MapController.currentUser != null){
@@ -49,6 +51,7 @@ public class PoiUPVApp extends Application {
                 alert.setHeaderText("Unsaved session");
                 alert.setContentText("There could be unrecorded scores.\nDo you want to exit without logging out?");
                 alert.initModality(Modality.APPLICATION_MODAL);
+                alert.initOwner(stage.getScene().getWindow());
                 
                 
                 ButtonType acceptButton = new ButtonType("Confirm");
@@ -82,7 +85,7 @@ public class PoiUPVApp extends Application {
                 alert.setHeaderText("All map changes will be lost");
                 alert.setContentText("Do you want to exit?");
                 alert.initModality(Modality.APPLICATION_MODAL);
-                
+                alert.initOwner(stage.getScene().getWindow());
                 
                 ButtonType acceptButton = new ButtonType("Accept");
                 ButtonType cancelButton = new ButtonType("Cancel");

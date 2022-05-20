@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.ModifyProfileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.ModifyProfileController">
    <top>
       <HBox prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #BB86DC; -fx-opacity: ;" BorderPane.alignment="CENTER_LEFT">
          <children>
@@ -40,7 +40,7 @@
       </HBox>
    </top>
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="25.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="106.0" prefWidth="600.0" spacing="25.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="bAccept" minWidth="80.0" mnemonicParsing="false" onAction="#handleBAcceptOnAction" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #49DF99;" text="Accept">
                <graphic>
@@ -201,10 +201,17 @@
                         <Insets left="25.0" top="15.0" />
                      </HBox.margin>
                   </VBox>
-                  <Button mnemonicParsing="false" onAction="#handleBPassHelpPressed" text="?">
+                  <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#handleBPassHelpPressed">
                      <HBox.margin>
                         <Insets left="20.0" top="35.0" />
                      </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/information.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                   <Label fx:id="incorrectPassword" prefHeight="40.0" prefWidth="304.0" textFill="RED" wrapText="true">
                      <HBox.margin>
