@@ -22,7 +22,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
+<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
    <children>
       <MenuBar>
         <menus>
@@ -48,7 +48,7 @@
                   <MenuItem fx:id="clearMenu" mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Problems">
+            <Menu fx:id="problemsButton" mnemonicParsing="false" text="Problems">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#randomProblemPressed" text="Random problem" />
                   <MenuItem mnemonicParsing="false" onAction="#selectProblemPressed" text="Select a problem" />
@@ -59,7 +59,7 @@
       </MenuBar>
       <AnchorPane prefHeight="640.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
          <children>
-               <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" pannable="true" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
                      <Pane fx:id="drawingPane" onMouseClicked="#clickTest" onMouseDragged="#handleDragOnMap" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed" onMouseReleased="#moveOrDrawReleased">
                         <children>
@@ -72,22 +72,48 @@
                      </Pane>
                   </content>
                </ScrollPane>
-            <VBox>
+            <VBox prefHeight="735.0" prefWidth="101.0" spacing="15.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#zoomIn" prefHeight="30.0" prefWidth="30.0" text="+" />
-                  <Slider fx:id="zoom_slider" min="10.0" orientation="VERTICAL" />
-                  <Button mnemonicParsing="false" onAction="#zoomOut" prefHeight="30.0" prefWidth="30.0" text="-" />
-                  <ToggleButton fx:id="selectPoint" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                  <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#zoomIn" prefHeight="35.0" prefWidth="34.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="35.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../resources/positionMarker.png" />
+                              <Image url="@../../resources/zoom-in.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Slider fx:id="zoom_slider" min="10.0" orientation="VERTICAL">
+                     <padding>
+                        <Insets left="9.0" />
+                     </padding></Slider>
+                  <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="35.0" prefWidth="34.0">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/zoom-out.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <ToggleButton fx:id="pannableButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#pannableButtonPressed" prefHeight="33.0" prefWidth="31.0">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/zoom-directions.png" />
                            </image>
                         </ImageView>
                      </graphic>
                      <toggleGroup>
                         <ToggleGroup fx:id="drawingTools" />
                      </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton fx:id="selectPoint" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
+                     <graphic>
+                        <ImageView fitHeight="29.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/positionMarker.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </ToggleButton>
                   <ToggleButton fx:id="drawLine" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
                      <graphic>
@@ -98,11 +124,20 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton fx:id="drawCircle" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
+                  <ToggleButton fx:id="drawCircle" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="34.0" toggleGroup="$drawingTools">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../resources/drawAnArc.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="33.0">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/ruler.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -121,7 +156,7 @@
                         <Color />
                      </value>
                   </ColorPicker>
-                  <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Thickness">
+                  <MenuButton minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="50.0">
                     <items>
                       <MenuItem mnemonicParsing="false">
                            <graphic>
@@ -129,6 +164,13 @@
                            </graphic>
                         </MenuItem>
                     </items>
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/line-thickness.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </MenuButton>
                   <ToggleButton fx:id="removeButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#removePressed" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
                      <graphic>
@@ -148,8 +190,10 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label text="Clear" />
                </children>
+               <padding>
+                  <Insets left="15.0" top="40.0" />
+               </padding>
             </VBox>
          </children>
       </AnchorPane>

@@ -40,6 +40,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
@@ -150,6 +151,10 @@ public class MapController implements Initializable {
     
     private List<Shape> list;
     private ObservableList<Shape> observableList; 
+    @FXML
+    private Menu problemsButton;
+    @FXML
+    private ToggleButton pannableButton;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -210,6 +215,9 @@ public class MapController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //initData();
+        
+        problemsButton.setDisable(true);
+        problemsButton.setText("Problems (login to access)");
         //==========================================================
         // inicializamos el slider y enlazamos con el zoom
         map_scrollpane.setHvalue(0.315);
@@ -237,6 +245,14 @@ public class MapController implements Initializable {
         contentGroup.getChildren().add(zoomGroup);
         zoomGroup.getChildren().add(map_scrollpane.getContent());
         map_scrollpane.setContent(contentGroup);
+        
+        pannableButton.focusedProperty().addListener(e -> {
+            if(pannableButton.isSelected())
+                map_scrollpane.setPannable(true);
+            else
+                map_scrollpane.setPannable(false);
+        });
+        
         
         zoomGroup.setOnMousePressed(this:: moveOrDrawPressed);
         zoomGroup.setOnMouseDragged(this:: handleDragOnMap);
@@ -276,6 +292,8 @@ public class MapController implements Initializable {
         modifyButton.setVisible(true);
         welcomeLabel.textProperty().setValue("You are logged as: " + currentUser.getNickName());
         welcomeLabel.setVisible(true);
+        problemsButton.setText("Problems");
+        problemsButton.setDisable(false);
     }
     
     private void logoutSetup(){
@@ -351,47 +369,17 @@ public class MapController implements Initializable {
 	BorderPane root = (BorderPane) myLoader.load();
 	ModifyProfileController modifyProfileController = myLoader.<ModifyProfileController>getController();
         
-        Dialog<String> dialog = new Dialog<>();
-        dialog.setTitle("Security check");
-        dialog.setHeaderText("For security reasons, confirm your actual password");
-        //dialog.setGraphic(new Circle(15, Color.RED)); 
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-
-        PasswordField pwd = new PasswordField();
-        HBox content = new HBox();
-        content.setAlignment(Pos.CENTER_LEFT);
-        content.setSpacing(10);
-        content.getChildren().addAll(new Label("Enter your actual password:"), pwd);
-        dialog.getDialogPane().setContent(content);
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == ButtonType.OK) {
-                return pwd.getText();
-            }
-            return null;
-        });
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent())
-        {
-            if(currentUser.getPassword().equals(result.get()))
-            {
-                Scene scene = new Scene (root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.setTitle("Modify profile");
-                stage.initModality(Modality.WINDOW_MODAL);
-                stage.setResizable(false);
-                stage.show();
-            }
-            else
-            {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Security error");
-                alert.setHeaderText("Password is not correct");
-                alert.setContentText("Enter your actual password in order to modify your profile!");
-                alert.initModality(Modality.WINDOW_MODAL);
-                alert.showAndWait();
-            }
-        }
+        
+        Scene scene = new Scene (root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Modify profile");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setResizable(false);
+        stage.show();
+            
+           
+        
     }
 
 	@FXML
@@ -428,83 +416,62 @@ public class MapController implements Initializable {
          @FXML
         private void checkStatisticsPressed(ActionEvent event) throws Exception {
             
-             if(currentUser != null){
-                FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/CheckStatistics.fxml"));
-                BorderPane root = (BorderPane) myLoader.load();
-                CheckStatisticsController statisticsController = myLoader.<CheckStatisticsController>getController();
+            
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/CheckStatistics.fxml"));
+            BorderPane root = (BorderPane) myLoader.load();
+            CheckStatisticsController statisticsController = myLoader.<CheckStatisticsController>getController();
 
-                Scene scene = new Scene (root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.setTitle("Statistics");
-                stage.initModality(Modality.WINDOW_MODAL);
-                stage.setResizable(false);
-                stage.show();
-            }else{
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Login required");
-                alert.setHeaderText("LOG IN TO PERFORM THIS OPERATION");
-                alert.setContentText("You must be logged in to check your statistics");
-                alert.initModality(Modality.APPLICATION_MODAL);
-                alert.showAndWait();
-            }
+            Scene scene = new Scene (root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Statistics");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setResizable(false);
+            stage.show();
+            
             
         }
 
 	@FXML
 	private void randomProblemPressed(ActionEvent event) throws Exception {
             
-            if(currentUser != null){
-                Random random = new Random();
-                List<Problem> problems = Navegacion.getSingletonNavegacion().getProblems();
-                int randomIndexProblem = random.nextInt(problems.size());
-                Problem randomProblem = problems.get(randomIndexProblem);
-        
-                FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/Problem.fxml"));
-                Parent root = (Parent) myLoader.load();
-                ProblemController problemController = myLoader.<ProblemController>getController();
-                problemController.setProblem(randomProblem);
+            
+            Random random = new Random();
+            List<Problem> problems = Navegacion.getSingletonNavegacion().getProblems();
+            int randomIndexProblem = random.nextInt(problems.size());
+            Problem randomProblem = problems.get(randomIndexProblem);
 
-                Scene scene = new Scene (root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.setTitle("Random problem");
-                stage.initModality(Modality.WINDOW_MODAL);
-                stage.setResizable(false);
-                stage.show();
-            }else{
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Login required");
-                alert.setHeaderText("LOG IN TO PERFORM THIS OPERATION");
-                alert.setContentText("You must be logged in to make problems");
-                alert.initModality(Modality.APPLICATION_MODAL);
-                alert.showAndWait();
-            }
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/Problem.fxml"));
+            Parent root = (Parent) myLoader.load();
+            ProblemController problemController = myLoader.<ProblemController>getController();
+            problemController.setProblem(randomProblem);
+
+            Scene scene = new Scene (root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Random problem");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setResizable(false);
+            stage.show();
+           
 	}
 
 	@FXML
 	private void selectProblemPressed(ActionEvent event) throws Exception {
             
-            if(currentUser != null){
-                FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ShowProblems.fxml"));
-                BorderPane root = (BorderPane) myLoader.load();
-                ShowProblemsController showProblemsController = myLoader.<ShowProblemsController>getController();
+            
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ShowProblems.fxml"));
+            BorderPane root = (BorderPane) myLoader.load();
+            ShowProblemsController showProblemsController = myLoader.<ShowProblemsController>getController();
 
-                Scene scene = new Scene (root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.setTitle("Problems");
-                stage.initModality(Modality.WINDOW_MODAL);
-                stage.setResizable(false);
-                stage.show();
-            }else{
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Login required");
-                alert.setHeaderText("LOG IN TO PERFORM THIS OPERATION");
-                alert.setContentText("You must be logged in to make problems");
-                alert.initModality(Modality.APPLICATION_MODAL);
-                alert.showAndWait();
-            }
+            Scene scene = new Scene (root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Problems");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setResizable(false);
+            stage.show();
+           
 	}
 
    
@@ -612,4 +579,7 @@ public class MapController implements Initializable {
     private void clickTest(MouseEvent event) {
     }
 
+    @FXML
+    private void pannableButtonPressed(ActionEvent event) {
+    }
 }
