@@ -91,7 +91,7 @@ public class MapController implements Initializable {
     private Color currentColor = Color.BLACK;
     private double currentThickness = 5;
     
-    private LocalDateTime sessionInitialized;
+    public static LocalDateTime sessionInitialized;
 
     private ListView<Poi> map_listview;
     @FXML
