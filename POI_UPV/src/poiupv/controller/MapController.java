@@ -650,9 +650,19 @@ public class MapController implements Initializable {
 
     @FXML
     private void clearButtonPressed(ActionEvent event) {
+        Alert alert;
+        alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Clear confirmation");
+        alert.setHeaderText("Are you sure you want to clear ALL the elements in the board?");
+        alert.setContentText("If you press OK, all elements will be erased");
+        alert.initOwner(drawLine.getScene().getWindow());
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK)
+        {
         System.out.println(zoomGroup.getChildren());
         zoomGroup.getChildren().removeAll(observableList);
         observableList.clear();
+        }
     }
 
     @FXML
