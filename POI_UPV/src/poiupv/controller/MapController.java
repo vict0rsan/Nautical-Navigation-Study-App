@@ -264,7 +264,12 @@ public class MapController implements Initializable {
         //zoomGroup.getChildren().forEach(this::makeDraggable);
         makeDraggable(rule);
         
-        
+        drawingTools.selectedToggleProperty().addListener(cl -> {
+            if(pannableButton.isSelected())
+                    map_scrollpane.setPannable(true);
+            else
+                    map_scrollpane.setPannable(false);
+        });
         
         zoomGroup.setOnMousePressed(this:: moveOrDrawPressed);
         zoomGroup.setOnMouseDragged(this:: handleDragOnMap);
@@ -275,11 +280,11 @@ public class MapController implements Initializable {
         arcMenu.selectedProperty().bindBidirectional(drawCircle.selectedProperty());
         textMenu.selectedProperty().bindBidirectional(putText.selectedProperty());
         dragMapMenu.selectedProperty().bindBidirectional(pannableButton.selectedProperty());
-		ruleMenu.selectedProperty().bindBidirectional(ruleButton.selectedProperty());
-		deleteMenu.selectedProperty().bindBidirectional(eraseButton.selectedProperty());
-		
-		dragMapMenu.setOnAction(this:: pannableButtonPressed);
-		ruleMenu.setOnAction(this:: ruleButtonPressed);
+        ruleMenu.selectedProperty().bindBidirectional(ruleButton.selectedProperty());
+        deleteMenu.selectedProperty().bindBidirectional(eraseButton.selectedProperty());
+
+        dragMapMenu.setOnAction(this:: pannableButtonPressed);
+        ruleMenu.setOnAction(this:: ruleButtonPressed);
     }
 
     
@@ -289,18 +294,6 @@ public class MapController implements Initializable {
         posicion.setText("sceneX: " + (int) event.getSceneX() + ", sceneY: " + (int) event.getSceneY() + "\n"
                 + "         X: " + (int) event.getX() + ",          Y: " + (int) event.getY());
     }
-
-    private void cerrarAplicacion(ActionEvent event) {
-        ((Stage)zoom_slider.getScene().getWindow()).close();
-    }
-
-    private void acercaDe(ActionEvent event) {
-        Alert mensaje= new Alert(Alert.AlertType.INFORMATION);
-        mensaje.setTitle("Acerca de");
-        mensaje.setHeaderText("IPC - 2022");
-        mensaje.showAndWait();
-    }
-    
     
     private void loginSetup () {
         loginButton.setVisible(false);
@@ -502,42 +495,57 @@ public class MapController implements Initializable {
             linePainting.setStrokeWidth(currentThickness);
             
             linePainting.setOnMouseClicked(e -> {
-                System.out.println(e);
-                System.out.println("Erase button is pressed:" + eraseButton.isSelected());
-				if(eraseButton.isSelected()){
-					Node src = (Node) e.getSource();
-					System.out.println(e);
-					if(src != null)
-						src.setVisible(false);
-				}
-			});
+                if(eraseButton.isSelected()){
+                        Node src = (Node) e.getSource();
+                        if(src != null)
+                                src.setVisible(false);
+                }
+                else{
+                    Node src = (Node) e.getSource();
+                        if(src != null){
+                            linePainting = (Line) src;
+                            linePainting.setStroke(currentColor);
+                            linePainting.setStrokeWidth(currentThickness);
+                        }
+                        
+                }
+            });
             
             zoomGroup.getChildren().add(linePainting);
             observableList.add(linePainting);
-            
-        }else if(drawCircle.isSelected()){
+            event.consume();
+        }
+        else if(drawCircle.isSelected()){
             circlePainting = new Circle(0);
             circlePainting.setStroke(currentColor);
             circlePainting.setFill(Color.TRANSPARENT);
             circlePainting.setStrokeWidth(currentThickness);
             
             circlePainting.setOnMouseClicked(e -> {
-                System.out.println(e);
-                System.out.println("Erase button is pressed:" + eraseButton.isSelected());
-				if(eraseButton.isSelected()){
-					Node src = (Node) e.getSource();
-					System.out.println(e);
-					if(src != null)
-						src.setVisible(false);
-				}
-			});
+                if(eraseButton.isSelected()){
+                        Node src = (Node) e.getSource();
+                        if(src != null)
+                                src.setVisible(false);
+                }
+                else{
+                    Node src = (Node) e.getSource();
+                        if(src != null){
+                            circlePainting = (Circle) src;
+                            circlePainting.setStroke(currentColor);
+                            circlePainting.setStrokeWidth(currentThickness);
+                        }
+                        
+                }
+            });
             
             zoomGroup.getChildren().add(circlePainting);
             circlePainting.setCenterX(event.getX());
             circlePainting.setCenterY(event.getY());
             coordinateXCircle = event.getX();
-            //observableList.add(circlePainting);
-        }else if(putText.isSelected()){
+            observableList.add(circlePainting);
+            event.consume();
+        }
+        else if(putText.isSelected()){
             TextField text = new TextField();
             zoomGroup.getChildren().add(text);
             text.setLayoutX(event.getX());
@@ -546,23 +554,54 @@ public class MapController implements Initializable {
             text.setOnAction(e -> {
                 Text test = new Text(text.getText());
                 test.setX(text.getLayoutX());
-                test.setY(text.getLayoutY());
-                test.setStyle("-fx-font-family: Gafata; -fx-font-size: 40;");
+                test.setY(text.getLayoutY()+20);
+                test.setStyle("-fx-font-size: 20;");
+                test.setStroke(currentColor);
+                
+                test.setOnMouseClicked(mc -> {
+                if(eraseButton.isSelected()){
+                        Node src = (Node) mc.getSource();
+                        if(src != null)
+                                src.setVisible(false);
+                }
+                
+            });
+                
                 zoomGroup.getChildren().add(test);
                 zoomGroup.getChildren().remove(text);
                 observableList.add(test);
-                e.consume();
             });
+            event.consume();
             
         }else if(selectPoint.isSelected()){
             pointSelected = new Circle(6);
             pointSelected.setStroke(currentColor);
             pointSelected.setStrokeWidth(currentThickness);
             pointSelected.setFill(currentColor);
+            
+            pointSelected.setOnMouseClicked(e -> {
+                if(eraseButton.isSelected()){
+                        Node src = (Node) e.getSource();
+                        if(src != null)
+                                src.setVisible(false);
+                }
+                else{
+                    Node src = (Node) e.getSource();
+                        if(src != null){
+                            pointSelected = (Circle) src;
+                            pointSelected.setStroke(currentColor);
+                            pointSelected.setStrokeWidth(currentThickness);
+                        }
+                        
+                }
+                
+            });
+            
             zoomGroup.getChildren().add(pointSelected);
             pointSelected.setCenterX(event.getX());
             pointSelected.setCenterY(event.getY());
             observableList.add(pointSelected);
+            event.consume();
         } 
         
     }
