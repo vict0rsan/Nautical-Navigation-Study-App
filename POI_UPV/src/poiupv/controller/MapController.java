@@ -512,7 +512,7 @@ public class MapController implements Initializable {
             observableList.add(linePainting);
             
         }else if(drawCircle.isSelected()){
-            circlePainting = new Circle();
+            circlePainting = new Circle(0);
             circlePainting.setStroke(currentColor);
             circlePainting.setFill(Color.TRANSPARENT);
             circlePainting.setStrokeWidth(currentThickness);
@@ -532,7 +532,7 @@ public class MapController implements Initializable {
             circlePainting.setCenterX(event.getX());
             circlePainting.setCenterY(event.getY());
             coordinateXCircle = event.getX();
-            observableList.add(circlePainting);
+            //observableList.add(circlePainting);
         }else if(putText.isSelected()){
             TextField text = new TextField();
             zoomGroup.getChildren().add(text);
@@ -551,7 +551,7 @@ public class MapController implements Initializable {
             });
             
         }else if(selectPoint.isSelected()){
-            pointSelected = new Circle(5);
+            pointSelected = new Circle(6);
             pointSelected.setStroke(currentColor);
             pointSelected.setStrokeWidth(currentThickness);
             pointSelected.setFill(currentColor);
@@ -592,6 +592,7 @@ public class MapController implements Initializable {
 
     @FXML
     private void clearButtonPressed(ActionEvent event) {
+        System.out.println(zoomGroup.getChildren());
         zoomGroup.getChildren().removeAll(observableList);
         observableList.clear();
     }
