@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
@@ -15,14 +17,30 @@
             <Text fx:id="problemText" strokeType="OUTSIDE" strokeWidth="0.0" text="SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TEXT SAMPLE TE" wrappingWidth="540.0" />
          </children>
       </HBox>
-      <RadioButton fx:id="answer1" mnemonicParsing="false" text="RadioButton">
-         <toggleGroup>
-            <ToggleGroup fx:id="answer" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="answer2" mnemonicParsing="false" text="RadioButton" toggleGroup="$answer" />
-      <RadioButton fx:id="answer3" mnemonicParsing="false" text="RadioButton" toggleGroup="$answer" />
-      <RadioButton fx:id="answer4" mnemonicParsing="false" text="RadioButton" toggleGroup="$answer" />
+      <HBox spacing="30.0">
+         <children>
+            <VBox alignment="CENTER_LEFT" prefHeight="158.0" prefWidth="346.0" spacing="30.0">
+               <children>
+                  <RadioButton fx:id="answer1" mnemonicParsing="false" text="RadioButton">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="answer" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="answer2" mnemonicParsing="false" text="RadioButton" toggleGroup="$answer" />
+                  <RadioButton fx:id="answer3" mnemonicParsing="false" text="RadioButton" toggleGroup="$answer" />
+                  <RadioButton fx:id="answer4" mnemonicParsing="false" text="RadioButton" toggleGroup="$answer" />
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </VBox>
+            <ImageView fitHeight="158.0" fitWidth="168.0" opacity="0.65" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/helm%202.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="55.0" prefWidth="513.0" spacing="30.0">
          <children>
             <Button fx:id="submitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onActionSubmitButton" prefHeight="30.0" prefWidth="90.0" text="Submit" />

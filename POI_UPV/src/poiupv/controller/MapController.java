@@ -436,6 +436,7 @@ public class MapController implements Initializable {
 	   stage.setTitle("Statistics");
 	   stage.initModality(Modality.WINDOW_MODAL);
 	   stage.setResizable(false);
+           stage.getIcons().add(new Image("resources/helm.png"));
 	   stage.show();
 
 

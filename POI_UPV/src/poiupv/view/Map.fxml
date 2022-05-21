@@ -90,10 +90,7 @@
                            </image>
                         </ImageView>
                      </graphic></Button>
-                  <Slider fx:id="zoom_slider" min="10.0" orientation="VERTICAL">
-                     <padding>
-                        <Insets left="9.0" />
-                     </padding></Slider>
+                  <Slider fx:id="zoom_slider" min="10.0" orientation="VERTICAL" prefHeight="143.0" prefWidth="28.0" />
                   <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="35.0" prefWidth="34.0">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">

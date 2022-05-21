@@ -31,6 +31,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -108,7 +109,7 @@ public class CheckStatisticsController implements Initializable {
                           i++;
                         }
                         
-                        pieChart.legendVisibleProperty().setValue(Boolean.TRUE);
+                        pieChart.legendVisibleProperty().setValue(Boolean.FALSE);
                         
                        
                     }
@@ -128,6 +129,7 @@ public class CheckStatisticsController implements Initializable {
         stage.setTitle("General Statistics");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
+        stage.getIcons().add(new Image("resources/helm.png"));
         stage.show();
 
         Node source = (Node) event.getSource();

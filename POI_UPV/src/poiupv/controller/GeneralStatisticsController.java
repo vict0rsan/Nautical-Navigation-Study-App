@@ -60,5 +60,15 @@ public class GeneralStatisticsController implements Initializable {
         data.add(new PieChart.Data("Hits", hits));
         data.add(new PieChart.Data("Faults", misses));
         pieChart.setData(data);
+        int i = 0;
+        for (PieChart.Data pieSlice : data) {
+            if(i == 0)
+                pieSlice.getNode().setStyle("-fx-pie-color: green;");
+            else
+                pieSlice.getNode().setStyle("-fx-pie-color: red;");
+          i++;
+        }
+
+        pieChart.legendVisibleProperty().setValue(Boolean.FALSE);
     }    
 }

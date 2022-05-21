@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -92,6 +93,7 @@ public class ShowProblemsController implements Initializable {
             stage.setTitle("Problem nº " + shownProblems.getSelectionModel().getSelectedIndex());
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setResizable(false);
+            stage.getIcons().add(new Image("resources/helm.png"));
             stage.show();
         }
     }
@@ -114,6 +116,7 @@ public class ShowProblemsController implements Initializable {
             stage.setTitle("Random problem");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setResizable(false);
+            stage.getIcons().add(new Image("resources/helm.png"));
             stage.show();
         
     }

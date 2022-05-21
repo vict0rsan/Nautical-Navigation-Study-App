@@ -66,12 +66,16 @@ public class ProblemController implements Initializable{
             markAsIncorrectAndFindCorrect(answers);
         }
         
+        
+        
         answer1.setDisable(true);
         answer2.setDisable(true);
         answer3.setDisable(true);
         answer4.setDisable(true);
         submitButton.setDisable(true);
+        cancelButton.setText("Close");
         cancelButton.requestFocus();
+        
         
     }
 

@@ -71,7 +71,14 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </Text>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="40.0" />
+            <VBox alignment="CENTER" prefHeight="314.0" prefWidth="150.0" spacing="40.0">
+               <children>
+                  <ImageView fitHeight="215.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/lighthouse.png" />
+                     </image>
+                  </ImageView>
+               </children></VBox>
          </children>
          <BorderPane.margin>
             <Insets top="30.0" />

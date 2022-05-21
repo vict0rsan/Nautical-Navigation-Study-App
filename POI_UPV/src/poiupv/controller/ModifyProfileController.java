@@ -236,6 +236,7 @@ public class ModifyProfileController implements Initializable
         alert.setTitle("Modify confirmation");
         alert.setHeaderText("Are you sure you want to modify this settings?");
         alert.setContentText("If you press OK, your profile will be modified");
+        alert.initOwner(email.getScene().getWindow());
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK)
         {
@@ -256,6 +257,7 @@ public class ModifyProfileController implements Initializable
             alert2.setTitle("CHANGES DONE");
             alert2.setHeaderText(null);
             alert2.setContentText("Your data has been succesfully updated!");
+            alert2.initOwner(email.getScene().getWindow());
             result = alert2.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) 
             {
@@ -271,6 +273,7 @@ public class ModifyProfileController implements Initializable
             alert2.setTitle("Changes not done");
             alert2.setHeaderText(null);
             alert2.setContentText("Your data has not been updated!");
+            alert2.initOwner(email.getScene().getWindow());
             result = alert2.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) 
             {
@@ -304,6 +307,7 @@ public class ModifyProfileController implements Initializable
 			"- does not contain any blank spaces"
 		);
 		alert.initModality(Modality.WINDOW_MODAL);
+                alert.initOwner(email.getScene().getWindow());
 		alert.showAndWait();
     }
 
@@ -320,6 +324,7 @@ public class ModifyProfileController implements Initializable
         stage.setTitle("Avatar Selector");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
+        stage.getIcons().add(new Image("resources/helm.png"));
         stage.showAndWait();
     }
   

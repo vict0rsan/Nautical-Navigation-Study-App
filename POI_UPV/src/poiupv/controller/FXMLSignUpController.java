@@ -331,6 +331,7 @@ public class FXMLSignUpController implements Initializable {
         stage.setTitle("Avatar Selector");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
+        stage.getIcons().add(new Image("resources/helm.png"));
         stage.showAndWait();
     }
 
@@ -348,6 +349,7 @@ public class FXMLSignUpController implements Initializable {
 			"- does not contain any blank spaces"
 		);
 		alert.initModality(Modality.WINDOW_MODAL);
+                alert.initOwner(email.getScene().getWindow());
 		alert.showAndWait();
 	}
 
@@ -381,7 +383,7 @@ public class FXMLSignUpController implements Initializable {
             alert.setTitle("Registration confirmed");
             alert.setHeaderText(null);
             alert.setContentText("You have been succesfully registered!");
-
+            alert.initOwner(email.getScene().getWindow());
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLLogin.fxml"));

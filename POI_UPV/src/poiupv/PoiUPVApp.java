@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
@@ -52,6 +53,8 @@ public class PoiUPVApp extends Application {
                 alert.setHeaderText("Unsaved session");
                 alert.setContentText("There could be unrecorded scores.\nDo you want to exit without logging out?");
                 alert.initModality(Modality.APPLICATION_MODAL);
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("../resources/styleAlert.css").toExternalForm());
                 alert.initOwner(stage.getScene().getWindow());
                 
                 

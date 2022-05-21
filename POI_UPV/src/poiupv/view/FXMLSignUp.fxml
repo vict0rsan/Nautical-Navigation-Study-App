@@ -17,17 +17,7 @@
 
 <BorderPane minHeight="-Infinity" minWidth="380.0" prefHeight="750.0" prefWidth="400.0" stylesheets="@../../resources/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.FXMLSignUpController">
    <top>
-      <HBox prefHeight="70.0" prefWidth="200.0" styleClass="banner" BorderPane.alignment="CENTER_LEFT">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up">
-               <font>
-                  <Font name="Book Antiqua Bold" size="42.0" />
-               </font>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Text>
-         </children>
+      <HBox alignment="CENTER" minHeight="15.0" minWidth="15.0" prefHeight="86.0" prefWidth="400.0" styleClass="banner" BorderPane.alignment="CENTER_LEFT">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -35,8 +25,18 @@
             <Insets />
          </BorderPane.margin>
          <padding>
-            <Insets bottom="10.0" left="30.0" right="20.0" top="10.0" />
+            <Insets top="20.0" />
          </padding>
+         <children>
+            <ImageView fitHeight="104.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/register.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="25.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
       </HBox>
    </top>
    <bottom>
@@ -231,7 +231,7 @@
             </HBox>
          </children>
          <BorderPane.margin>
-            <Insets left="20.0" right="20.0" top="10.0" />
+            <Insets left="20.0" right="20.0" top="30.0" />
          </BorderPane.margin>
       </VBox>
    </center>
