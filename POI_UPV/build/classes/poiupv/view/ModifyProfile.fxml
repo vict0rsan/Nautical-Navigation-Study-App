@@ -15,9 +15,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.ModifyProfileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="553.0" stylesheets="@../../resources/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.ModifyProfileController">
    <top>
-      <HBox prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #BB86DC; -fx-opacity: ;" BorderPane.alignment="CENTER_LEFT">
+      <HBox prefHeight="70.0" prefWidth="200.0" styleClass="banner" BorderPane.alignment="CENTER_LEFT">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Modify Profile">
                <font>
@@ -40,16 +40,9 @@
       </HBox>
    </top>
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="25.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_RIGHT" prefHeight="94.0" prefWidth="533.0" spacing="25.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="bAccept" minWidth="80.0" mnemonicParsing="false" onAction="#handleBAcceptOnAction" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #49DF99;" text="Accept">
-               <graphic>
-                  <ImageView fitHeight="35.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resources/accept.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <Button fx:id="bAccept" minWidth="80.0" mnemonicParsing="false" onAction="#handleBAcceptOnAction" prefHeight="30.0" prefWidth="90.0" text="Accept">
                <font>
                   <Font name="Arial Rounded MT Bold" size="13.0" />
                </font>
@@ -57,17 +50,10 @@
                   <DropShadow />
                </effect>
                <HBox.margin>
-                  <Insets left="350.0" top="40.0" />
+                  <Insets />
                </HBox.margin>
             </Button>
-            <Button fx:id="bCancel" minWidth="80.0" mnemonicParsing="false" onAction="#handleButtonCancelOnAction" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #E75F5F;" text="Cancel">
-               <graphic>
-                  <ImageView fitHeight="89.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resources/cancel.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <Button minWidth="80.0" mnemonicParsing="false" onAction="#handleButtonCancelOnAction" prefHeight="30.0" prefWidth="90.0" text="Cancel">
                <font>
                   <Font name="Arial Rounded MT Bold" size="13.0" />
                </font>
@@ -75,14 +61,17 @@
                   <DropShadow />
                </effect>
                <HBox.margin>
-                  <Insets top="40.0" />
+                  <Insets />
                </HBox.margin>
             </Button>
          </children>
+         <BorderPane.margin>
+            <Insets right="20.0" />
+         </BorderPane.margin>
       </HBox>
    </bottom>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="528.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="30.0" prefHeight="70.0" prefWidth="600.0" spacing="30.0">
                <children>
@@ -95,7 +84,7 @@
                         </Label>
                         <TextField fx:id="username" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="205.0">
                            <VBox.margin>
-                              <Insets top="5.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextField>
                         <VBox prefHeight="62.0" prefWidth="194.0" spacing="5.0">
@@ -105,16 +94,13 @@
                                     <Font name="Arial Rounded MT Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <DatePicker fx:id="birthdate" prefHeight="26.0" prefWidth="202.0" />
+                              <DatePicker fx:id="birthdate" prefHeight="26.0" prefWidth="202.0" styleClass="text-field" />
                            </children>
                         </VBox>
                      </children>
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
-                     <padding>
-                        <Insets left="25.0" />
-                     </padding>
                   </VBox>
                   <VBox prefHeight="62.0" prefWidth="90.0">
                      <children>
@@ -136,13 +122,12 @@
                         </ImageView>
                      </children>
                      <HBox.margin>
-                        <Insets left="25.0" top="20.0" />
+                        <Insets left="25.0" top="10.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0" spacing="10.0">
                      <children>
-                        <Button fx:id="selectAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectAvatarButton" prefHeight="26.0" prefWidth="100.0" text="Selelect default" />
-                        <Button fx:id="selectAvatarFromDeviceButton" mnemonicParsing="false" onAction="#handleSelectAvatarFromDeviceButton" prefHeight="35.0" prefWidth="100.0" text="Upload from device" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectAvatarButton" prefHeight="30.0" prefWidth="90.0" text="Select Avatar" />
                      </children>
                      <HBox.margin>
                         <Insets top="40.0" />
@@ -153,7 +138,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="70.0" prefWidth="200.0">
+            <HBox prefHeight="58.0" prefWidth="575.0">
                <children>
                   <VBox prefHeight="62.0" prefWidth="342.0">
                      <children>
@@ -169,41 +154,46 @@
                         </TextField>
                      </children>
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets />
                      </HBox.margin>
-                     <padding>
-                        <Insets left="25.0" />
-                     </padding>
                   </VBox>
                   <Label fx:id="incorrectEmail" text="Incorrect Email" textFill="RED" visible="false">
                      <HBox.margin>
                         <Insets left="20.0" top="35.0" />
-                     </HBox.margin></Label>
+                     </HBox.margin>
+                  </Label>
                </children>
             </HBox>
-            <HBox prefHeight="70.0" prefWidth="600.0">
+            <HBox prefHeight="57.0" prefWidth="559.0" spacing="15.0">
                <children>
-                  <VBox prefHeight="62.0" prefWidth="194.0">
+                  <VBox prefHeight="55.0" prefWidth="219.0">
                      <children>
                         <Label text="Change password:">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font>
                         </Label>
-                        <PasswordField fx:id="password">
+                        <PasswordField fx:id="password" prefHeight="25.0" prefWidth="198.0" styleClass="text-field">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
                         </PasswordField>
                      </children>
                      <HBox.margin>
-                        <Insets left="25.0" top="15.0" />
+                        <Insets />
                      </HBox.margin>
                   </VBox>
-                  <Button fx:id="passwordHelpButton" mnemonicParsing="false" onAction="#handleBPassHelpPressed" text="?">
+                  <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#handleBPassHelpPressed" prefHeight="23.0" prefWidth="69.0">
                      <HBox.margin>
-                        <Insets left="20.0" top="35.0" />
+                        <Insets top="22.0" />
                      </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/information.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                   <Label fx:id="incorrectPassword" prefHeight="40.0" prefWidth="304.0" textFill="RED" wrapText="true">
                      <HBox.margin>
@@ -220,14 +210,14 @@
                            <font>
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font></Label>
-                        <PasswordField fx:id="passwordConfirmation">
+                        <PasswordField fx:id="passwordConfirmation" styleClass="text-field">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
                         </PasswordField>
                      </children>
                      <HBox.margin>
-                        <Insets left="25.0" top="20.0" />
+                        <Insets />
                      </HBox.margin>
                   </VBox>
                   <Label fx:id="incorrectPasswordConfirmation" prefHeight="62.0" prefWidth="342.0" text="Passwords don't match" textFill="RED" visible="false" wrapText="true">
@@ -236,20 +226,10 @@
                      </HBox.margin></Label>
                </children>
             </HBox>
-            <HBox layoutX="10.0" layoutY="241.0" prefHeight="70.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="incorrectBirthday" prefHeight="62.0" prefWidth="342.0" text="Users must be between 12 and 100 years old" textFill="RED" visible="false" wrapText="true">
-                     <HBox.margin>
-                        <Insets left="25.0" top="40.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="312.0" prefHeight="70.0" prefWidth="200.0" />
          </children>
-         <padding>
-            <Insets top="20.0" />
-         </padding>
+         <BorderPane.margin>
+            <Insets left="25.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
 </BorderPane>

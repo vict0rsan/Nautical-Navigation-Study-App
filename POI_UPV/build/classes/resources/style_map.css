@@ -1,0 +1,77 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 21 may 2022, 10:26:41
+    Author     : guill
+*/
+
+
+@font-face {
+    font-family: Proxima;
+    src: url("../resources/fonts/FontsFree-Net-proxima_nova_reg-webfont.ttf");
+    
+}
+
+.root
+{
+    -fx-font-family: 'Proxima';
+    -fx-background-color:  #e6d7bd;
+}
+
+/* lo de la fuente personalizada no va */
+
+.banner
+{
+    -fx-background-color:  #B0C4DE;
+    -fx-font-size: 42px;
+}
+
+.text-field
+{
+    -fx-background-color:  #F0F8FF;
+}
+
+.button-accept
+{
+    -fx-background-color: #B0C4DE;
+}
+
+.button {
+    -fx-pref-heigth: 50px;
+    -fx-pref-width: 50px;
+    -fx-background-color:#e3f5fa;
+    -fx-background-radius:0;
+    -fx-border-color:black;
+    -fx-border-width: 1 1 1 1;
+    -fx-background-insets: 0;
+}
+
+.toggle-button
+{
+    -fx-pref-heigth: 50px;
+    -fx-pref-width: 50px;
+    -fx-background-color:#e3f5fa;
+    -fx-background-radius:0;
+    -fx-border-color:black;
+    -fx-border-width: 1 1 1 1;
+    -fx-background-insets: 0;
+}
+
+.button:hover
+{
+    -fx-background-color: #B0E0E6;
+   
+}
+
+.toggle-button:hover
+{
+    -fx-background-color: #B0E0E6;
+   
+}
+
+.toggle-button:selected
+{
+    -fx-background-color: #7fc7fa;
+}

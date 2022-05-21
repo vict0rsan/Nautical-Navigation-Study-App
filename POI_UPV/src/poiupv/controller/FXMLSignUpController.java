@@ -307,25 +307,6 @@ public class FXMLSignUpController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLLogin.fxml"));
-
-            BorderPane root = (BorderPane) myLoader.load();
-
-                    //Get the controller of the UI
-            LoginController detailsController = myLoader.<LoginController>getController();
-                    //We pass the data to the cotroller. Passing the observableList we 
-                    //give controll to the modal for deleting/adding/modify the data 
-                    //we see in the listView
-
-            Scene scene = new Scene (root);
-
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Login");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            stage.show();
-
             Node source = (Node) event.getSource();
             Stage oldStage = (Stage) source.getScene().getWindow();
             oldStage.close();

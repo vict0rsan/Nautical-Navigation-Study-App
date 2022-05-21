@@ -72,6 +72,7 @@ public class PoiUPVApp extends Application {
                         Session currentSession = new Session(MapController.sessionInitialized, MapController.currentSessionHints ,MapController.currentSessionFaults);
                         try{
                         MapController.currentUser.addSession(currentSession);
+                        System.exit(0);
                         }catch(NavegacionDAOException ex){
                             System.out.println(ex.getStackTrace());
                         }

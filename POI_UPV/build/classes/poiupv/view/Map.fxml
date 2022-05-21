@@ -22,30 +22,33 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
+<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/style_map.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
    <children>
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="Account">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleOnActionLoginButton" text="Login" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleOnActionSignUpButton" text="Sign up" />
+              <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#handleOnActionLoginButton" text="Login" />
+                  <MenuItem fx:id="signUpButton" mnemonicParsing="false" onAction="#handleOnActionSignUpButton" text="Sign up" />
                   <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#handleOnActionLogoutButton" text="Logout" visible="false" />
                   <MenuItem fx:id="modifyButton" mnemonicParsing="false" onAction="#handleOnActionModifyButton" text="Modify profile" visible="false" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Tools">
             <items>
-                  <RadioMenuItem mnemonicParsing="false" onAction="#pointMenuPressed" text="Mark a point" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#colourMenuPressed" text="Select colour" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" />
-                  <RadioMenuItem mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear" />
+                  <RadioMenuItem fx:id="pointMenu" mnemonicParsing="false" text="Mark a point">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="drawingToolsMenu" />
+                     </toggleGroup></RadioMenuItem>
+                  <RadioMenuItem fx:id="lineMenu" mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" toggleGroup="$drawingToolsMenu" />
+                  <RadioMenuItem fx:id="arcMenu" mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" toggleGroup="$drawingToolsMenu" />
+                  <RadioMenuItem fx:id="textMenu" mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" toggleGroup="$drawingToolsMenu" />
+                  <MenuItem fx:id="colourMenu" mnemonicParsing="false" onAction="#colourMenuPressed" text="Select colour" />
+                  <RadioMenuItem fx:id="deleteMenu" mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" toggleGroup="$drawingToolsMenu" />
+                  <MenuItem fx:id="clearMenu" mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Problems">
+            <Menu fx:id="problemsButton" mnemonicParsing="false" text="Problems">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#randomProblemPressed" text="Random problem" />
                   <MenuItem mnemonicParsing="false" onAction="#selectProblemPressed" text="Select a problem" />
@@ -56,29 +59,51 @@
       </MenuBar>
       <AnchorPane prefHeight="640.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
          <children>
-               <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" pannable="true" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
-                     <Pane onMouseDragged="#handleDragOnMap" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed" onMouseReleased="#moveOrDrawReleased">
+                     <Pane fx:id="drawingPane" onMouseClicked="#clickTest" onMouseDragged="#handleDragOnMap" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed">
                         <children>
-                           <ImageView pickOnBounds="true">
+                           <ImageView layoutX="42.0" pickOnBounds="true">
                               <image>
                                  <Image url="@../../resources/carta_nautica.jpg" />
                               </image>
                            </ImageView>
+                        <ImageView fx:id="rule" fitHeight="546.0" fitWidth="689.0" layoutX="375.0" layoutY="447.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/transportador.png" />
+                           </image>
+                        </ImageView>
                         </children>
                      </Pane>
                   </content>
                </ScrollPane>
-            <Pane fx:id="buttonPane" prefHeight="626.0" prefWidth="116.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox prefHeight="735.0" prefWidth="101.0" spacing="15.0">
                <children>
-                  <Slider fx:id="zoom_slider" layoutX="20.0" layoutY="46.0" min="10.0" orientation="VERTICAL" />
-                  <Button layoutX="12.0" layoutY="195.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="30.0" prefWidth="30.0" text="-" />
-                  <Button layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#zoomIn" prefHeight="30.0" prefWidth="30.0" text="+" />
-                  <ToggleButton fx:id="selectPoint" layoutX="12.0" layoutY="254.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                  <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#zoomIn" prefHeight="35.0" prefWidth="34.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="35.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../resources/positionMarker.png" />
+                              <Image url="@../../resources/zoom-in.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Slider fx:id="zoom_slider" min="10.0" orientation="VERTICAL">
+                     <padding>
+                        <Insets left="9.0" />
+                     </padding></Slider>
+                  <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="35.0" prefWidth="34.0">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/zoom-out.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <ToggleButton fx:id="pannableButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#pannableButtonPressed" prefHeight="33.0" prefWidth="31.0">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/zoom-directions.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -86,16 +111,25 @@
                         <ToggleGroup fx:id="drawingTools" />
                      </toggleGroup>
                   </ToggleButton>
-                  <ToggleButton fx:id="drawLine" layoutX="12.0" layoutY="290.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
+                  <ToggleButton fx:id="selectPoint" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="23.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/positionMarker.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton fx:id="drawLine" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../resources/drawALine.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton fx:id="drawCircle" layoutX="12.0" layoutY="330.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
+                  <ToggleButton fx:id="drawCircle" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="34.0" toggleGroup="$drawingTools">
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -104,37 +138,30 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton fx:id="putText" layoutX="12.0" layoutY="371.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
+                  <ToggleButton fx:id="ruleButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="36.0" prefWidth="33.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="28.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/ruler.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton fx:id="putText" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../resources/addText.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton layoutX="12.0" layoutY="484.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools" />
-                  <Label layoutX="48.0" layoutY="587.0" text="Clear" />
-                  <Button layoutX="12.0" layoutY="580.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
-                     <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../resources/erase.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <ColorPicker fx:id="colorPicker" layoutX="9.0" layoutY="410.0" onAction="#changeColor" prefHeight="30.0" prefWidth="41.0" promptText="Color">
+                  <ColorPicker fx:id="colorPicker" onAction="#changeColor" prefHeight="30.0" prefWidth="41.0" promptText="Color" styleClass="button">
                      <value>
                         <Color />
                      </value>
                   </ColorPicker>
-                  <ImageView fitHeight="150.0" fitWidth="22.0" layoutX="16.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resources/delete.png" />
-                     </image>
-                  </ImageView>
-                  <MenuButton layoutX="9.0" layoutY="452.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Thickness">
+                  <MenuButton minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="50.0" styleClass="button">
                     <items>
                       <MenuItem mnemonicParsing="false">
                            <graphic>
@@ -142,9 +169,37 @@
                            </graphic>
                         </MenuItem>
                     </items>
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/line-thickness.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </MenuButton>
+                  <ToggleButton fx:id="eraseButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#removePressed" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/erase.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <Button fx:id="clearButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#clearButtonPressed" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/delete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
-            </Pane>
+               <padding>
+                  <Insets left="15.0" top="40.0" />
+               </padding>
+            </VBox>
          </children>
       </AnchorPane>
       <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="700.0" spacing="150.0">

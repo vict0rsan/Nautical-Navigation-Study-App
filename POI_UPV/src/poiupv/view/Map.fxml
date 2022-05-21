@@ -36,7 +36,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Tools">
             <items>
-                  <RadioMenuItem fx:id="pointMenu" mnemonicParsing="false" onAction="#pointMenuPressed" text="Mark a point">
+                  <RadioMenuItem fx:id="pointMenu" mnemonicParsing="false" text="Mark a point">
                      <toggleGroup>
                         <ToggleGroup fx:id="drawingToolsMenu" />
                      </toggleGroup></RadioMenuItem>
@@ -61,7 +61,7 @@
          <children>
                <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
-                     <Pane fx:id="drawingPane" onMouseClicked="#clickTest" onMouseDragged="#handleDragOnMap" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed" onMouseReleased="#moveOrDrawReleased">
+                     <Pane fx:id="drawingPane" onMouseClicked="#clickTest" onMouseDragged="#handleDragOnMap" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed">
                         <children>
                            <ImageView layoutX="42.0" pickOnBounds="true">
                               <image>

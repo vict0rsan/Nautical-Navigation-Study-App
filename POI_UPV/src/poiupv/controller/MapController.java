@@ -270,7 +270,6 @@ public class MapController implements Initializable {
         
         zoomGroup.setOnMousePressed(this:: moveOrDrawPressed);
         zoomGroup.setOnMouseDragged(this:: handleDragOnMap);
-        zoomGroup.setOnMouseReleased(this:: moveOrDrawReleased);
         
         
         pointMenu.selectedProperty().bindBidirectional(selectPoint.selectedProperty());
@@ -404,10 +403,6 @@ public class MapController implements Initializable {
         
     }
 
-	@FXML
-	private void pointMenuPressed(ActionEvent event) {
-            selectPoint.selectedProperty().setValue(Boolean.TRUE);
-	}
 
 	@FXML
 	private void lineMenuPressed(ActionEvent event) {
@@ -522,7 +517,7 @@ public class MapController implements Initializable {
             observableList.add(linePainting);
             
         }else if(drawCircle.isSelected()){
-            circlePainting = new Circle(1);
+            circlePainting = new Circle();
             circlePainting.setStroke(currentColor);
             circlePainting.setFill(Color.TRANSPARENT);
             circlePainting.setStrokeWidth(currentThickness);
@@ -572,21 +567,7 @@ public class MapController implements Initializable {
         } 
         
     }
-    
-    
 
-    @FXML
-    private void moveOrDrawReleased(MouseEvent event){
-        if(drawLine.isSelected()){
-            linePainting.setEndX(event.getX());
-            linePainting.setEndY(event.getY());
-            event.consume();
-        }else if(drawCircle.isSelected()){
-            double radius = Math.abs(event.getX() - coordinateXCircle);
-            circlePainting.setRadius(radius);
-            event.consume();
-        }
-    }
 
     @FXML
     private void handleDragOnMap(MouseEvent event){
@@ -638,8 +619,8 @@ public class MapController implements Initializable {
 
         double x = point.getX();
         double y = point.getX();
-        rule.setX(map_scrollpane.getScene().getWindow().getWidth());
-        rule.setY(map_scrollpane.getScene().getWindow().getHeight());
+        rule.setX(map_scrollpane.getScene().getWindow().getWidth() + x);
+        rule.setY(map_scrollpane.getScene().getWindow().getHeight() + y);
 
         }else
             rule.setVisible(false);
