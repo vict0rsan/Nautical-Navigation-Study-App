@@ -224,6 +224,7 @@ public class MapController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //initData();
+        colorPicker.setStyle("-fx-color-label-visible: false;");
         rule.setVisible(false);
         problemsButton.setDisable(true);
         problemsButton.setText("Problems (login to access)");
@@ -359,7 +360,9 @@ public class MapController implements Initializable {
         stage.setScene(scene);
         stage.setTitle("Sign Up");
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setResizable(false);
+        stage.setResizable(true);
+        stage.setMinWidth(390);
+        stage.setMinHeight(800);
         stage.getIcons().add(new Image("resources/helm.png"));
         stage.show();
     }

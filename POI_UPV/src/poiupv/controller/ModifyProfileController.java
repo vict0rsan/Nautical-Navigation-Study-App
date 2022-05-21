@@ -322,26 +322,5 @@ public class ModifyProfileController implements Initializable
         stage.setResizable(false);
         stage.showAndWait();
     }
-
-    @FXML
-    private void handleSelectAvatarFromDeviceButton(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Buscar Imagen");
-
-        // Agregar filtros para facilitar la busqueda
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Images", "*.*"),
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                new FileChooser.ExtensionFilter("PNG", "*.png")
-        );
-
-        // Obtener la imagen seleccionada
-        File imgFile = fileChooser.showOpenDialog(null);
-
-        // Mostar la imagen
-        if (imgFile != null) {
-            Image image = new Image("file:" + imgFile.getAbsolutePath());
-            avatar.setImage(image);
-        }
-    }
+  
 }

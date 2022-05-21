@@ -5,6 +5,7 @@
  */
 package poiupv.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
 public class AvatarSelectorController implements Initializable {
     private ImageView avatar;
@@ -83,7 +85,25 @@ public class AvatarSelectorController implements Initializable {
     @FXML
     private void handleAvatarDefault(ActionEvent event) 
     {
-        setAndDisplayImage("default");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Buscar Imagen");
+
+        // Agregar filtros para facilitar la busqueda
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png"),
+                new FileChooser.ExtensionFilter("GIF", "*.gif")
+        );
+
+        // Obtener la imagen seleccionada
+        File imgFile = fileChooser.showOpenDialog(null);
+
+        // Mostar la imagen
+        if (imgFile != null) {
+            Image image = new Image("file:" + imgFile.getAbsolutePath());
+            avatar.setImage(image);
+        }
         ((Node) event.getSource()).getScene().getWindow().hide();
     }
     

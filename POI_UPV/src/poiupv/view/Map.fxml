@@ -22,7 +22,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/estilos.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
+<VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/style_map.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
    <children>
       <MenuBar>
         <menus>
@@ -156,12 +156,12 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ColorPicker fx:id="colorPicker" onAction="#changeColor" prefHeight="30.0" prefWidth="41.0" promptText="Color">
+                  <ColorPicker fx:id="colorPicker" onAction="#changeColor" prefHeight="30.0" prefWidth="41.0" promptText="Color" styleClass="button">
                      <value>
                         <Color />
                      </value>
                   </ColorPicker>
-                  <MenuButton minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="50.0">
+                  <MenuButton minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="50.0" styleClass="button">
                     <items>
                       <MenuItem mnemonicParsing="false">
                            <graphic>

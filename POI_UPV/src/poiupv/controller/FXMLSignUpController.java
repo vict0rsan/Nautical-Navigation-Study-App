@@ -272,7 +272,7 @@ public class FXMLSignUpController implements Initializable {
     }
     
     private void checkBirthdate() {
-	if (Period.between(birthdate.getValue(), LocalDate.now()).getYears() < 12 || 
+        if (birthdate.getValue() == null || Period.between(birthdate.getValue(), LocalDate.now()).getYears() < 12 || 
 	    Period.between(birthdate.getValue(), LocalDate.now()).getYears() > 100) {
 	    showErrorMessage(lBirthdate, birthdate);
 	    validBirthdate.setValue(Boolean.FALSE);
@@ -379,29 +379,6 @@ public class FXMLSignUpController implements Initializable {
     }
 
     @FXML
-    private void handleSelectAvatarFromFileButton(ActionEvent event) 
-    {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Buscar Imagen");
-
-        // Agregar filtros para facilitar la busqueda
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Images", "*.*"),
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                new FileChooser.ExtensionFilter("PNG", "*.png")
-        );
-
-        // Obtener la imagen seleccionada
-        File imgFile = fileChooser.showOpenDialog(null);
-
-        // Mostar la imagen
-        if (imgFile != null) {
-            Image image = new Image("file:" + imgFile.getAbsolutePath());
-            avatar.setImage(image);
-        }
-    }
-
-    @FXML
     private void dateEnterPressed(KeyEvent event) throws Exception {
         if (event.getCode() == KeyCode.ENTER) {
             try{nav.registerUser(username.textProperty().getValue(), email.textProperty().getValue(), pass.textProperty().getValue(), avatar.getImage(), birthdate.getValue());}
@@ -457,7 +434,6 @@ public class FXMLSignUpController implements Initializable {
         dateEnterPressed(event);
     }
 
-    @FXML
     private void fileEnterPressed(KeyEvent event) throws Exception {
         dateEnterPressed(event);
     }
