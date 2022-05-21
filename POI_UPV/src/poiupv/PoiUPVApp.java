@@ -40,8 +40,8 @@ public class PoiUPVApp extends Application {
         Scene scene = new Scene(root);
         stage.setTitle("Map");
         stage.setScene(scene);
-	stage.setMinHeight(750);
-	stage.setMinWidth(900);
+		stage.setMinHeight(850);
+		stage.setMinWidth(900);
         stage.getIcons().add(new Image("resources/helm.png"));
         stage.setOnCloseRequest(e -> {
             
