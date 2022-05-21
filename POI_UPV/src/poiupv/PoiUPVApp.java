@@ -41,8 +41,8 @@ public class PoiUPVApp extends Application {
         Scene scene = new Scene(root);
         stage.setTitle("Map");
         stage.setScene(scene);
-		stage.setMinHeight(850);
-		stage.setMinWidth(900);
+        stage.setMinHeight(850);
+        stage.setMinWidth(900);
         stage.getIcons().add(new Image("resources/helm.png"));
         stage.setOnCloseRequest(e -> {
             
@@ -53,11 +53,7 @@ public class PoiUPVApp extends Application {
                 alert.setHeaderText("Unsaved session");
                 alert.setContentText("There could be unrecorded scores.\nDo you want to exit without logging out?");
                 alert.initModality(Modality.APPLICATION_MODAL);
-                DialogPane dialogPane = alert.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("../resources/styleAlert.css").toExternalForm());
-                alert.initOwner(stage.getScene().getWindow());
-                
-                
+               
                 ButtonType acceptButton = new ButtonType("Confirm");
                 ButtonType logoutButton = new ButtonType("Logout and exit");
                 

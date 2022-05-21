@@ -13,30 +13,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="553.0" stylesheets="@../../resources/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.ModifyProfileController">
    <top>
-      <HBox prefHeight="70.0" prefWidth="200.0" styleClass="banner" BorderPane.alignment="CENTER_LEFT">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Modify Profile">
-               <font>
-                  <Font name="Book Antiqua Bold" size="42.0" />
-               </font>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Text>
-         </children>
+      <HBox alignment="CENTER" minHeight="15.0" prefHeight="70.0" prefWidth="200.0" styleClass="banner" BorderPane.alignment="CENTER">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
-         <padding>
-            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-         </padding>
+         <children>
+            <ImageView fitHeight="105.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/modifyProfile.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="40.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
       </HBox>
    </top>
    <bottom>
@@ -102,37 +98,38 @@
                         <Insets top="10.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="62.0" prefWidth="90.0">
+                  <HBox prefHeight="126.0" prefWidth="251.0">
                      <children>
-                        <Label text="Avatar:">
-                           <font>
-                              <Font name="Arial Rounded MT Bold" size="12.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                        <ImageView fx:id="avatar" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../resources/avatars/avatardefault.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin>
-                        </ImageView>
+                        <VBox prefHeight="62.0" prefWidth="90.0">
+                           <children>
+                              <Label prefHeight="15.0" prefWidth="262.0" text="      Avatar:">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="12.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <ImageView fx:id="avatar" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../resources/avatars/avatardefault.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0" spacing="10.0">
+                           <children>
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectAvatarButton" prefHeight="30.0" prefWidth="90.0" text="Select Avatar" />
+                           </children>
+                        </VBox>
                      </children>
                      <HBox.margin>
-                        <Insets left="25.0" top="10.0" />
+                        <Insets left="60.0" top="10.0" />
                      </HBox.margin>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0" spacing="10.0">
-                     <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectAvatarButton" prefHeight="30.0" prefWidth="90.0" text="Select Avatar" />
-                     </children>
-                     <HBox.margin>
-                        <Insets top="40.0" />
-                     </HBox.margin>
-                  </VBox>
+                  </HBox>
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
@@ -228,7 +225,7 @@
             </HBox>
          </children>
          <BorderPane.margin>
-            <Insets left="25.0" />
+            <Insets left="25.0" top="20.0" />
          </BorderPane.margin>
       </VBox>
    </center>

@@ -87,7 +87,7 @@ public class CheckStatisticsController implements Initializable {
                         problemCount.setText("-");
                         correctAnswers.setText("-");
                         incorrectAnswers.setText("-");
-                        pieChart.setData(null);
+                        pieChart.setVisible(false);
                     }else{
                         Session selectedSession = shownSessions.getSelectionModel().getSelectedItem();
                         int hits = selectedSession.getHits();
@@ -110,7 +110,8 @@ public class CheckStatisticsController implements Initializable {
                         }
                         
                         pieChart.legendVisibleProperty().setValue(Boolean.FALSE);
-                        
+                        if(hits+faults != 0)
+                            pieChart.setVisible(true);
                        
                     }
                 });
@@ -131,10 +132,6 @@ public class CheckStatisticsController implements Initializable {
         stage.setResizable(false);
         stage.getIcons().add(new Image("resources/helm.png"));
         stage.show();
-
-        Node source = (Node) event.getSource();
-        Stage oldStage = (Stage) source.getScene().getWindow();
-        oldStage.close();
     }
 
     @FXML
@@ -145,7 +142,8 @@ public class CheckStatisticsController implements Initializable {
             sessions = sessions.stream().filter(s -> s.getLocalDate().compareTo(dateFrom) >= 0).collect(Collectors.toList());
             sessionsToShow = FXCollections.observableArrayList(sessions);
             shownSessions.setItems(sessionsToShow);
-            pieChart.setData(null);
+            if(shownSessions.getSelectionModel().getSelectedIndex() == -1);
+                pieChart.setVisible(false);
         }
     }
     

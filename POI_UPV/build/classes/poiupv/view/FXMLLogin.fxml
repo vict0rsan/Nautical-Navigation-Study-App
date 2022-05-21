@@ -7,21 +7,25 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="349.0" prefWidth="285.0" stylesheets="@../../resources/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.LoginController">
    <top>
-      <HBox prefHeight="70.0" prefWidth="200.0" styleClass="banner" BorderPane.alignment="CENTER_LEFT">
+      <HBox alignment="CENTER" minHeight="15.0" minWidth="15.0" prefHeight="82.0" prefWidth="285.0" styleClass="banner" BorderPane.alignment="BOTTOM_CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
-               <font>
-                  <Font size="42.0" />
-               </font>
-            </Text>
+            <ImageView fitHeight="115.0" fitWidth="124.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/login.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="30.0" />
+               </HBox.margin>
+            </ImageView>
          </children>
          <opaqueInsets>
             <Insets />
@@ -29,9 +33,6 @@
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
-         <padding>
-            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-         </padding>
       </HBox>
    </top>
    <bottom>

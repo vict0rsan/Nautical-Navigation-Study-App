@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -10,30 +12,37 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="600.0" stylesheets="@../../resources/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.GeneralStatisticsController">
    <children>
-      <VBox alignment="BOTTOM_CENTER" prefHeight="61.0" prefWidth="276.0">
+      <HBox alignment="CENTER" minHeight="15.0" prefHeight="74.0" prefWidth="600.0" styleClass="banner">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="General statistics">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Text>
-            <Label fx:id="user" text="User">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Label>
+            <ImageView fitHeight="97.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/statistics%202.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="40.0" />
+               </HBox.margin>
+            </ImageView>
          </children>
+      </HBox>
+      <HBox prefHeight="262.0" prefWidth="582.0">
          <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </VBox>
-      <HBox prefHeight="286.0" prefWidth="550.0">
-         <VBox.margin>
-            <Insets bottom="40.0" left="30.0" right="20.0" top="20.0" />
+            <Insets bottom="10.0" left="30.0" right="20.0" top="20.0" />
          </VBox.margin>
          <children>
-            <VBox alignment="CENTER" prefHeight="143.0" prefWidth="208.0">
+            <VBox alignment="CENTER" prefHeight="242.0" prefWidth="274.0">
                <children>
+                  <HBox alignment="CENTER" prefWidth="222.0">
+                     <children>
+                        <Label fx:id="user" alignment="CENTER" prefHeight="50.0" prefWidth="234.0" style="-fx-font-size: 25;" text="User" textAlignment="CENTER">
+                           <font>
+                              <Font size="44.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </HBox>
                   <HBox alignment="TOP_RIGHT" spacing="15.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total number of sessions:">
@@ -41,6 +50,11 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
+                        <Label fx:id="sessionLabel" prefHeight="26.0" prefWidth="27.0" text="-">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
                      </children>
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -53,6 +67,11 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
+                        <Label fx:id="problemLabel" prefHeight="26.0" prefWidth="38.0" text="-">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
                      </children>
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -65,6 +84,11 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
+                        <Label fx:id="correctLabel" prefHeight="26.0" prefWidth="27.0" text="-">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
                      </children>
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -77,6 +101,11 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
+                        <Label fx:id="incorrectLabel" prefHeight="26.0" prefWidth="27.0" text="-">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
                      </children>
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -87,46 +116,10 @@
                   <Insets top="20.0" />
                </HBox.margin>
             </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="72.0">
-               <children>
-                  <Label fx:id="sessionLabel" text="-">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="problemLabel" text="-">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="correctLabel" text="-">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="incorrectLabel" text="-">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" />
-                     </VBox.margin>
-                  </Label>
-               </children>
+            <PieChart fx:id="pieChart" maxHeight="1000.0" maxWidth="1000.0" prefHeight="212.0" prefWidth="328.0">
                <HBox.margin>
-                  <Insets top="20.0" />
-               </HBox.margin>
-            </VBox>
-            <PieChart fx:id="pieChart" prefHeight="282.0" prefWidth="335.0" />
+                  <Insets bottom="10.0" left="20.0" top="15.0" />
+               </HBox.margin></PieChart>
          </children>
       </HBox>
    </children>

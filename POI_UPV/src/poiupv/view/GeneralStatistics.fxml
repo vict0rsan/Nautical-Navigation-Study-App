@@ -24,12 +24,12 @@
             </ImageView>
          </children>
       </HBox>
-      <HBox prefHeight="258.0" prefWidth="550.0">
+      <HBox prefHeight="262.0" prefWidth="582.0">
          <VBox.margin>
             <Insets bottom="10.0" left="30.0" right="20.0" top="20.0" />
          </VBox.margin>
          <children>
-            <VBox alignment="CENTER" prefHeight="212.0" prefWidth="222.0">
+            <VBox alignment="CENTER" prefHeight="242.0" prefWidth="274.0">
                <children>
                   <HBox alignment="CENTER" prefWidth="222.0">
                      <children>
@@ -50,7 +50,7 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Label fx:id="sessionLabel" text="-">
+                        <Label fx:id="sessionLabel" prefHeight="26.0" prefWidth="27.0" text="-">
                            <font>
                               <Font size="17.0" />
                            </font>
@@ -67,7 +67,7 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Label fx:id="problemLabel" text="-">
+                        <Label fx:id="problemLabel" prefHeight="26.0" prefWidth="38.0" text="-">
                            <font>
                               <Font size="17.0" />
                            </font>
@@ -84,7 +84,7 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Label fx:id="correctLabel" text="-">
+                        <Label fx:id="correctLabel" prefHeight="26.0" prefWidth="27.0" text="-">
                            <font>
                               <Font size="17.0" />
                            </font>
@@ -101,7 +101,7 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Label fx:id="incorrectLabel" text="-">
+                        <Label fx:id="incorrectLabel" prefHeight="26.0" prefWidth="27.0" text="-">
                            <font>
                               <Font size="17.0" />
                            </font>
@@ -116,7 +116,7 @@
                   <Insets top="20.0" />
                </HBox.margin>
             </VBox>
-            <PieChart fx:id="pieChart" prefHeight="212.0" prefWidth="328.0">
+            <PieChart fx:id="pieChart" maxHeight="1000.0" maxWidth="1000.0" prefHeight="212.0" prefWidth="328.0">
                <HBox.margin>
                   <Insets bottom="10.0" left="20.0" top="15.0" />
                </HBox.margin></PieChart>
