@@ -86,6 +86,7 @@ public class MapController implements Initializable {
     public static User currentUser;
     public static int currentSessionHints;
     public static int currentSessionFaults;
+    private MouseEvent rulerPositionEvent;
     
     private Group zoomGroup;
     private Line linePainting = new Line();
@@ -274,6 +275,19 @@ public class MapController implements Initializable {
         zoomGroup.setOnMousePressed(this:: moveOrDrawPressed);
         zoomGroup.setOnMouseDragged(this:: handleDragOnMap);
         
+        ruleButton.setOnMouseClicked(mc -> {
+            if(ruleButton.isSelected()){
+                rule.setVisible(true);
+                double x = rulerPositionEvent.getX();
+                double y = rulerPositionEvent.getY();
+                System.out.println(rulerPositionEvent.getX()+100);
+                System.out.println(rulerPositionEvent.getY()-600);
+                rule.setX(x+100);
+                rule.setY(y-600);
+        }else
+            rule.setVisible(false);
+            
+        });
         
         pointMenu.selectedProperty().bindBidirectional(selectPoint.selectedProperty());
         lineMenu.selectedProperty().bindBidirectional(drawLine.selectedProperty());
@@ -283,7 +297,6 @@ public class MapController implements Initializable {
         ruleMenu.selectedProperty().bindBidirectional(ruleButton.selectedProperty());
         deleteMenu.selectedProperty().bindBidirectional(eraseButton.selectedProperty());
 
-        dragMapMenu.setOnAction(this:: pannableButtonPressed);
         ruleMenu.setOnAction(this:: ruleButtonPressed);
     }
 
@@ -293,6 +306,7 @@ public class MapController implements Initializable {
     private void muestraPosicion(MouseEvent event) {
         posicion.setText("sceneX: " + (int) event.getSceneX() + ", sceneY: " + (int) event.getSceneY() + "\n"
                 + "         X: " + (int) event.getX() + ",          Y: " + (int) event.getY());
+        rulerPositionEvent = event;
     }
     
     private void loginSetup () {
@@ -646,16 +660,8 @@ public class MapController implements Initializable {
     }
 
     @FXML
-    private void pannableButtonPressed(ActionEvent event) {
-		if(pannableButton.isSelected())
-			map_scrollpane.setPannable(true);
-		else
-			map_scrollpane.setPannable(false);
-    }
-
-    @FXML
     private void ruleButtonPressed(ActionEvent event) {
-        if(ruleButton.isSelected()){
+       /* if(ruleButton.isSelected()){
             rule.setVisible(true);
             Robot robot = new Robot();
             Point2D point = robot.getMousePosition();
@@ -667,7 +673,7 @@ public class MapController implements Initializable {
         rule.setY(map_scrollpane.getScene().getWindow().getHeight() + y);
 
         }else
-            rule.setVisible(false);
+            rule.setVisible(false);*/
     }
     
     private double startX;
