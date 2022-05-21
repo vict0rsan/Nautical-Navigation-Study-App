@@ -164,6 +164,10 @@ public class MapController implements Initializable {
     private ToggleButton ruleButton;
     @FXML
     private ToggleButton eraseButton;
+	@FXML
+	private RadioMenuItem dragMapMenu;
+	@FXML
+	private RadioMenuItem ruleMenu;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -260,12 +264,6 @@ public class MapController implements Initializable {
         //zoomGroup.getChildren().forEach(this::makeDraggable);
         makeDraggable(rule);
         
-        pannableButton.focusedProperty().addListener(e -> {
-            if(pannableButton.isSelected())
-                map_scrollpane.setPannable(true);
-            else
-                map_scrollpane.setPannable(false);
-        });
         
         
         zoomGroup.setOnMousePressed(this:: moveOrDrawPressed);
@@ -276,7 +274,12 @@ public class MapController implements Initializable {
         lineMenu.selectedProperty().bindBidirectional(drawLine.selectedProperty());
         arcMenu.selectedProperty().bindBidirectional(drawCircle.selectedProperty());
         textMenu.selectedProperty().bindBidirectional(putText.selectedProperty());
-        // FALTAN LOS DE DELETE Y CLEAR, LOS PONE NACHO CUANDO ESTEN IMPLEMENTADOS
+        dragMapMenu.selectedProperty().bindBidirectional(pannableButton.selectedProperty());
+		ruleMenu.selectedProperty().bindBidirectional(ruleButton.selectedProperty());
+		deleteMenu.selectedProperty().bindBidirectional(eraseButton.selectedProperty());
+		
+		dragMapMenu.setOnAction(this:: pannableButtonPressed);
+		ruleMenu.setOnAction(this:: ruleButtonPressed);
     }
 
     
@@ -423,6 +426,7 @@ public class MapController implements Initializable {
 
 	@FXML
 	private void clearMenuPressed(ActionEvent event) {
+		clearButtonPressed(event);
 	}
         
 	@FXML
@@ -603,6 +607,10 @@ public class MapController implements Initializable {
 
     @FXML
     private void pannableButtonPressed(ActionEvent event) {
+		if(pannableButton.isSelected())
+			map_scrollpane.setPannable(true);
+		else
+			map_scrollpane.setPannable(false);
     }
 
     @FXML

@@ -36,12 +36,15 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Tools">
             <items>
-                  <RadioMenuItem fx:id="pointMenu" mnemonicParsing="false" text="Mark a point">
+                  <RadioMenuItem fx:id="dragMapMenu" mnemonicParsing="false" text="Drag map">
                      <toggleGroup>
                         <ToggleGroup fx:id="drawingToolsMenu" />
-                     </toggleGroup></RadioMenuItem>
+                     </toggleGroup>
+                  </RadioMenuItem>
+                  <RadioMenuItem fx:id="pointMenu" mnemonicParsing="false" text="Mark a point" toggleGroup="$drawingToolsMenu" />
                   <RadioMenuItem fx:id="lineMenu" mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" toggleGroup="$drawingToolsMenu" />
                   <RadioMenuItem fx:id="arcMenu" mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" toggleGroup="$drawingToolsMenu" />
+                  <RadioMenuItem fx:id="ruleMenu" mnemonicParsing="false" text="Use rule" toggleGroup="$drawingToolsMenu" />
                   <RadioMenuItem fx:id="textMenu" mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" toggleGroup="$drawingToolsMenu" />
                   <MenuItem fx:id="colourMenu" mnemonicParsing="false" onAction="#colourMenuPressed" text="Select colour" />
                   <RadioMenuItem fx:id="deleteMenu" mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" toggleGroup="$drawingToolsMenu" />
@@ -77,7 +80,7 @@
                      </Pane>
                   </content>
                </ScrollPane>
-            <VBox prefHeight="735.0" prefWidth="101.0" spacing="15.0">
+            <VBox alignment="CENTER" prefHeight="735.0" prefWidth="101.0" spacing="15.0">
                <children>
                   <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#zoomIn" prefHeight="35.0" prefWidth="34.0">
                      <graphic>
@@ -197,7 +200,7 @@
                   </Button>
                </children>
                <padding>
-                  <Insets left="15.0" top="40.0" />
+                  <Insets top="40.0" />
                </padding>
             </VBox>
          </children>
