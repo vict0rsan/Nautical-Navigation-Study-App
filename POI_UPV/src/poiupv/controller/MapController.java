@@ -318,9 +318,9 @@ public class MapController implements Initializable {
         currentUser = null;
         sessionInitialized = null;
         logoutButton.setVisible(false);
-	modifyButton.setVisible(false);
-	welcomeLabel.textProperty().setValue(null);
-	welcomeLabel.setVisible(false);
+		modifyButton.setVisible(false);
+		welcomeLabel.textProperty().setValue(null);
+		welcomeLabel.setVisible(false);
     }
 
     @FXML
@@ -374,21 +374,20 @@ public class MapController implements Initializable {
         
         logoutSetup();
 	
-	Alert alert = new Alert(Alert.AlertType.INFORMATION);
-	alert.setTitle("Logout");
-	alert.setHeaderText(null);
-	alert.setContentText("You have succesfully logged out.");
-	alert.initModality(Modality.WINDOW_MODAL);
-        alert.initOwner(map_scrollpane.getScene().getWindow());
-	alert.showAndWait();
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Logout");
+		alert.setHeaderText(null);
+		alert.setContentText("You have succesfully logged out.");
+		alert.initModality(Modality.WINDOW_MODAL);
+		alert.initOwner(map_scrollpane.getScene().getWindow());
+		alert.showAndWait();
     }
 
     @FXML
     private void handleOnActionModifyButton(ActionEvent event) throws IOException {
         FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/ModifyProfile.fxml"));
-	BorderPane root = (BorderPane) myLoader.load();
-	ModifyProfileController modifyProfileController = myLoader.<ModifyProfileController>getController();
-        
+		BorderPane root = (BorderPane) myLoader.load();
+		ModifyProfileController modifyProfileController = myLoader.<ModifyProfileController>getController();
         
         Scene scene = new Scene (root);
         Stage stage = new Stage();
@@ -398,11 +397,7 @@ public class MapController implements Initializable {
         stage.setResizable(false);
         stage.getIcons().add(new Image("resources/helm.png"));
         stage.show();
-            
-           
-        
     }
-
 
 	@FXML
 	private void lineMenuPressed(ActionEvent event) {
@@ -430,24 +425,24 @@ public class MapController implements Initializable {
 	private void clearMenuPressed(ActionEvent event) {
 	}
         
-         @FXML
-        private void checkStatisticsPressed(ActionEvent event) throws Exception {
-            
-            
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/CheckStatistics.fxml"));
-            BorderPane root = (BorderPane) myLoader.load();
-            CheckStatisticsController statisticsController = myLoader.<CheckStatisticsController>getController();
+	@FXML
+	private void checkStatisticsPressed(ActionEvent event) throws Exception {
 
-            Scene scene = new Scene (root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Statistics");
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.setResizable(false);
-            stage.show();
-            
-            
-        }
+
+	   FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/CheckStatistics.fxml"));
+	   BorderPane root = (BorderPane) myLoader.load();
+	   CheckStatisticsController statisticsController = myLoader.<CheckStatisticsController>getController();
+
+	   Scene scene = new Scene (root);
+	   Stage stage = new Stage();
+	   stage.setScene(scene);
+	   stage.setTitle("Statistics");
+	   stage.initModality(Modality.WINDOW_MODAL);
+	   stage.setResizable(false);
+	   stage.show();
+
+
+   }
 
 	@FXML
 	private void randomProblemPressed(ActionEvent event) throws Exception {
@@ -505,13 +500,13 @@ public class MapController implements Initializable {
             linePainting.setOnMouseClicked(e -> {
                 System.out.println(e);
                 System.out.println("Erase button is pressed:" + eraseButton.isSelected());
-            if(eraseButton.isSelected()){
-                Node src = (Node) e.getSource();
-                System.out.println(e);
-                if(src != null)
-                    src.setVisible(false);
-            }
-        });
+				if(eraseButton.isSelected()){
+					Node src = (Node) e.getSource();
+					System.out.println(e);
+					if(src != null)
+						src.setVisible(false);
+				}
+			});
             
             zoomGroup.getChildren().add(linePainting);
             observableList.add(linePainting);
@@ -525,13 +520,13 @@ public class MapController implements Initializable {
             circlePainting.setOnMouseClicked(e -> {
                 System.out.println(e);
                 System.out.println("Erase button is pressed:" + eraseButton.isSelected());
-            if(eraseButton.isSelected()){
-                Node src = (Node) e.getSource();
-                System.out.println(e);
-                if(src != null)
-                    src.setVisible(false);
-            }
-        });
+				if(eraseButton.isSelected()){
+					Node src = (Node) e.getSource();
+					System.out.println(e);
+					if(src != null)
+						src.setVisible(false);
+				}
+			});
             
             zoomGroup.getChildren().add(circlePainting);
             circlePainting.setCenterX(event.getX());
