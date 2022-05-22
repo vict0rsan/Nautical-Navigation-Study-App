@@ -65,6 +65,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.robot.Robot;
+import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
@@ -90,9 +91,10 @@ public class MapController implements Initializable {
     
     private Group zoomGroup;
     private Line linePainting = new Line();
-    private Circle circlePainting;
+    private Arc arcPainting;
     private Circle pointSelected;
     private double coordinateXCircle;
+    private double coordinateYCircle;
     private Color currentColor = Color.BLACK;
     private double currentThickness = 5;
     
@@ -531,12 +533,12 @@ public class MapController implements Initializable {
             event.consume();
         }
         else if(drawCircle.isSelected()){
-            circlePainting = new Circle(0);
-            circlePainting.setStroke(currentColor);
-            circlePainting.setFill(Color.TRANSPARENT);
-            circlePainting.setStrokeWidth(currentThickness);
-            
-            circlePainting.setOnMouseClicked(e -> {
+            arcPainting = new Arc (0.0, 0.0, 0.0, 0.0, 0.0, 180.0);
+			arcPainting.setStroke(currentColor);
+			arcPainting.setFill(Color.TRANSPARENT);
+			arcPainting.setStrokeWidth(currentThickness);
+			
+			arcPainting.setOnMouseClicked(e -> {
                 if(eraseButton.isSelected()){
                         Node src = (Node) e.getSource();
                         if(src != null)
@@ -545,19 +547,20 @@ public class MapController implements Initializable {
                 else{
                     Node src = (Node) e.getSource();
                         if(src != null){
-                            circlePainting = (Circle) src;
-                            circlePainting.setStroke(currentColor);
-                            circlePainting.setStrokeWidth(currentThickness);
+                            arcPainting = (Arc) src;
+                            arcPainting.setStroke(currentColor);
+                            arcPainting.setStrokeWidth(currentThickness);
                         }
                         
                 }
             });
-            
-            zoomGroup.getChildren().add(circlePainting);
-            circlePainting.setCenterX(event.getX());
-            circlePainting.setCenterY(event.getY());
+			
+			zoomGroup.getChildren().add(arcPainting);
+            arcPainting.setCenterX(event.getX());
+            arcPainting.setCenterY(event.getY());
             coordinateXCircle = event.getX();
-            observableList.add(circlePainting);
+            coordinateYCircle = event.getY();
+            observableList.add(arcPainting);
             event.consume();
         }
         else if(putText.isSelected()){
@@ -629,8 +632,11 @@ public class MapController implements Initializable {
             linePainting.setEndY(event.getY());
             event.consume();
         }else if(drawCircle.isSelected()){
-            double radius = Math.abs(event.getX() - coordinateXCircle);
-            circlePainting.setRadius(radius);
+            double radiusX = Math.abs(event.getX() - coordinateXCircle);
+            double radiusY = Math.abs(event.getY() - coordinateYCircle);
+            arcPainting.setRadiusX(radiusX);
+            arcPainting.setRadiusY(radiusY);
+			arcPainting.setStartAngle(Math.atan2(event.getY(), event.getX())*100);
             event.consume();
         }
     }
