@@ -5,10 +5,13 @@
 package poiupv.controller;
 
 import DBAccess.NavegacionDAOException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +25,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -74,6 +78,37 @@ public class ShowProblemsController implements Initializable {
                         problemDescription.setText(selectedProblem.getText());
                     }
                 });
+        
+        shownProblems.setOnMouseClicked(mc -> {
+            if (mc.getButton().equals(MouseButton.PRIMARY)) {
+                if (mc.getClickCount() == 2) {
+
+            if(shownProblems.getSelectionModel().getSelectedIndex() != -1){
+            Problem selectedProblem = shownProblems.getSelectionModel().getSelectedItem();
+            
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/Problem.fxml"));
+            Parent root = null;
+                     try {
+                         root = (Parent) myLoader.load();
+                     } catch (IOException ex) {
+                         Logger.getLogger(ShowProblemsController.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+            ProblemController problemController = myLoader.<ProblemController>getController();
+            problemController.setProblem(selectedProblem);
+            
+            Scene scene = new Scene (root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Problem nº " + shownProblems.getSelectionModel().getSelectedIndex());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setResizable(false);
+            stage.getIcons().add(new Image("resources/helm.png"));
+            stage.show();
+        }
+
+            }
+       }
+        });
     }
 
     @FXML
