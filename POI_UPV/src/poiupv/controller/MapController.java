@@ -21,6 +21,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -568,7 +569,8 @@ public class MapController implements Initializable {
             });
 			
 			zoomGroup.getChildren().add(arcPainting);
-            arcPainting.setCenterX(event.getX());
+            
+			arcPainting.setCenterX(event.getX());
             arcPainting.setCenterY(event.getY());
             coordinateXCircle = event.getX();
             coordinateYCircle = event.getY();
@@ -644,11 +646,13 @@ public class MapController implements Initializable {
             linePainting.setEndY(event.getY());
             event.consume();
         }else if(drawCircle.isSelected()){
-            double radiusX = Math.abs(event.getX() - coordinateXCircle);
-            double radiusY = Math.abs(event.getY() - coordinateYCircle);
-            arcPainting.setRadiusX(radiusX);
-            arcPainting.setRadiusY(radiusY);
-			arcPainting.setStartAngle(Math.atan2(event.getY(), event.getX())*100);
+            double radiusX = event.getX() - coordinateXCircle;
+            double radiusY = event.getY() - coordinateYCircle;
+			double radius = Math.sqrt(radiusX * radiusX + radiusY * radiusY);
+            arcPainting.setRadiusX(radius);
+            arcPainting.setRadiusY(radius);
+			double angle = (Math.atan2(radiusY, radiusX) * (-180 / Math.PI)) - 90;
+			arcPainting.setStartAngle(angle);
             event.consume();
         }
     }
