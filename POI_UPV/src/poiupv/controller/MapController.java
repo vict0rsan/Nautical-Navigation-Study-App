@@ -56,6 +56,9 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyCombination.*;
+import javafx.scene.input.Mnemonic;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -171,6 +174,10 @@ public class MapController implements Initializable {
 	private RadioMenuItem dragMapMenu;
 	@FXML
 	private RadioMenuItem ruleMenu;
+	@FXML
+	private Button zoomInButton;
+	@FXML
+	private Button zoomOutButton;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -235,6 +242,7 @@ public class MapController implements Initializable {
         rule.setVisible(false);
         problemsButton.setDisable(true);
         problemsButton.setText("Problems (login to access)");
+		
         //==========================================================
         // inicializamos el slider y enlazamos con el zoom
         map_scrollpane.setHvalue(0.315);
@@ -706,4 +714,14 @@ public class MapController implements Initializable {
             node.setTranslateY(e.getSceneY() - startY);
         });
     }
+
+	@FXML
+	private void zoomInMenuPressed(ActionEvent event) {
+		zoomIn(event);
+	}
+
+	@FXML
+	private void zoomOutMenuPressed(ActionEvent event) {
+		zoomOut(event);
+	}
 }

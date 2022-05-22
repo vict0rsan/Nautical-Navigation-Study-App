@@ -15,6 +15,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -28,27 +29,76 @@
         <menus>
           <Menu mnemonicParsing="false" text="Account">
             <items>
-              <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#handleOnActionLoginButton" text="Login" />
-                  <MenuItem fx:id="signUpButton" mnemonicParsing="false" onAction="#handleOnActionSignUpButton" text="Sign up" />
-                  <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#handleOnActionLogoutButton" text="Logout" visible="false" />
-                  <MenuItem fx:id="modifyButton" mnemonicParsing="false" onAction="#handleOnActionModifyButton" text="Modify profile" visible="false" />
+              <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#handleOnActionLoginButton" text="Login">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem fx:id="signUpButton" mnemonicParsing="false" onAction="#handleOnActionSignUpButton" text="Sign up">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#handleOnActionLogoutButton" text="Logout" visible="false">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem fx:id="modifyButton" mnemonicParsing="false" onAction="#handleOnActionModifyButton" text="Modify profile" visible="false">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="M" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Tools">
             <items>
+                  <MenuItem mnemonicParsing="false" onAction="#zoomInMenuPressed" text="Zoom in">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="PLUS" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#zoomOutMenuPressed" text="Zoom out">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="MINUS" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
                   <RadioMenuItem fx:id="dragMapMenu" mnemonicParsing="false" text="Drag map">
                      <toggleGroup>
                         <ToggleGroup fx:id="drawingToolsMenu" />
                      </toggleGroup>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
                   </RadioMenuItem>
-                  <RadioMenuItem fx:id="pointMenu" mnemonicParsing="false" text="Mark a point" toggleGroup="$drawingToolsMenu" />
-                  <RadioMenuItem fx:id="lineMenu" mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" toggleGroup="$drawingToolsMenu" />
-                  <RadioMenuItem fx:id="arcMenu" mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" toggleGroup="$drawingToolsMenu" />
-                  <RadioMenuItem fx:id="ruleMenu" mnemonicParsing="false" text="Use rule" toggleGroup="$drawingToolsMenu" />
-                  <RadioMenuItem fx:id="textMenu" mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" toggleGroup="$drawingToolsMenu" />
-                  <MenuItem fx:id="colourMenu" mnemonicParsing="false" onAction="#colourMenuPressed" text="Select colour" />
-                  <RadioMenuItem fx:id="deleteMenu" mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" toggleGroup="$drawingToolsMenu" />
-                  <MenuItem fx:id="clearMenu" mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear" />
+                  <RadioMenuItem fx:id="pointMenu" mnemonicParsing="false" text="Mark a point" toggleGroup="$drawingToolsMenu">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></RadioMenuItem>
+                  <RadioMenuItem fx:id="lineMenu" mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" toggleGroup="$drawingToolsMenu">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></RadioMenuItem>
+                  <RadioMenuItem fx:id="arcMenu" mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" toggleGroup="$drawingToolsMenu">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></RadioMenuItem>
+                  <RadioMenuItem fx:id="ruleMenu" mnemonicParsing="false" text="Use rule" toggleGroup="$drawingToolsMenu">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></RadioMenuItem>
+                  <RadioMenuItem fx:id="textMenu" mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" toggleGroup="$drawingToolsMenu">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></RadioMenuItem>
+                  <MenuItem fx:id="colourMenu" mnemonicParsing="false" onAction="#colourMenuPressed" text="Select colour">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <RadioMenuItem fx:id="deleteMenu" mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" toggleGroup="$drawingToolsMenu">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></RadioMenuItem>
+                  <MenuItem fx:id="clearMenu" mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
             <Menu fx:id="problemsButton" mnemonicParsing="false" text="Problems">
@@ -82,7 +132,7 @@
                </ScrollPane>
             <VBox alignment="CENTER" prefHeight="735.0" prefWidth="101.0" spacing="15.0">
                <children>
-                  <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#zoomIn" prefHeight="35.0" prefWidth="34.0">
+                  <Button fx:id="zoomInButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#zoomIn" prefHeight="35.0" prefWidth="34.0" text="_+">
                      <graphic>
                         <ImageView fitHeight="35.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -91,7 +141,7 @@
                         </ImageView>
                      </graphic></Button>
                   <Slider fx:id="zoom_slider" min="10.0" orientation="VERTICAL" prefHeight="143.0" prefWidth="28.0" />
-                  <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="35.0" prefWidth="34.0">
+                  <Button fx:id="zoomOutButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="35.0" prefWidth="34.0" text="_-">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                            <image>
