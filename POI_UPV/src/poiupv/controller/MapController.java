@@ -293,12 +293,13 @@ public class MapController implements Initializable {
         ruleButton.setOnMouseClicked(mc -> {
             if(ruleButton.isSelected()){
                 rule.setVisible(true);
-                double x = rulerPositionEvent.getX();
-                double y = rulerPositionEvent.getY();
-                System.out.println(rulerPositionEvent.getX()+100);
-                System.out.println(rulerPositionEvent.getY()-600);
-                rule.setX(x+100);
-                rule.setY(y-600);
+                if(rulerPositionEvent != null){
+                    double x = rulerPositionEvent.getX();
+                    double y = rulerPositionEvent.getY();
+                    rule.setX(x+100);
+                    rule.setY(y-600);
+                }
+                
         }else
             rule.setVisible(false);
             
@@ -546,7 +547,7 @@ public class MapController implements Initializable {
             event.consume();
         }
         else if(drawCircle.isSelected()){
-            arcPainting = new Arc (0.0, 0.0, 0.0, 0.0, 0.0, 180.0);
+            arcPainting = new Arc (0.0, 0.0, 0.0, 0.0, 0.0, 120.0);
 			arcPainting.setStroke(currentColor);
 			arcPainting.setFill(Color.TRANSPARENT);
 			arcPainting.setStrokeWidth(currentThickness);

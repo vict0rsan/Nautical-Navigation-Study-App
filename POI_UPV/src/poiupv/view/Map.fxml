@@ -25,7 +25,7 @@
 
 <VBox minHeight="650.0" minWidth="750.0" prefHeight="1000.0" prefWidth="1650.0" snapToPixel="false" stylesheets="@../../resources/style_map.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="poiupv.controller.MapController">
    <children>
-      <MenuBar>
+      <MenuBar style="-fx-background-color: #e6d7bd;">
         <menus>
           <Menu mnemonicParsing="false" text="Account">
             <items>
@@ -259,9 +259,9 @@
       </AnchorPane>
       <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="700.0" spacing="150.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="1233.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="1249.0">
                <children>
-                  <Label fx:id="welcomeLabel" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="387.0" visible="false">
+                  <Label fx:id="welcomeLabel" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="403.0" visible="false">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
