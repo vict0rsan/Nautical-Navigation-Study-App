@@ -290,7 +290,7 @@ public class MapController implements Initializable {
         zoomGroup.setOnMousePressed(this:: moveOrDrawPressed);
         zoomGroup.setOnMouseDragged(this:: handleDragOnMap);
         
-        ruleButton.setOnMouseClicked(mc -> {
+        ruleButton.selectedProperty().addListener(mc -> {
             if(ruleButton.isSelected()){
                 rule.setVisible(true);
                 if(rulerPositionEvent != null){
@@ -298,10 +298,12 @@ public class MapController implements Initializable {
                     double y = rulerPositionEvent.getY();
                     rule.setX(x+100);
                     rule.setY(y-600);
-                }
-                
-        }else
-            rule.setVisible(false);
+                } else {
+					rule.setX(2422 + 100);
+					rule.setY(954 - 600);
+				}
+			}else
+				rule.setVisible(false);
             
         });
         
@@ -425,17 +427,6 @@ public class MapController implements Initializable {
         stage.show();
     }
 
-	@FXML
-	private void lineMenuPressed(ActionEvent event) {
-	}
-
-	@FXML
-	private void arcMenuPressed(ActionEvent event) {
-	}
-
-	@FXML
-	private void textMenuPressed(ActionEvent event) {
-	}
 
 	@FXML
 	private void colourMenuPressed(ActionEvent event) {
@@ -443,9 +434,6 @@ public class MapController implements Initializable {
             changeColor(event);
 	}
 
-	@FXML
-	private void deleteMenuPressed(ActionEvent event) {
-	}
 
 	@FXML
 	private void clearMenuPressed(ActionEvent event) {
@@ -519,7 +507,6 @@ public class MapController implements Initializable {
    
     @FXML
     private void moveOrDrawPressed(MouseEvent event) {
-        
         if(drawLine.isSelected()){
             linePainting = new Line(event.getX(), event.getY(), event.getX(), event.getY());
             linePainting.setStroke(currentColor);
@@ -547,7 +534,7 @@ public class MapController implements Initializable {
             event.consume();
         }
         else if(drawCircle.isSelected()){
-            arcPainting = new Arc (0.0, 0.0, 0.0, 0.0, 0.0, 120.0);
+            arcPainting = new Arc (0.0, 0.0, 0.0, 0.0, 0.0, 180.0);
 			arcPainting.setStroke(currentColor);
 			arcPainting.setFill(Color.TRANSPARENT);
 			arcPainting.setStrokeWidth(currentThickness);
@@ -663,13 +650,6 @@ public class MapController implements Initializable {
         currentColor = colorPicker.getValue();
     }
 
-    @FXML
-    private void removePressed(ActionEvent event) {
-        /*if(eraseButton.isPressed()){
-            zoomGroup.getChildren().remove(event.getSource());
-            observableList.remove(event.getSource());
-        }*/
-    }
 
     @FXML
     private void clearButtonPressed(ActionEvent event) {
@@ -688,11 +668,7 @@ public class MapController implements Initializable {
         }
     }
 
-    @FXML
-    private void clickTest(MouseEvent event) {
-    }
 
-    @FXML
     private void ruleButtonPressed(ActionEvent event) {
        /* if(ruleButton.isSelected()){
             rule.setVisible(true);

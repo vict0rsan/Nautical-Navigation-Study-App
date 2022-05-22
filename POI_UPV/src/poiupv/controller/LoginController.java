@@ -67,7 +67,7 @@ public class LoginController implements Initializable {
         validEmail.setValue(Boolean.FALSE);
         validpass.setValue(Boolean.FALSE);
 		
-	username.requestFocus();
+		username.requestFocus();
         
         username.focusedProperty().addListener((observable, oldValue, newValue)->{
             if (username.textProperty().getValue().isBlank()) {
@@ -117,10 +117,10 @@ public class LoginController implements Initializable {
             return;
         }
         
-	MapController.currentUser = user;
-	Node source = (Node) event.getSource();
-	Stage oldStage = (Stage) source.getScene().getWindow();
-	oldStage.close();
+		MapController.currentUser = user;
+		Node source = (Node) event.getSource();
+		Stage oldStage = (Stage) source.getScene().getWindow();
+		oldStage.close();
     }
     
     private void clearFields(){
@@ -137,7 +137,7 @@ public class LoginController implements Initializable {
     {
         Node source = (Node) event.getSource();
         Stage oldStage = (Stage) source.getScene().getWindow();
-	oldStage.close();
+		oldStage.close();
     }
 
     @FXML

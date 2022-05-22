@@ -46,8 +46,6 @@ public class ModifyProfileController implements Initializable
     @FXML
     private Button bAccept;
     @FXML
-    private Button bCancel;
-    @FXML
     private TextField email;
     @FXML
     private Label incorrectEmail;
@@ -94,9 +92,11 @@ public class ModifyProfileController implements Initializable
         changes.setValue(Boolean.FALSE);
        
         email.focusedProperty().addListener((observable, oldValue, newValue)->{
-	    if(!newValue) //focus lost.
-		checkEditEmail(); 
-            });
+			if(!newValue) //focus lost.
+				checkEditEmail(); 
+			
+
+		});
         
         email.textProperty().addListener( (o, oldVal, newVal) ->{
             if(!(newVal.equals(oldVal)))
@@ -104,6 +104,7 @@ public class ModifyProfileController implements Initializable
                 changes.setValue(Boolean.TRUE);
                 validEmail.setValue(Boolean.FALSE);
             }
+
         });
         
         password.textProperty().addListener( (o, oldVal, newVal) ->{
@@ -112,28 +113,41 @@ public class ModifyProfileController implements Initializable
                 changes.setValue(Boolean.TRUE);
                 equalPasswords.setValue(Boolean.FALSE);
             }
+
         });
         
         password.focusedProperty().addListener((observable, oldValue, newValue)->{
-            if(!newValue) 
+            if(!newValue && !password.textProperty().getValue().isEmpty()) 
                 checkEditPass();
-                
+			else if (password.textProperty().getValue().isEmpty()) {
+				hideErrorMessage(incorrectPassword,password);
+				validPassword.setValue(Boolean.TRUE);
+			}    
+
         });
       
         passwordConfirmation.focusedProperty().addListener((observable, oldValue, newValue)->{
-            if(!newValue)
+            if(!newValue && !passwordConfirmation.textProperty().getValue().isEmpty())
                 checkEqualPass();
+			else if (password.textProperty().getValue().isEmpty()) {
+				hideErrorMessage(incorrectPasswordConfirmation,passwordConfirmation);
+				equalPasswords.setValue(Boolean.TRUE);
+			}
+					System.out.println("valid email: " + validEmail + " valid password: " + validPassword + " equal passwords: " + equalPasswords + " changes: " + changes);
+
         });
         
         avatar.imageProperty().addListener( (o, oldVal, newVal) -> {
             System.out.println("Image property listener entering" + changes.getValue());
             if(!(newVal.equals(oldVal))) changes.setValue(Boolean.TRUE);
             System.out.println("Image property listener entering" + changes.getValue());
+					System.out.println("valid email: " + validEmail + " valid password: " + validPassword + " equal passwords: " + equalPasswords + " changes: " + changes);
+
         });
  
         BooleanBinding validFields = Bindings.and(validEmail, validPassword)
                  .and(equalPasswords).and(changes);
-        
+		        
         bAccept.disableProperty().bind(Bindings.not(validFields));
         
         username.setDisable(true);
@@ -152,16 +166,16 @@ public class ModifyProfileController implements Initializable
     }
     
     private void checkEditPass(){
-        if(!User.checkPassword(password.textProperty().getValueSafe())) {
-		incorrectPassword.setText("Not a valid password");
-		manageError(incorrectPassword, password, validPassword);
-	} else {
-            manageCorrect(incorrectPassword, password, validPassword);
-	}
+			if(!password.textProperty().getValue().isEmpty() && !User.checkPassword(password.textProperty().getValueSafe())) {
+				incorrectPassword.setText("Not a valid password");
+				manageError(incorrectPassword, password, validPassword);
+			} else {
+				manageCorrect(incorrectPassword, password, validPassword);
+			}
     }
     
     private void checkEqualPass(){
-        if(password.textProperty().getValueSafe().compareTo(passwordConfirmation.textProperty().getValueSafe()) != EQUALS)
+        if(!password.textProperty().getValue().isEmpty() && !passwordConfirmation.textProperty().getValue().isEmpty() && password.textProperty().getValueSafe().compareTo(passwordConfirmation.textProperty().getValueSafe()) != EQUALS)
         {
             showErrorMessage(incorrectPasswordConfirmation, passwordConfirmation);
             equalPasswords.setValue(Boolean.FALSE);
@@ -172,7 +186,7 @@ public class ModifyProfileController implements Initializable
     }
     
     private void manageError(Label errorLabel,TextField textField, BooleanProperty boolProp ){
-        boolProp.setValue(Boolean.FALSE);
+		boolProp.setValue(Boolean.FALSE);
         showErrorMessage(errorLabel,textField);
         textField.requestFocus();
     }

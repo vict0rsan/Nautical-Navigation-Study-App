@@ -71,19 +71,19 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator></RadioMenuItem>
-                  <RadioMenuItem fx:id="lineMenu" mnemonicParsing="false" onAction="#lineMenuPressed" text="Draw line" toggleGroup="$drawingToolsMenu">
+                  <RadioMenuItem fx:id="lineMenu" mnemonicParsing="false" text="Draw line" toggleGroup="$drawingToolsMenu">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator></RadioMenuItem>
-                  <RadioMenuItem fx:id="arcMenu" mnemonicParsing="false" onAction="#arcMenuPressed" text="Draw arc" toggleGroup="$drawingToolsMenu">
+                  <RadioMenuItem fx:id="arcMenu" mnemonicParsing="false" text="Draw arc" toggleGroup="$drawingToolsMenu">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator></RadioMenuItem>
-                  <RadioMenuItem fx:id="ruleMenu" mnemonicParsing="false" text="Use rule" toggleGroup="$drawingToolsMenu">
+                  <RadioMenuItem fx:id="ruleMenu" mnemonicParsing="false" text="Use ruler">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator></RadioMenuItem>
-                  <RadioMenuItem fx:id="textMenu" mnemonicParsing="false" onAction="#textMenuPressed" text="Add text" toggleGroup="$drawingToolsMenu">
+                  <RadioMenuItem fx:id="textMenu" mnemonicParsing="false" text="Add text" toggleGroup="$drawingToolsMenu">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator></RadioMenuItem>
@@ -96,7 +96,7 @@
                         <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <RadioMenuItem fx:id="deleteMenu" mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" toggleGroup="$drawingToolsMenu">
+                  <RadioMenuItem fx:id="deleteMenu" mnemonicParsing="false" text="Delete" toggleGroup="$drawingToolsMenu">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></RadioMenuItem>
@@ -119,7 +119,7 @@
          <children>
                <ScrollPane fx:id="map_scrollpane" hbarPolicy="ALWAYS" prefHeight="640.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <content>
-                     <Pane fx:id="drawingPane" onMouseClicked="#clickTest" onMouseDragged="#handleDragOnMap" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed">
+                     <Pane fx:id="drawingPane" onMouseDragged="#handleDragOnMap" onMouseMoved="#muestraPosicion" onMousePressed="#moveOrDrawPressed">
                         <children>
                            <ImageView layoutX="42.0" pickOnBounds="true">
                               <image>
@@ -193,7 +193,7 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton fx:id="ruleButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#ruleButtonPressed" prefHeight="36.0" prefWidth="33.0">
+                  <ToggleButton fx:id="ruleButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="33.0">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -232,7 +232,7 @@
                         </ImageView>
                      </graphic>
                   </MenuButton>
-                  <ToggleButton fx:id="eraseButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#removePressed" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
+                  <ToggleButton fx:id="eraseButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" toggleGroup="$drawingTools">
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
