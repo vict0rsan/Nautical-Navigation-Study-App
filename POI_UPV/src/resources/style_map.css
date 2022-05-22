@@ -75,3 +75,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 {
     -fx-background-color: #7fc7fa;
 }
+
+
+.menu-item{
+    -fx-background-color: #e6d7bd;
+}
+
+.menu-item:hover{
+    -fx-background-color: #7fc7fa;
+}
+
+
