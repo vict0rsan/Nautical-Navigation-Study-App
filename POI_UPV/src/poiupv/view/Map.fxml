@@ -91,9 +91,14 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator></MenuItem>
+                  <MenuItem fx:id="thicknessMenu" mnemonicParsing="false" onAction="#thicknessMenuPressed" text="Select thickness">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
                   <RadioMenuItem fx:id="deleteMenu" mnemonicParsing="false" onAction="#deleteMenuPressed" text="Delete" toggleGroup="$drawingToolsMenu">
                      <accelerator>
-                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></RadioMenuItem>
                   <MenuItem fx:id="clearMenu" mnemonicParsing="false" onAction="#clearMenuPressed" text="Clear">
                      <accelerator>
@@ -211,7 +216,7 @@
                         <Color />
                      </value>
                   </ColorPicker>
-                  <MenuButton minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="50.0" styleClass="button">
+                  <MenuButton fx:id="thicknessButton" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="50.0" styleClass="button">
                     <items>
                       <MenuItem mnemonicParsing="false">
                            <graphic>

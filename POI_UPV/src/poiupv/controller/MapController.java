@@ -178,6 +178,10 @@ public class MapController implements Initializable {
 	private Button zoomInButton;
 	@FXML
 	private Button zoomOutButton;
+	@FXML
+	private MenuItem thicknessMenu;
+	@FXML
+	private MenuButton thicknessButton;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -723,5 +727,10 @@ public class MapController implements Initializable {
 	@FXML
 	private void zoomOutMenuPressed(ActionEvent event) {
 		zoomOut(event);
+	}
+
+	@FXML
+	private void thicknessMenuPressed(ActionEvent event) {
+		thicknessButton.show();
 	}
 }
