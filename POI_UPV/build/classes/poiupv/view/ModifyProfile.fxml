@@ -156,7 +156,7 @@
                   </VBox>
                   <Label fx:id="incorrectEmail" text="Incorrect Email" textFill="RED" visible="false">
                      <HBox.margin>
-                        <Insets left="20.0" top="35.0" />
+                        <Insets left="20.0" top="20.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -180,7 +180,7 @@
                         <Insets />
                      </HBox.margin>
                   </VBox>
-                  <Button minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#handleBPassHelpPressed" prefHeight="23.0" prefWidth="69.0">
+                  <Button focusTraversable="false" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#handleBPassHelpPressed" prefHeight="23.0" prefWidth="69.0">
                      <HBox.margin>
                         <Insets top="22.0" />
                      </HBox.margin>
@@ -217,9 +217,9 @@
                         <Insets />
                      </HBox.margin>
                   </VBox>
-                  <Label fx:id="incorrectPasswordConfirmation" prefHeight="62.0" prefWidth="342.0" text="Passwords don't match" textFill="RED" visible="false" wrapText="true">
+                  <Label fx:id="incorrectPasswordConfirmation" alignment="CENTER" prefHeight="26.0" prefWidth="318.0" text="Passwords don't match" textFill="RED" visible="false" wrapText="true">
                      <HBox.margin>
-                        <Insets left="25.0" top="40.0" />
+                        <Insets left="25.0" top="20.0" />
                      </HBox.margin></Label>
                </children>
             </HBox>

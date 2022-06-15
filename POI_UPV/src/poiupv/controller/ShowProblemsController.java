@@ -166,7 +166,7 @@ public class ShowProblemsController implements Initializable {
         if(problem == null || empty){
             
         }else{
-            setText("Problem  -  " + problem.getText().substring(0, 35) + "...");
+            setText("Problem  -  " + problem.getText().substring(0, 50) + "...");
         }
             
         

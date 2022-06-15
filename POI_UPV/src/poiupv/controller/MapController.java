@@ -35,6 +35,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
@@ -60,6 +61,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyCombination.*;
 import javafx.scene.input.Mnemonic;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -183,6 +185,8 @@ public class MapController implements Initializable {
 	private MenuItem thicknessMenu;
 	@FXML
 	private MenuButton thicknessButton;
+    @FXML
+    private Menu problemsButton1;
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -282,7 +286,11 @@ public class MapController implements Initializable {
         
         drawingTools.selectedToggleProperty().addListener(cl -> {
             if(pannableButton.isSelected())
+                {
+                    rule.setVisible(false);
+                    ruleButton.selectedProperty().set(false);
                     map_scrollpane.setPannable(true);
+                }
             else
                     map_scrollpane.setPannable(false);
         });
@@ -292,6 +300,7 @@ public class MapController implements Initializable {
         
         ruleButton.selectedProperty().addListener(mc -> {
             if(ruleButton.isSelected()){
+                pannableButton.selectedProperty().set(false);
                 rule.setVisible(true);
                 if(rulerPositionEvent != null){
                     double x = rulerPositionEvent.getX();
@@ -315,7 +324,6 @@ public class MapController implements Initializable {
         ruleMenu.selectedProperty().bindBidirectional(ruleButton.selectedProperty());
         deleteMenu.selectedProperty().bindBidirectional(eraseButton.selectedProperty());
 
-        ruleMenu.setOnAction(this:: ruleButtonPressed);
     }
 
     
@@ -507,141 +515,209 @@ public class MapController implements Initializable {
    
     @FXML
     private void moveOrDrawPressed(MouseEvent event) {
-        if(drawLine.isSelected()){
-            linePainting = new Line(event.getX(), event.getY(), event.getX(), event.getY());
-            linePainting.setStroke(currentColor);
-            linePainting.setStrokeWidth(currentThickness);
-            
-            linePainting.setOnMouseClicked(e -> {
-                if(eraseButton.isSelected()){
+        if(event.getButton().equals(MouseButton.PRIMARY))
+        {
+            if(drawLine.isSelected()){
+                linePainting = new Line(event.getX(), event.getY(), event.getX(), event.getY());
+                linePainting.setStroke(currentColor);
+                linePainting.setStrokeWidth(currentThickness);
+
+
+                linePainting.setOnContextMenuRequested(eventContext -> 
+                {
+                    ContextMenu menuContext = new ContextMenu();
+                    MenuItem deleteItem = new MenuItem("Delete");
+                    menuContext.getItems().add(deleteItem);
+                    //If the user selects the option, we delete the line
+                    deleteItem.setOnAction( eventMenu ->
+                    {
+                        zoomGroup.getChildren().remove((Node)eventContext.getSource());
+                        eventMenu.consume();
+                    });
+                    menuContext.show(linePainting, eventContext.getSceneX() + 60, eventContext.getSceneY());
+                    eventContext.consume();
+                });
+
+
+
+                linePainting.setOnMouseClicked(e -> {
+                    if(eraseButton.isSelected()){
+                            Node src = (Node) e.getSource();
+                            if(src != null)
+                                    src.setVisible(false);
+                    }
+                    else{
                         Node src = (Node) e.getSource();
-                        if(src != null)
-                                src.setVisible(false);
-                }
-                else{
-                    Node src = (Node) e.getSource();
-                        if(src != null){
-                            linePainting = (Line) src;
-                            linePainting.setStroke(currentColor);
-                            linePainting.setStrokeWidth(currentThickness);
-                        }
-                        
-                }
-            });
-            
-            zoomGroup.getChildren().add(linePainting);
-            observableList.add(linePainting);
-            event.consume();
-        }
-        else if(drawCircle.isSelected()){
-            arcPainting = new Arc (0.0, 0.0, 0.0, 0.0, 0.0, 180.0);
-			arcPainting.setStroke(currentColor);
-			arcPainting.setFill(Color.TRANSPARENT);
-			arcPainting.setStrokeWidth(currentThickness);
-			
-			arcPainting.setOnMouseClicked(e -> {
-                if(eraseButton.isSelected()){
-                        Node src = (Node) e.getSource();
-                        if(src != null)
-                                src.setVisible(false);
-                }
-                else{
-                    Node src = (Node) e.getSource();
-                        if(src != null){
-                            arcPainting = (Arc) src;
+                            if(src != null){
+                                linePainting = (Line) src;
+                                linePainting.setStroke(currentColor);
+                                linePainting.setStrokeWidth(currentThickness);
+                            }
+
+                    }
+                });
+
+                zoomGroup.getChildren().add(linePainting);
+                observableList.add(linePainting);
+                event.consume();
+            }
+            else if(drawCircle.isSelected()){
+                arcPainting = new Arc (0.0, 0.0, 0.0, 0.0, 0.0, 120.0);
                             arcPainting.setStroke(currentColor);
+                            arcPainting.setFill(Color.TRANSPARENT);
                             arcPainting.setStrokeWidth(currentThickness);
-                        }
-                        
-                }
-            });
-			
-			zoomGroup.getChildren().add(arcPainting);
-            
-			arcPainting.setCenterX(event.getX());
-            arcPainting.setCenterY(event.getY());
-            coordinateXCircle = event.getX();
-            coordinateYCircle = event.getY();
-            observableList.add(arcPainting);
-            event.consume();
-        }
-        else if(putText.isSelected()){
-            TextField text = new TextField();
-            zoomGroup.getChildren().add(text);
-            text.setLayoutX(event.getX());
-            text.setLayoutY(event.getY());
-            text.requestFocus();
-            text.setOnAction(e -> {
-                Text test = new Text(text.getText());
-                test.setX(text.getLayoutX());
-                test.setY(text.getLayoutY()+20);
-                test.setStyle("-fx-font-size: 20;");
-                test.setStroke(currentColor);
-                
-                test.setOnMouseClicked(mc -> {
-                if(eraseButton.isSelected()){
-                        Node src = (Node) mc.getSource();
-                        if(src != null)
-                                src.setVisible(false);
-                }
-                
-            });
-                
-                zoomGroup.getChildren().add(test);
-                zoomGroup.getChildren().remove(text);
-                observableList.add(test);
-            });
-            event.consume();
-            
-        }else if(selectPoint.isSelected()){
-            pointSelected = new Circle(6);
-            pointSelected.setStroke(currentColor);
-            pointSelected.setStrokeWidth(currentThickness);
-            pointSelected.setFill(currentColor);
-            
-            pointSelected.setOnMouseClicked(e -> {
-                if(eraseButton.isSelected()){
+                            
+                arcPainting.setOnContextMenuRequested(eventContext -> 
+                {
+                    ContextMenu menuContext = new ContextMenu();
+                    MenuItem deleteItem = new MenuItem("Delete");
+                    menuContext.getItems().add(deleteItem);
+                    //If the user selects the option, we delete the line
+                    deleteItem.setOnAction( eventMenu ->
+                    {
+                        zoomGroup.getChildren().remove((Node)eventContext.getSource());
+                        eventMenu.consume();
+                    });
+                    menuContext.show(arcPainting, eventContext.getSceneX() + 60, eventContext.getSceneY());
+                    eventContext.consume();
+                });
+
+                            arcPainting.setOnMouseClicked(e -> {
+                    if(eraseButton.isSelected()){
+                            Node src = (Node) e.getSource();
+                            if(src != null)
+                                    src.setVisible(false);
+                    }
+                    else{
                         Node src = (Node) e.getSource();
-                        if(src != null)
-                                src.setVisible(false);
-                }
-                else{
-                    Node src = (Node) e.getSource();
-                        if(src != null){
-                            pointSelected = (Circle) src;
-                            pointSelected.setStroke(currentColor);
-                            pointSelected.setStrokeWidth(currentThickness);
-                        }
-                        
-                }
+                            if(src != null){
+                                arcPainting = (Arc) src;
+                                arcPainting.setStroke(currentColor);
+                                arcPainting.setStrokeWidth(currentThickness);
+                            }
+
+                    }
+                });
+
+                            zoomGroup.getChildren().add(arcPainting);
+
+                            arcPainting.setCenterX(event.getX());
+                arcPainting.setCenterY(event.getY());
+                coordinateXCircle = event.getX();
+                coordinateYCircle = event.getY();
+                observableList.add(arcPainting);
+                event.consume();
+            }
+            else if(putText.isSelected()){
+                TextField text = new TextField();
+                zoomGroup.getChildren().add(text);
+                text.setLayoutX(event.getX());
+                text.setLayoutY(event.getY());
+                text.requestFocus();
+                text.setOnAction(e -> {
+                    Text test = new Text(text.getText());
+                    test.setX(text.getLayoutX());
+                    test.setY(text.getLayoutY()+20);
+                    test.setStyle("-fx-font-size: 20;");
+                    test.setStroke(currentColor);
+                    
+                    test.setOnContextMenuRequested(eventContext -> 
+                    {
+                    ContextMenu menuContext = new ContextMenu();
+                    MenuItem deleteItem = new MenuItem("Delete");
+                    menuContext.getItems().add(deleteItem);
+                    //If the user selects the option, we delete the line
+                    deleteItem.setOnAction( eventMenu ->
+                    {
+                        zoomGroup.getChildren().remove((Node)eventContext.getSource());
+                        eventMenu.consume();
+                    });
+                    menuContext.show(test, eventContext.getSceneX() + 160, eventContext.getSceneY() - 50);
+                    eventContext.consume();
+                    });
+
+                    test.setOnMouseClicked(mc -> {
+                    if(eraseButton.isSelected()){
+                            Node src = (Node) mc.getSource();
+                            if(src != null)
+                                    src.setVisible(false);
+                    }
+
+                });
+
+                    zoomGroup.getChildren().add(test);
+                    zoomGroup.getChildren().remove(text);
+                    observableList.add(test);
+                });
+                event.consume();
+
+            }else if(selectPoint.isSelected()){
+                pointSelected = new Circle(6);
+                pointSelected.setStroke(currentColor);
+                pointSelected.setStrokeWidth(currentThickness);
+                pointSelected.setFill(currentColor);
                 
-            });
-            
-            zoomGroup.getChildren().add(pointSelected);
-            pointSelected.setCenterX(event.getX());
-            pointSelected.setCenterY(event.getY());
-            observableList.add(pointSelected);
-            event.consume();
-        } 
-        
+                pointSelected.setOnContextMenuRequested(eventContext -> 
+                {
+                    ContextMenu menuContext = new ContextMenu();
+                    MenuItem deleteItem = new MenuItem("Delete");
+                    menuContext.getItems().add(deleteItem);
+                    //If the user selects the option, we delete the line
+                    deleteItem.setOnAction( eventMenu ->
+                    {
+                        zoomGroup.getChildren().remove((Node)eventContext.getSource());
+                        eventMenu.consume();
+                    });
+                    menuContext.show(pointSelected, event.getSceneX() + 160, event.getSceneY());
+                    eventContext.consume();
+                });
+
+                pointSelected.setOnMouseClicked(e -> {
+                    if(eraseButton.isSelected()){
+                            Node src = (Node) e.getSource();
+                            if(src != null)
+                                    src.setVisible(false);
+                    }
+                    else{
+                        Node src = (Node) e.getSource();
+                            if(src != null){
+                                pointSelected = (Circle) src;
+                                pointSelected.setStroke(currentColor);
+                                pointSelected.setStrokeWidth(currentThickness);
+                            }
+
+                    }
+
+                });
+
+                zoomGroup.getChildren().add(pointSelected);
+                pointSelected.setCenterX(event.getX());
+                pointSelected.setCenterY(event.getY());
+                observableList.add(pointSelected);
+                event.consume();
+            } 
+        }
     }
 
 
     @FXML
     private void handleDragOnMap(MouseEvent event){
-        if(drawLine.isSelected()){
-            linePainting.setEndX(event.getX());
-            linePainting.setEndY(event.getY());
-            event.consume();
-        }else if(drawCircle.isSelected()){
-            double radiusX = event.getX() - coordinateXCircle;
-            double radiusY = event.getY() - coordinateYCircle;
-			double radius = Math.sqrt(radiusX * radiusX + radiusY * radiusY);
-            arcPainting.setRadiusX(radius);
-            arcPainting.setRadiusY(radius);
-			double angle = (Math.atan2(radiusY, radiusX) * (-180 / Math.PI)) - 90;
-			arcPainting.setStartAngle(angle);
-            event.consume();
+        if(event.getButton().equals(MouseButton.PRIMARY))
+        {
+            if(drawLine.isSelected()){
+                linePainting.setEndX(event.getX());
+                linePainting.setEndY(event.getY());
+                event.consume();
+            }else if(drawCircle.isSelected()){
+                double radiusX = event.getX() - coordinateXCircle;
+                double radiusY = event.getY() - coordinateYCircle;
+                            double radius = Math.sqrt(radiusX * radiusX + radiusY * radiusY);
+                arcPainting.setRadiusX(radius);
+                arcPainting.setRadiusY(radius);
+                            double angle = (Math.atan2(radiusY, radiusX) * (-180 / Math.PI)) - 90;
+                            arcPainting.setStartAngle(angle);
+                event.consume();
+            }
         }
     }
     
@@ -666,23 +742,6 @@ public class MapController implements Initializable {
         zoomGroup.getChildren().removeAll(observableList);
         observableList.clear();
         }
-    }
-
-
-    private void ruleButtonPressed(ActionEvent event) {
-       /* if(ruleButton.isSelected()){
-            rule.setVisible(true);
-            Robot robot = new Robot();
-            Point2D point = robot.getMousePosition();
-            
-
-        double x = point.getX();
-        double y = point.getX();
-        rule.setX(map_scrollpane.getScene().getWindow().getWidth() + x);
-        rule.setY(map_scrollpane.getScene().getWindow().getHeight() + y);
-
-        }else
-            rule.setVisible(false);*/
     }
     
     private double startX;
@@ -714,4 +773,35 @@ public class MapController implements Initializable {
 	private void thicknessMenuPressed(ActionEvent event) {
 		thicknessButton.show();
 	}
+
+    @FXML
+    private void onActionInformationButton(ActionEvent event) 
+    {
+        Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("APP help");
+		alert.setHeaderText("IPC - 2022");
+		alert.setContentText("App made by: \n\nGuillem Fornet Llorca\t - \tgforllo@etsinf.upv.es\nNacho Martí Martín\t\t - \tilmarmar@etsinf.upv.es\nVíctor Santiago de Mena\t - \tvicsand1@teleco.upv.es\n\nGroup: 2E"
+			
+		);
+		alert.initModality(Modality.WINDOW_MODAL);
+                alert.initOwner(putText.getScene().getWindow());
+		alert.showAndWait();
+        
+        
+    }
+
+    @FXML
+    private void onActionHelpButton(ActionEvent event) 
+    {
+        Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("APP help");
+		alert.setHeaderText("Application Information:");
+		alert.setContentText(
+                        "NavigApp is an app destinated to help with the preparation of the navigation exercises on the nautical chart of the Strait of Gibraltar in the recreational boat skipper exams"
+			
+		);
+		alert.initModality(Modality.WINDOW_MODAL);
+                alert.initOwner(putText.getScene().getWindow());
+		alert.showAndWait();
+    }
 }

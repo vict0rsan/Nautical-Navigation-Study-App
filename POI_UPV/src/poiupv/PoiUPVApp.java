@@ -39,7 +39,7 @@ public class PoiUPVApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/poiupv/view/Map.fxml"));
         
         Scene scene = new Scene(root);
-        stage.setTitle("Map");
+        stage.setTitle("NavigApp");
         stage.setScene(scene);
         stage.setMinHeight(850);
         stage.setMinWidth(900);

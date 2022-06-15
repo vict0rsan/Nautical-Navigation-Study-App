@@ -113,6 +113,12 @@
                   <MenuItem mnemonicParsing="false" onAction="#checkStatisticsPressed" text="Check statistics" />
                </items>
             </Menu>
+            <Menu fx:id="problemsButton1" mnemonicParsing="false" text="About">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onActionHelpButton" text="Help" />
+                  <MenuItem mnemonicParsing="false" onAction="#onActionInformationButton" text="Contact" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
       <AnchorPane prefHeight="640.0" prefWidth="700.0" VBox.vgrow="ALWAYS">

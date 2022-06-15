@@ -71,7 +71,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .list-cell:even { /* <=== changed to even */
-    -fx-background-color: white;
+    -fx-background-color: #DFE8F3;
+}
+
+.list-cell:odd
+{
+    -fx-background-color: #CBDBEF;
 }
 
 .list-cell:filled:hover {

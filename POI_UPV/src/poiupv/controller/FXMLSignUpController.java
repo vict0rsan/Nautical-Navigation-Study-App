@@ -69,9 +69,12 @@ public class FXMLSignUpController implements Initializable {
     private BooleanProperty equalPasswords;  
     private BooleanProperty validUsername;
     private BooleanProperty validBirthdate;
+    private BooleanBinding validFields;
     
     //When to strings are equal, compareTo returns zero
     private final int EQUALS = 0; 
+    @FXML
+    private Button buttonHelpPass;
 
     /**
      * Updates the boolProp to false.Changes to red the background of the edit. 
@@ -163,6 +166,7 @@ public class FXMLSignUpController implements Initializable {
     // you must initialize here all related with the object 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        buttonHelpPass.focusTraversableProperty().set(false);
         
         try {nav = Navegacion.getSingletonNavegacion();} 
         catch(Exception e){System.out.println(e.getMessage());}
@@ -205,16 +209,15 @@ public class FXMLSignUpController implements Initializable {
                 checkEqualPass();
             }
         });
-	
-	birthdate.focusedProperty().addListener((observable, oldValue, newValue)->{
-            if(!newValue)
-            {
-                checkBirthdate();
-            }
+
+        
+        birthdate.valueProperty().addListener((observable, oldValue, newValue)->{
+            checkBirthdate();
+
         });
         
-        BooleanBinding validFields = Bindings.and(validEmail, validPassword)
-                 .and(equalPasswords).and(validUsername);
+        validFields = Bindings.and(validEmail, validPassword)
+                 .and(equalPasswords).and(validUsername).and(validBirthdate);
         
         bAccept.disableProperty().bind(Bindings.not(validFields));
     } ;
@@ -287,19 +290,7 @@ public class FXMLSignUpController implements Initializable {
     {
         try{nav.registerUser(username.textProperty().getValue(), email.textProperty().getValue(), pass.textProperty().getValue(), avatar.getImage(), birthdate.getValue());}
         catch(Exception e){ System.out.println(e.getMessage());}
-        email.textProperty().setValue("");
-        pass.textProperty().setValue("");
-        rpass.textProperty().setValue("");
-        username.textProperty().setValue("");
-        avatar.setImage(new Image("resources/avatars/avatardefault.png"));
-        birthdate.setValue(null);
-        
-        
-        validEmail.setValue(Boolean.FALSE);
-        validPassword.setValue(Boolean.FALSE);
-        equalPasswords.setValue(Boolean.FALSE);
-        validUsername.setValue(Boolean.FALSE);
-		
+
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Registration confirmed");
         alert.setHeaderText(null);
@@ -363,21 +354,9 @@ public class FXMLSignUpController implements Initializable {
 
     @FXML
     private void dateEnterPressed(KeyEvent event) throws Exception {
-        if (event.getCode() == KeyCode.ENTER) {
+        if (event.getCode() == KeyCode.ENTER && validFields.getValue()) {
             try{nav.registerUser(username.textProperty().getValue(), email.textProperty().getValue(), pass.textProperty().getValue(), avatar.getImage(), birthdate.getValue());}
             catch(Exception e){ System.out.println(e.getMessage());}
-            email.textProperty().setValue("");
-            pass.textProperty().setValue("");
-            rpass.textProperty().setValue("");
-            username.textProperty().setValue("");
-            avatar.setImage(new Image("resources/avatars/avatardefault.png"));
-            birthdate.setValue(null);
-
-
-            validEmail.setValue(Boolean.FALSE);
-            validPassword.setValue(Boolean.FALSE);
-            equalPasswords.setValue(Boolean.FALSE);
-            validUsername.setValue(Boolean.FALSE);
 
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Registration confirmed");
@@ -386,25 +365,6 @@ public class FXMLSignUpController implements Initializable {
             alert.initOwner(email.getScene().getWindow());
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/poiupv/view/FXMLLogin.fxml"));
-
-                BorderPane root = (BorderPane) myLoader.load();
-
-                        //Get the controller of the UI
-                LoginController detailsController = myLoader.<LoginController>getController();
-                        //We pass the data to the cotroller. Passing the observableList we 
-                        //give controll to the modal for deleting/adding/modify the data 
-                        //we see in the listView
-
-                Scene scene = new Scene (root);
-
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.setTitle("Login");
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setResizable(false);
-                stage.show();
-
                 Node source = (Node) event.getSource();
                 Stage oldStage = (Stage) source.getScene().getWindow();
                 oldStage.close();

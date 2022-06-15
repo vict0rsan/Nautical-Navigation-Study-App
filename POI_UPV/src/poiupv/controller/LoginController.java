@@ -69,13 +69,14 @@ public class LoginController implements Initializable {
 		
 		username.requestFocus();
         
-        username.focusedProperty().addListener((observable, oldValue, newValue)->{
-            if (username.textProperty().getValue().isBlank()) {
+        username.textProperty().addListener((observable, oldValue, newValue)->{
+            if (!username.textProperty().getValue().isBlank()) {
                 validEmail.setValue(Boolean.TRUE);
             }
         });
+
         
-        password.focusedProperty().addListener((observable, oldValue, newValue)->{
+        password.textProperty().addListener((observable, oldValue, newValue) ->{
             if (!password.textProperty().getValue().isBlank()) {
                 validpass.setValue(Boolean.TRUE);
             }
